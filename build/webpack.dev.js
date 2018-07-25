@@ -2,7 +2,7 @@
  * webpack开发环境配置
  * @author luyanhong 2018-07-24
 */
-
+const webpack = require('webpack');
 const merge = require('webpack-merge');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const WEBPACK_DEV_CONFIG = require('../config').WEBPACK_DEV_CONFIG;
@@ -35,6 +35,7 @@ module.exports = (env) => {
       },
     },
     plugins: [
+      new webpack.HotModuleReplacementPlugin(),
       new MiniCssExtractPlugin({
         filename: 'css/[name].css'
       })
