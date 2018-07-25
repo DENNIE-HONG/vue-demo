@@ -14,14 +14,28 @@ module.exports = (env) => {
     resolve: {
       extensions: ['.js','.vue'],
       alias: {
-        scss: path.resolve(__dirname, '../src/assets'),
+        assets: path.resolve(__dirname, '../src/assets'),
         coms: path.resolve(__dirname, '../src/components')
       }
     },
     optimization: {
+      splitChunks: {
+        cacheGroups: {
+          common: {
+            chunks: 'all',
+            minChunks: 5,
+            name: 'common'
+          },
+          vendors: {
+            test: /node_modules/,
+            name: 'vendors',
+            chunks: 'all'
+          }
+        }
+      },
       runtimeChunk: {
         name: 'manifest'
-      }
+      },
     },
     plugins: [
       new CleanWebpackPlugin([
@@ -107,7 +121,7 @@ module.exports = (env) => {
               loader: 'url-loader',
               options: {
                 limit: 2048,
-                name: env.production ? 'fonts/[name].[hash:7].[ext]': 'img/[name].[ext]'
+                name: env.production ? 'fonts/[name].[hash:7].[ext]': 'fonts/[name].[ext]'
               }
             }
           ]

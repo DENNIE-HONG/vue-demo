@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/DENNIE-HONG/vue-demo#readme",
   "dependencies": {
+    "amfe-flexible": "^2.2.1",
     "axios": "^0.18.0",
     "vue": "^2.5.16",
     "vue-template-compiler": "^2.5.16"
