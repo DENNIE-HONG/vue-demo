@@ -2,11 +2,16 @@
   <div class="com-header">
     <a href="javascript:;" class="com-header-user"><i class="iconfont icon-user"></i></a>
     <div class="com-header-logo"></div>
+    <SearchHeader />
   </div>
 </template>
 <script>
+import SearchHeader from 'coms/search-header/index.vue';
 export default {
   name: 'CommonHead',
+  components: {
+    SearchHeader
+  },
   data () {
     return {
       msg: 'Hello world!'
@@ -17,7 +22,7 @@ export default {
 <style lang="scss">
 .com-header {
   height: rem(188);
-  padding: rem(10);
+  padding: rem(20);
   box-sizing: border-box;
   &-user {
     float: left;
@@ -27,9 +32,9 @@ export default {
   }
   &-logo {
     display: block;
-    width: rem(70);
-    height: rem(70);
-    margin: 0 auto;
+    width: rem(60);
+    height: rem(60);
+    margin: 0 auto rem(15);
     background: url('./img/logo.png') top/100% no-repeat;
   }
 }
