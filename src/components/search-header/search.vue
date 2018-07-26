@@ -14,9 +14,9 @@ export default {
   name: 'Search',
   props: ['placeholder', 'domNode'],
   methods: {
-    destroy: function() {
-      console.log(this.domNode);
-      this.domNode.parentNode.removeChild(this.domNode);
+    destroy () {
+      this.$el.parentNode.removeChild(this.$el);
+      this.$destroy();
     }
   }
 }
@@ -29,6 +29,7 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
+  display: block;
   padding: rem(20);
   background-color: nth($fgray, 3);
   &-box {
