@@ -1,15 +1,10 @@
 <template>
   <div id="app">
-    <Header />
-    hello
+    <router-view></router-view>
   </div>
 </template>
 <script>
-  import Header from 'coms/header';
   export default {
-    name: 'app',
-    components: {
-      Header
-    }
+    name: 'app'
   };
 </script>
