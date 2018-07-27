@@ -33,6 +33,13 @@ module.exports = (env) => {
         modules: false,
         chunks: false
       },
+      proxy: {
+        '/api': {
+          target: 'https://suggest.taobao.com',
+          changeOrigin: true,
+          pathRewrite: { '^/api': '' }
+        }
+      },
     },
     plugins: [
       new webpack.HotModuleReplacementPlugin(),

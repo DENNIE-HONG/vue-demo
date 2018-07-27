@@ -3,7 +3,7 @@
     <header class="search-box">
       <div class="search-header">
         <i class="iconfont icon-search"></i>
-        <input type="text" class="search-header-input" :placeholder="placeholder"/>
+        <input type="text" class="search-header-input" :placeholder="placeholder" v-model="value"/>
       </div>
       <button v-on:click="destroy">取消</button>
     </header>
@@ -12,7 +12,23 @@
 <script>
 export default {
   name: 'Search',
-  props: ['placeholder', 'domNode'],
+  props: ['placeholder'],
+  data() {
+    return {
+      value: ''
+    }
+  },
+  watch: {
+    value: function(newValue, oldValue) {
+      this.$api['search/sug']({
+        q: newValue
+      }).then((res) => {
+        console.log(res);
+      }).catch((err) => {
+        console.log(err);
+      })
+    }
+  },
   methods: {
     destroy () {
       this.$el.parentNode.removeChild(this.$el);

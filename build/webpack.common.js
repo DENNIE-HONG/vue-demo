@@ -15,7 +15,9 @@ module.exports = (env) => {
       extensions: ['.js','.vue'],
       alias: {
         assets: path.resolve(__dirname, '../src/assets'),
-        coms: path.resolve(__dirname, '../src/components')
+        coms: path.resolve(__dirname, '../src/components'),
+        config: path.resolve(__dirname, '../config'),
+        utils: path.resolve(__dirname, '../src/utils'),
       }
     },
     optimization: {

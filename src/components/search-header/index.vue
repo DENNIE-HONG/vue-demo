@@ -15,8 +15,7 @@ export default {
       const root = document.createElement('div');
       document.body.appendChild(root);
       const props = {
-        placeholder: '搜索你感兴趣的',
-        domNode: root
+        placeholder: '搜索你感兴趣的'
       };
       new Vue({
         el: root,
