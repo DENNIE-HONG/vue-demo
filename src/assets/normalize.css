@@ -339,3 +339,12 @@ template {
 [hidden] {
   display: none;
 }
+
+li {
+  list-style: none;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}

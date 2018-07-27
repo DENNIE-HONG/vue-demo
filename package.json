@@ -25,6 +25,7 @@
   "dependencies": {
     "amfe-flexible": "^2.2.1",
     "axios": "^0.18.0",
+    "throttle-debounce": "^2.0.1",
     "vue": "^2.5.16",
     "vue-meta": "^1.5.2",
     "vue-router": "^3.0.1",

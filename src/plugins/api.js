@@ -11,9 +11,8 @@ class MakeApi {
   constructor(opts) {
     this.api = {};
     this.apiBuilder(opts);
-    console.log(API_CONFIG);
   }
-  apiBuilder ({ sep = '|', config = {}}) {
+  apiBuilder ({ sep = '/', config = {}}) {
     Object.keys(config).map(namespace => {
       _apiSingleBuilder.call(this, {
         namespace,
@@ -28,7 +27,7 @@ class MakeApi {
  *
  * @param {*} { namespace, sep = '|', config = {}}
  */
-function _apiSingleBuilder ({ namespace, sep = '|', config = {}}) {
+function _apiSingleBuilder ({ namespace, sep = '/', config = {}}) {
   const self = this;
   config.forEach(api => {
     const {name, desc, params, method, path } = api;
@@ -37,7 +36,7 @@ function _apiSingleBuilder ({ namespace, sep = '|', config = {}}) {
       value(outerParams, outerOptions) {
         //请求参数自动截取
         // 请求参数不穿则发送默认配置参数。
-        const data =  isEmpty(outerParams) ? params: outerParams;
+        const data =  isEmpty(outerParams) ? params: Object.assign(params, outerParams);
         const options = Object.assign({
           url: path,
           desc,

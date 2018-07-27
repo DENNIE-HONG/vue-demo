@@ -7,32 +7,50 @@
       </div>
       <button v-on:click="destroy">取消</button>
     </header>
+    <article class="search-result">
+      <ul>
+        <li class="search-result-item" v-for="item in result">{{item[0]}}</li>
+      </ul>
+    </article>
   </div>
 </template>
 <script>
+import { debounce } from 'throttle-debounce';
 export default {
   name: 'Search',
   props: ['placeholder'],
-  data() {
+  data () {
     return {
-      value: ''
+      value: '',
+      result: [],
+      sendData: {
+        q: ''
+      }
     }
   },
   watch: {
     value: function(newValue, oldValue) {
-      this.$api['search/sug']({
-        q: newValue
-      }).then((res) => {
-        console.log(res);
-      }).catch((err) => {
-        console.log(err);
-      })
+      this.debounceGetSearch();
     }
+  },
+  created() {
+    this.debounceGetSearch = debounce(400, this.getSearch);
   },
   methods: {
     destroy () {
       this.$el.parentNode.removeChild(this.$el);
       this.$destroy();
+    },
+    getSearch () {
+      if (!this.value) {
+        return;
+      }
+      this.sendData.q = this.value;
+      this.$api['api/search'](this.sendData).then((res) => {
+        this.result = res.data.result;
+      }).catch((err) => {
+        console.log(err);
+      });
     }
   }
 }
@@ -56,6 +74,15 @@ export default {
   }
   button {
     padding: 0 rem(30);
+  }
+  &-result {
+    background-color: white;
+    &-item {
+      padding: rem(30) rem(40);
+      font-size: rem(28);
+      line-height: rem(40);
+      border-bottom: 1px solid nth($fgray, 1);
+    }
   }
 }
 </style>
