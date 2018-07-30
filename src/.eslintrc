@@ -13,6 +13,7 @@
     "sourceType": "module"
   },
   "plugins": [
+    "html"
   ],
   "rules": {
     "arrow-parens": ["error", "always"],
@@ -37,6 +38,7 @@
     "no-param-reassign": 0,
     "no-this-before-super": 0,
     "no-unused-expressions": 0,
+    "no-console": 1,
     "consistent-return": 0,
     "constructor-super": 0,
     "object-curly-spacing": [2, "always"],

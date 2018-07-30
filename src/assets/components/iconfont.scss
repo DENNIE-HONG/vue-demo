@@ -13,15 +13,21 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.icon-github:before { content: "\eaf6"; }
+
 .icon-touzi:before { content: "\e6c1"; }
 
 .icon-piaofang:before { content: "\e600"; }
+
+.icon-left:before { content: "\e602"; }
 
 .icon-rili:before { content: "\e601"; }
 
 .icon-send:before { content: "\e893"; }
 
 .icon-home:before { content: "\e8ba"; }
+
+.icon-ask:before { content: "\e8bb"; }
 
 .icon-chat:before { content: "\e8bd"; }
 
@@ -52,9 +58,3 @@
 .icon-warning:before { content: "\e8f2"; }
 
 .icon-info:before { content: "\e8f3"; }
-
-.icon-github:before { content: "\eaf6"; }
-
-.icon-error:before { content: "\e845"; }
-
-.icon-ask:before { content: "\e8bb"; }

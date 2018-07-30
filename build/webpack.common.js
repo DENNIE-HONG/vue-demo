@@ -18,6 +18,7 @@ module.exports = (env) => {
         coms: path.resolve(__dirname, '../src/components'),
         config: path.resolve(__dirname, '../config'),
         utils: path.resolve(__dirname, '../src/utils'),
+        views: path.resolve(__dirname, '../src/views'),
       }
     },
     optimization: {
@@ -132,4 +133,4 @@ module.exports = (env) => {
     },
   };
   return config;
-}
+};

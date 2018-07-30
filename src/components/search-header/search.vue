@@ -3,19 +3,44 @@
     <header class="search-box">
       <div class="search-header">
         <i class="iconfont icon-search"></i>
-        <input type="text" class="search-header-input" :placeholder="placeholder" v-model="value"/>
+        <input type="text" class="search-header-input" :placeholder="placeholder" v-model="value" @keydown.13="submit(value)" />
       </div>
       <button v-on:click="destroy">取消</button>
     </header>
     <article class="search-result">
       <ul>
-        <li class="search-result-item" v-for="item in result">{{item[0]}}</li>
+        <li class="search-result-item" v-for="item in result" @click="submit(item[0])">{{item[0]}}</li>
       </ul>
     </article>
+    <section>
+      <h3>历史搜索</h3>
+      <span class="tag" v-for="tag in historyWords">{{tag}}</span>
+    </section>
   </div>
 </template>
 <script>
+/**
+ * 搜索自动匹配模块
+ * @param {String}      placeholder,搜索输入提示
+ * @author luyanhong 2018-07-30
+*/
 import { debounce } from 'throttle-debounce';
+/**
+ * @param {Array}   存储的数组
+*/
+const storage = (data) => {
+  const key = 'history-words';
+  if (!data) {
+    const dataStr = localStorage.getItem(key);
+    return JSON.parse(dataStr) || [];
+  }
+  const historyStr = JSON.stringify(data)
+  localStorage.setItem(key, historyStr);
+}
+// 强制参数
+const required = () => {
+  throw Error('missing parameter');
+}
 export default {
   name: 'Search',
   props: ['placeholder'],
@@ -25,16 +50,18 @@ export default {
       result: [],
       sendData: {
         q: ''
-      }
+      },
+      historyWords: []
     }
   },
   watch: {
-    value: function(newValue, oldValue) {
+    value () {
       this.debounceGetSearch();
     }
   },
-  created() {
+  created () {
     this.debounceGetSearch = debounce(400, this.getSearch);
+    this.historyWords = storage();
   },
   methods: {
     destroy () {
@@ -51,6 +78,13 @@ export default {
       }).catch((err) => {
         console.log(err);
       });
+    },
+    submit (keyword = required()) {
+      if (!keyword || this.historyWords.includes(keyword)) {
+        return;
+      }
+      this.historyWords.push(keyword);
+      storage(this.historyWords);
     }
   }
 }
