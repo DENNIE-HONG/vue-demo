@@ -8,7 +8,7 @@
 <script>
 import SearchHeader from 'coms/search-header/index.vue';
 export default {
-  name: 'CommonHead',
+  name: 'TheHead',
   components: {
     SearchHeader
   },

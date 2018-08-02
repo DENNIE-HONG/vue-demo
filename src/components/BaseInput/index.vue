@@ -1,5 +1,5 @@
 <template>
-  <input class="com-input" :type="type" :placeholder="placeholder" :maxlength="maxlength"/>
+  <input class="com-input" :type="type" :placeholder="placeholder" :maxlength="maxlength" :value="value" @input="$emit('input', $event.target.value)"/>
 </template>
 <script>
 /**
@@ -8,20 +8,20 @@
  * @param {String}  placeholder  提示文本
 */
 export default {
-  name: 'Input',
+  name: 'BaseInput',
+  inheritAttrs: false,
   props: {
     type: {
       default: 'text'
     },
+
     maxlength: {
       default: 100
     },
-    placeholder: String
-  },
-  data () {
-    return {
 
-    }
+    placeholder: String,
+
+    value: String
   }
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <CommonHead />
+    <TheHead />
     <div>hello</div>
     <footer class="home-footer">
       <nav>
@@ -11,11 +11,11 @@
   </div>
 </template>
 <script>
-import CommonHead from 'coms/commonHead';
+import TheHead from 'coms/TheHead/index.vue';
 export default {
   name: 'Home',
   components: {
-    CommonHead
+    TheHead
   },
   metaInfo: {
     title: 'My Vue Home',

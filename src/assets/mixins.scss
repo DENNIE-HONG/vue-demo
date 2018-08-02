@@ -1,3 +1,7 @@
 @function rem($px) {
   @return $px / 750 * 10rem;
 }
+@mixin wordbreak {
+  word-break: break-all;
+  word-wrap: break-word;
+}
