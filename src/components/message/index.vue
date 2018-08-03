@@ -1,9 +1,16 @@
 <template>
   <div class="com-message modal-bg">
-    <div class="com-message-txt" :class="type">{{message}}</div>
+    <div class="com-message-txt" :class="type">
+      <i class="iconfont" :class="'icon-' + type"></i>
+      {{message}}
+    </div>
   </div>
 </template>
 <script>
+/**
+ * 消息提示模块
+ * @author luyanhong 2018-08-03
+*/
 export default {
   name: 'Message',
   props: {
@@ -16,8 +23,21 @@ export default {
       type: String,
       required: true
     }
+  },
+  // 默认消息提示3秒后消失
+  created () {
+    setTimeout(()=> {
+      this.destroy();
+    }, 3000);
+  },
+  methods: {
+    destroy () {
+      this.$el.parentNode.removeChild(this.$el);
+      this.$destroy();
+    }
   }
 }
+
 </script>
 <style lang="scss">
 .com-message {
@@ -32,9 +52,20 @@ export default {
     border-radius: rem(10);
     color: white;
     @include wordbreak;
+    > .iconfont {
+      padding-right: rem(5);
+    }
     &.error {
       color: nth($fred, 1);
       background-color: rgba(nth($fred, 2), 0.8);
+    }
+    &.warning {
+      color: nth($fyellow, 1);
+      background-color: nth($fyellow, 2);
+    }
+    &.success {
+      color: nth($fgreen, 1);
+      background-color: nth($fgreen, 3);
     }
   }
 }

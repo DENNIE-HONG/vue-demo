@@ -1,48 +1,66 @@
 <template>
   <div class="my">
     <header>
-      <a class="my-back"><i class="iconfont icon-left"></i>返回</a>
-      <SearchHeader />
-      <router-link to="/login" class="my-login"></router-link>
+      <div class="my-behavior">
+        <img class="my-avatar" :src="avatar" />
+      </div>
     </header>
+    <div class="my-login">
+      <span>{{name}}</span>
+      <router-link to="/login" class="pull-right">{{isLogin? '退出' : '登入'}}</router-link>
+    </div>
   </div>
 </template>
 <script>
-import SearchHeader from 'coms/search-header/index.vue';
+import { getUser } from 'service/api/user.js';
 export default {
   name: 'My',
-  components: {
-    SearchHeader
+  data () {
+    return {
+      avatar: '',
+      name: '',
+      isLogin: false
+    }
+  },
+  created () {
+    getUser().then((res) => {
+      this.avatar = res.data.avatar;
+      this.name = res.data.name;
+      this.isLogin = res.data.isLogin;
+    });
   }
 }
 </script>
 <style lang="scss">
 .my {
   header {
-    display: flex;
-    height: rem(90);
-    padding: 0 rem(20);
-    background-color: nth($fgreen, 1);
-    align-items: center;
-    .my-back {
-      color: white;
-      font-size: rem(28);
-      > .iconfont {
-        font-size: rem(26);
-      }
-    }
-    .search-header {
-      margin-left: rem(20);
-      margin-right: rem(20);
-      flex: 1;
-      border-radius: rem(30);
-    }
-    .my-login {
-      width: rem(60);
-      height: rem(60);
-      background: url('../../assets/img/user.png') top/100% no-repeat;
+    position: relative;
+    height: rem(400);
+    background: url('./img/bg.png') top/100% no-repeat;
+    border-bottom: 1px solid nth($fgray, 1);
+    .my-avatar {
+      display: inline-block;
+      width: rem(130);
+      height: rem(130);
+      margin: rem(-60) rem(40) 0;
       border-radius: 50%;
     }
+  }
+  &-behavior {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: rem(150);
+    background-color: white;
+  }
+  &-login {
+    height: rem(80);
+    margin-top: rem(20);
+    padding: 0 rem(20);
+    background-color: white;
+    border-top: 1px solid nth($fgray, 1);
+    border-bottom: 1px solid nth($fgray, 1);
+    line-height: rem(80);
   }
 }
 </style>

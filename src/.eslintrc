@@ -34,11 +34,12 @@
     "no-func-assign": 2,
     "no-undef": 2,
     "no-spaced-func": 2,
-    "no-use-before-define": 2,
     "no-param-reassign": 0,
     "no-this-before-super": 0,
     "no-unused-expressions": 0,
     "no-console": 1,
+    "no-return-assign": 2,
+    "no-else-return": 2,
     "consistent-return": 0,
     "constructor-super": 0,
     "object-curly-spacing": [2, "always"],
@@ -49,6 +50,7 @@
     "prefer-promise-reject-errors": 0,
     "space-before-function-paren": [2, "always"],
     "space-before-blocks": [2, "always"],
-    "space-unary-ops": [2, {"words": true, "nonwords": true, "overrides": {"!": false, ".": false}}]
+    "space-unary-ops": [2, {"words": true, "nonwords": true, "overrides": {"!": false, ".": false}}],
+    "prefer-destructuring": 2
   }
 }

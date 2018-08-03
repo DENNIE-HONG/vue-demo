@@ -1,5 +1,8 @@
 <template>
-  <input class="com-input" :type="type" :placeholder="placeholder" :maxlength="maxlength" :value="value" @input="$emit('input', $event.target.value)"/>
+  <div class="com-input">
+    <input class="com-input-box" :type="type" :placeholder="placeholder" :maxlength="maxlength" :value="value" @input="onInput"/>
+    <i v-if="clearable" class="iconfont icon-close" @click="clear" :class="{ hide: isHideClearBtn}"></i>
+  </div>
 </template>
 <script>
 /**
@@ -21,21 +24,59 @@ export default {
 
     placeholder: String,
 
-    value: String
+    value: String,
+
+    clearable: {
+      type: Boolean,
+      default: false
+    }
+  },
+  data () {
+    return {
+      isHideClearBtn: true
+    }
+  },
+  watch: {
+    value (val) {
+      if (this.clearable) {
+        val && (this.isHideClearBtn = false);
+        !val && (this.isHideClearBtn = true);
+      }
+    }
+  },
+
+  methods: {
+    // 输入事件
+    onInput ($event) {
+      this.$emit('input', $event.target.value);
+    },
+    // 清空输入框
+    clear () {
+      this.$emit('input', '');
+      this.isHideClearBtn = true;
+    }
   }
 }
 </script>
 <style lang="scss">
 .com-input {
-  width: 100%;
-  padding: rem(20) rem(20);
+  display: flex;
+  padding: 0 rem(20);
+  background-color: white;
   border: 1px solid nth($fgray, 1);
   border-radius: rem(8);
-  font-size: rem(28);
-  box-sizing: border-box;
+  align-items: center;
+  &-box {
+    flex: 1;
+    padding: rem(20) 0;
+    font-size: rem(28);
+  }
   &:active,
   &:hover {
     border-color: nth($fgreen, 1);
+  }
+  .iconfont {
+    color: nth($fblack, 3);
   }
 }
 </style>

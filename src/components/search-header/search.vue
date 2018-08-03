@@ -73,7 +73,7 @@ export default {
         return;
       }
       this.sendData.q = this.value;
-      this.$api['api/search'](this.sendData).then((res) => {
+      this.$api['api/sug'](this.sendData).then((res) => {
         this.result = res.data.result;
       }).catch((err) => {
         console.log(err);

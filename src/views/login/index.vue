@@ -7,25 +7,27 @@
         v-model="name"
         class="login-input"
         maxlength="10"
+        clearable
       />
       <BaseInput
         placeholder="密码"
         v-model="password"
         class="login-input"
+        maxlength="20"
+        clearable
       />
       <div class="btn-primary btn-large" @click="submit">登录</div>
-      <Message message="测试数据啊啊啊啊啊啊啊啊" type="error"/>
     </form>
   </div>
 </template>
 <script>
 import BaseInput from 'coms/BaseInput';
-import Message from 'coms/message';
+import message from 'coms/message/message.js';
+import { postLogin } from 'service/api/user.js';
 export default {
   name: 'Login',
   components: {
-    BaseInput,
-    Message
+    BaseInput
   },
 
   data () {
@@ -43,10 +45,13 @@ export default {
     submit () {
       const errorMsg = this.check();
       if (errorMsg) {
-        console.log(errorMsg);
+        this.showError(errorMsg);
+        return;
       }
+      this.combineData();
+      this.postData();
     },
-
+    // 校验
     check () {
       let errorMsg;
       if (!this.name) {
@@ -58,6 +63,29 @@ export default {
         return errorMsg;
       }
       return errorMsg;
+    },
+    // 组合数据
+    combineData () {
+      const { name, password } = this;
+      this.sendData = {
+        name,
+        password
+      };
+    },
+    // 请求数据
+    postData () {
+      postLogin(this.sendData).then(() => {
+        this.$router.push('/my');
+      }).catch((res) => {
+        this.showError(res.msg);
+      });
+    },
+
+    showError (text) {
+      message({
+        type: 'error',
+        message: text
+      });
     }
 
   }

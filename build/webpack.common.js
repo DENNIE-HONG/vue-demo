@@ -7,6 +7,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const StyleLintPlugin = require('stylelint-webpack-plugin');
 const WEBPACK_COMMON_CONFIG = require('../config/index.js').WEBPACK_COMMON_CONFIG;
 module.exports = (env) => {
   const config = {
@@ -19,6 +20,7 @@ module.exports = (env) => {
         config: path.resolve(__dirname, '../config'),
         utils: path.resolve(__dirname, '../src/utils'),
         views: path.resolve(__dirname, '../src/views'),
+        service: path.resolve(__dirname, '../src/service'),
       }
     },
     optimization: {
@@ -61,6 +63,9 @@ module.exports = (env) => {
         // chunksSortMode: 'manual',
         xhtml: true,
         favicon: path.resolve(__dirname, '../favicon.ico')
+      }),
+      new StyleLintPlugin({
+        files: ['**/*.{vue,htm,html,css,sss,less,scss,sass}'],
       }),
     ],
     module: {

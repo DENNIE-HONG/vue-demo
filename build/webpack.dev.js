@@ -31,7 +31,8 @@ module.exports = (env) => {
       stats: {
         colors: true,
         modules: false,
-        chunks: false
+        chunks: false,
+        children: false
       },
       proxy: {
         '/api': {

@@ -1,6 +1,6 @@
 export default {
   api: [{
-    name: 'search',
+    name: 'sug',
     method: 'GET',
     desc: '搜索接口',
     path: '/api/sug',
