@@ -2,8 +2,12 @@
   <div class="my">
     <header>
       <div class="my-behavior">
-        <img class="my-avatar" :src="avatar" />
+        <div class="my-info">
+          <img class="my-avatar" :src="avatar" />
+          <span v-if="isLogin">{{name}}</span>
+        </div>
       </div>
+      <router-link to="/setting" class="my-setting" v-if="isLogin">设置</router-link>
     </header>
     <div class="my-login">
       <span>{{name}}</span>
@@ -42,8 +46,8 @@ export default {
       display: inline-block;
       width: rem(130);
       height: rem(130);
-      margin: rem(-60) rem(40) 0;
       border-radius: 50%;
+      border: rem(4) solid nth($fgray, 1);
     }
   }
   &-behavior {
@@ -61,6 +65,27 @@ export default {
     border-top: 1px solid nth($fgray, 1);
     border-bottom: 1px solid nth($fgray, 1);
     line-height: rem(80);
+  }
+  &-info {
+    display: inline-block;
+    margin-left: rem(40);
+    margin-top: rem(-60);
+    span {
+      display: inline-block;
+      vertical-align: top;
+      font-size: rem(34);
+      color: white;
+    }
+  }
+  &-setting {
+    position: absolute;
+    top: rem(20);
+    right: rem(20);
+    padding: rem(7) rem(20);
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: rem(30);
+    font-size: rem(24);
+    color: white;
   }
 }
 </style>
