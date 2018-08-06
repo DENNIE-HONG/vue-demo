@@ -25,8 +25,10 @@
         <span>性别</span>
         <div class="pull-right"><i class="iconfont icon-right"></i></div>
       </div>
-      <base-radio>女</base-radio>
-      <base-radio>男</base-radio>
+      <base-radio-group title="修改性别" v-model="gender">
+        <base-radio :label="1">女</base-radio>
+        <base-radio :label="2">男</base-radio>
+      </base-radio-group>
     </section>
   </div>
 </template>
@@ -36,12 +38,13 @@
  * @author luyanhong 2019-08-05
 */
 import { getUser } from 'service/api/user.js';
+import BaseRadioGroup from 'coms/BaseRadio/radio-group.vue';
 import BaseRadio from 'coms/BaseRadio/index.vue';
 export default {
   name: 'Setting',
   metaInfo: {
     title: 'my setting',
-     meta: [
+    meta: [
       {
         'property': 'keywords',
         'content': 'vue设置页'
@@ -53,15 +56,21 @@ export default {
     ]
   },
   components: {
+    BaseRadioGroup,
     BaseRadio
   },
   data () {
     return {
       name: '',
-      avatar: ''
+      avatar: '',
+      gender: 2
     }
   },
-
+  watch: {
+    gender (val) {
+      console.log(val);
+    }
+  },
   created () {
     getUser().then((res) => {
       this.name = res.data.name;

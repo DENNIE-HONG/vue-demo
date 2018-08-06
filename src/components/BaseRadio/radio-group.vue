@@ -2,22 +2,44 @@
   <div class="com-radio-group modal-bg black">
     <div class="com-radio-box">
       <h3>{{title}}</h3>
+      <slot></slot>
     </div>
   </div>
 </template>
 <script>
 /**
  * 单选组模块
- * @author luyanhong
+ * @author luyanhong 2018-08-06
 */
 export default {
   name: 'BaseRadioGroup',
+  modal: {
+    prop: 'value',
+    event: 'change'
+  },
   props: {
     title: {
       default: '请选择',
       type: String
+    },
+
+    value: [String, Number]
+  },
+  watch: {
+    value (val) {
+      console.log(val);
     }
   },
+  created () {
+    this.$on('handleChange', (value) => {
+      this.$emit('change', value);
+    });
+  },
+  methods: {
+    test () {
+      console.log(2);
+    }
+  }
 }
 </script>
 <style lang="scss">
