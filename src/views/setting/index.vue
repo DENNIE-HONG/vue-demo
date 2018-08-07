@@ -23,13 +23,20 @@
     <section class="setting-info">
       <div class="info-item">
         <span>性别</span>
-        <div class="pull-right"><i class="iconfont icon-right"></i></div>
+        <div class="pull-right" @click="handleGender">
+          {{sex}}
+          <i class="iconfont icon-right"></i>
+        </div>
       </div>
-      <base-radio-group title="修改性别" v-model="gender">
-        <base-radio :label="1">女</base-radio>
-        <base-radio :label="2">男</base-radio>
-      </base-radio-group>
     </section>
+    <base-radio-group
+      title="修改性别"
+      v-model="gender"
+      :is-hide="isHideGender"
+      @closeRadio="closeGender">
+      <base-radio :label="1">女</base-radio>
+      <base-radio :label="2">男</base-radio>
+    </base-radio-group>
   </div>
 </template>
 <script>
@@ -63,7 +70,15 @@ export default {
     return {
       name: '',
       avatar: '',
-      gender: 2
+      gender: 1,
+      isHideGender: true
+    }
+  },
+  computed: {
+    sex: {
+      get () {
+        return this.gender === 1 ? '女' : '男'
+      }
     }
   },
   watch: {
@@ -76,6 +91,14 @@ export default {
       this.name = res.data.name;
       this.avatar= res.data.avatar;
     });
+  },
+  methods: {
+    handleGender () {
+      this.isHideGender = false;
+    },
+    closeGender (options) {
+      this.isHideGender = options.isHide;
+    }
   }
 }
 </script>

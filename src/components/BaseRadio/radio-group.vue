@@ -1,5 +1,5 @@
 <template>
-  <div class="com-radio-group modal-bg black">
+  <div class="com-radio-group modal-bg black" :class="{hide: isHide}" @click="close">
     <div class="com-radio-box">
       <h3>{{title}}</h3>
       <slot></slot>
@@ -9,35 +9,50 @@
 <script>
 /**
  * 单选组模块
+ * @param {String}    title, 标题
+ * @param {Boolean}   isHide, 是否隐藏
+ * @param {event}     closeRadio, 隐藏事件，参数是true
  * @author luyanhong 2018-08-06
 */
+import Bus from 'utils/bus.js';
 export default {
   name: 'BaseRadioGroup',
-  modal: {
+  model: {
     prop: 'value',
-    event: 'change'
+    event: 'changeRadio'
   },
   props: {
     title: {
       default: '请选择',
       type: String
     },
-
+    isHide: {
+      default: true,
+      type: Boolean
+    },
     value: [String, Number]
   },
-  watch: {
-    value (val) {
-      console.log(val);
+  data () {
+    return {
+      isVisible: false
     }
   },
   created () {
-    this.$on('handleChange', (value) => {
-      this.$emit('change', value);
+    Bus.$on('radioGroupChange', (value) => {
+      this.$emit('changeRadio', value);
+      this.noticeParentClose();
     });
   },
   methods: {
-    test () {
-      console.log(2);
+    // 点击空白区域关闭
+    close ($event) {
+      if ($event.target.className.includes('com-radio-group')) {
+        this.noticeParentClose();
+      }
+    },
+    // 通知父组件关闭窗口
+    noticeParentClose () {
+      this.$emit('closeRadio', { isHide: true });
     }
   }
 }
@@ -51,7 +66,7 @@ export default {
     width: 80%;
     padding: 0 rem(20);
     background-color: white;
-    border-radius: rem(4);
+    border-radius: rem(8);
     box-sizing: border-box;
   }
 }

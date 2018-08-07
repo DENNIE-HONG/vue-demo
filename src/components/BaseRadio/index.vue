@@ -1,7 +1,7 @@
 <template>
   <label class="com-radio">
     <span><slot></slot></span>
-    <input type="radio" class="com-radio-input" :name="name" :value="label" @input="onChange" :checked="value === label" />
+    <input type="radio" class="com-radio-input" :name="name" :value="label" @input="onChange" :checked="value === label" v-model="model" />
   </label>
 </template>
 <script>
@@ -11,6 +11,7 @@
  * @param name    可选, {String}
  * @author luyanhong 2018-08-06
 */
+import Bus from 'utils/bus.js';
 export default {
   name: 'BaseRadio',
   model: {
@@ -31,11 +32,32 @@ export default {
     value: {
       type: [String, Number]
     }
+
+  },
+  data () {
+    return {
+      isGroup: false
+    }
+  },
+  computed: {
+    model: {
+      get () {
+        return this.isGroup ? this.$parent.value: this.value;
+      },
+      set (val) {
+        !this.isGroup && this.$emit('change', val);
+        this.isGroup && Bus.$emit('radioGroupChange', val);
+      }
+    }
+  },
+  created () {
+    this.isGroup = this.$parent.$options._componentTag === 'base-radio-group';
   },
   methods: {
-    onChange ($event) {
-      const value = $event.target._value;
-      this.$emit('change', value);
+    onChange () {
+      // const value = $event.target._value;
+      // this.$emit('change', this.model);
+      // this.isGroup && Bus.$emit('radioGroupChange', this.model);
     }
   }
 }
@@ -46,10 +68,7 @@ export default {
   padding: rem(20);
   background-color: white;
   font-size: rem(30);
-  border-bottom: 1px solid nth($fgray, 1);
-  &:last-child {
-    border-bottom: 0;
-  }
+  border-top: 1px solid nth($fgray, 1);
   &-input {
     // opacity: 0;
   }
