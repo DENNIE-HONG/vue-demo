@@ -14,6 +14,7 @@
         v-model="password"
         class="login-input"
         maxlength="20"
+        type="password"
         clearable
       />
       <div class="btn-primary btn-large" @click="submit">登录</div>

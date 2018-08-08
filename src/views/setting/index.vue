@@ -28,25 +28,32 @@
           <i class="iconfont icon-right"></i>
         </div>
       </div>
+      <base-radio-group
+        title="修改性别"
+        v-model="gender"
+        :is-hide="isHideGender"
+        @closeRadio="closeGender">
+        <base-radio :label="1">女</base-radio>
+        <base-radio :label="2">男</base-radio>
+      </base-radio-group>
+      <div class="info-item">
+        <span>帅吗</span>
+        <div class="pull-right">
+          <base-checkbox v-model="checked"/>
+        </div>
+      </div>
     </section>
-    <base-radio-group
-      title="修改性别"
-      v-model="gender"
-      :is-hide="isHideGender"
-      @closeRadio="closeGender">
-      <base-radio :label="1">女</base-radio>
-      <base-radio :label="2">男</base-radio>
-    </base-radio-group>
   </div>
 </template>
 <script>
 /**
  * 设置个人资料页
- * @author luyanhong 2019-08-05
+ * @author luyanhong 2018-08-05
 */
 import { getUser } from 'service/api/user.js';
 import BaseRadioGroup from 'coms/BaseRadio/radio-group.vue';
 import BaseRadio from 'coms/BaseRadio/index.vue';
+import BaseCheckbox from 'coms/BaseCheckbox/index.vue';
 export default {
   name: 'Setting',
   metaInfo: {
@@ -64,14 +71,16 @@ export default {
   },
   components: {
     BaseRadioGroup,
-    BaseRadio
+    BaseRadio,
+    BaseCheckbox
   },
   data () {
     return {
       name: '',
       avatar: '',
       gender: 1,
-      isHideGender: true
+      isHideGender: true,
+      checked: true
     }
   },
   computed: {
