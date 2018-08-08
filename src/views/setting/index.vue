@@ -8,13 +8,14 @@
     <section class="setting-info">
       <div class="info-item">
         <span>vue头像</span>
-        <div class="pull-right">
+        <div class="info-item-right">
+          <img :src="avatar" class="info-item-pic"/>
           <i class="iconfont icon-right"></i>
         </div>
       </div>
       <div class="info-item">
         <span>vue昵称</span>
-        <div class="pull-right">
+        <div class="info-item-right">
           {{name}}
           <i class="iconfont icon-right"></i>
         </div>
@@ -23,7 +24,7 @@
     <section class="setting-info">
       <div class="info-item">
         <span>性别</span>
-        <div class="pull-right" @click="handleGender">
+        <div class="info-item-right" @click="handleGender">
           {{sex}}
           <i class="iconfont icon-right"></i>
         </div>
@@ -38,10 +39,11 @@
       </base-radio-group>
       <div class="info-item">
         <span>帅吗</span>
-        <div class="pull-right">
+        <div class="info-item-right">
           <base-checkbox v-model="checked"/>
         </div>
       </div>
+      <Upload v-model="avatar"><i class="iconfont icon-right"></i></Upload>
     </section>
   </div>
 </template>
@@ -54,6 +56,7 @@ import { getUser } from 'service/api/user.js';
 import BaseRadioGroup from 'coms/BaseRadio/radio-group.vue';
 import BaseRadio from 'coms/BaseRadio/index.vue';
 import BaseCheckbox from 'coms/BaseCheckbox/index.vue';
+import Upload from 'coms/upload/index.vue';
 export default {
   name: 'Setting',
   metaInfo: {
@@ -72,7 +75,8 @@ export default {
   components: {
     BaseRadioGroup,
     BaseRadio,
-    BaseCheckbox
+    BaseCheckbox,
+    Upload
   },
   data () {
     return {
@@ -107,6 +111,9 @@ export default {
     },
     closeGender (options) {
       this.isHideGender = options.isHide;
+    },
+    imgUrl (url) {
+      console.log(url);
     }
   }
 }
@@ -138,22 +145,31 @@ export default {
   &-info {
     margin-bottom: rem(15);
     .info-item {
+      display: flex;
       padding: 0 rem(20);
       background-color: white;
       border-bottom: 1px solid nth($fgray, 1);
       font-size: rem(34);
       line-height: rem(90);
+      align-items: center;
       @include hid;
-      .pull-right {
-        width: 50%;
-        text-align: right;
+      &-right {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
         color: nth($fblack, 3);
         font-size: rem(30);
         > .iconfont {
-          position: relative;
-          top: rem(4);
           font-size: rem(36);
         }
+      }
+      &-pic {
+        display: inline-block;
+        width: rem(100);
+        height: rem(100);
+        margin: rem(10) rem(20) rem(10) 0;
+        border-radius: rem(4);
       }
     }
   }
