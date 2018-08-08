@@ -38,10 +38,7 @@ export default {
       const [file] = $event.target.files;
       const errorMsg = this.check(file);
       if (errorMsg) {
-        message({
-          type: 'error',
-          message: errorMsg
-        });
+        this.fail(errorMsg);
         return;
       }
       try {
@@ -52,10 +49,7 @@ export default {
           message: '图片上传成功'
         });
       } catch (error) {
-        message({
-          type: 'error',
-          message: error
-        });
+        this.fail(error);
       }
 
     },
@@ -92,6 +86,13 @@ export default {
         reader.onerror = (error) => {
           reject(error);
         };
+      });
+    },
+
+    fail (error) {
+      message({
+        type: 'error',
+        message: error
       });
     }
   }
