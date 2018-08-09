@@ -1,7 +1,7 @@
 <template>
   <label class="com-radio">
     <span><slot></slot></span>
-    <input type="radio" class="com-radio-input" :name="name" :value="label" @input="onChange" :checked="value === label" v-model="model" />
+    <input type="radio" class="com-radio-input" :name="name" :value="label" :checked="value === label" v-model="model" />
   </label>
 </template>
 <script>
@@ -55,9 +55,6 @@ export default {
   },
   methods: {
     onChange () {
-      // const value = $event.target._value;
-      // this.$emit('change', this.model);
-      // this.isGroup && Bus.$emit('radioGroupChange', this.model);
     }
   }
 }

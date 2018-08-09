@@ -9,8 +9,7 @@
       <div class="info-item">
         <span>vue头像</span>
         <div class="info-item-right">
-          <img :src="avatar" class="info-item-pic"/>
-          <i class="iconfont icon-right"></i>
+          <Upload v-model="avatar" class="info-item-pic"></Upload>
         </div>
       </div>
       <div class="info-item">
@@ -43,7 +42,15 @@
           <base-checkbox v-model="checked"/>
         </div>
       </div>
-      <Upload v-model="avatar"><i class="iconfont icon-right"></i></Upload>
+      <div class="info-item">
+        <span>兴趣</span>
+        <div class="info-item-right">
+          <base-select v-model="hobby">
+            <base-option value="1" label="吴亦凡"></base-option>
+            <base-option value="2" label="黄景瑜"></base-option>
+          </base-select>
+        </div>
+      </div>
     </section>
   </div>
 </template>
@@ -57,6 +64,8 @@ import BaseRadioGroup from 'coms/BaseRadio/radio-group.vue';
 import BaseRadio from 'coms/BaseRadio/index.vue';
 import BaseCheckbox from 'coms/BaseCheckbox/index.vue';
 import Upload from 'coms/upload/index.vue';
+import BaseSelect from 'coms/BaseSelect/index.vue';
+import BaseOption from 'coms/BaseSelect/option.vue';
 export default {
   name: 'Setting',
   metaInfo: {
@@ -76,7 +85,9 @@ export default {
     BaseRadioGroup,
     BaseRadio,
     BaseCheckbox,
-    Upload
+    Upload,
+    BaseSelect,
+    BaseOption
   },
   data () {
     return {
@@ -84,7 +95,8 @@ export default {
       avatar: '',
       gender: 1,
       isHideGender: true,
-      checked: true
+      checked: true,
+      hobby: ''
     }
   },
   computed: {
@@ -96,6 +108,9 @@ export default {
   },
   watch: {
     gender (val) {
+      console.log(val);
+    },
+    hobby (val) {
       console.log(val);
     }
   },
@@ -152,7 +167,6 @@ export default {
       font-size: rem(34);
       line-height: rem(90);
       align-items: center;
-      @include hid;
       &-right {
         flex: 1;
         display: flex;
@@ -166,10 +180,7 @@ export default {
       }
       &-pic {
         display: inline-block;
-        width: rem(100);
-        height: rem(100);
-        margin: rem(10) rem(20) rem(10) 0;
-        border-radius: rem(4);
+        margin: rem(20) rem(20) rem(20) 0;
       }
     }
   }

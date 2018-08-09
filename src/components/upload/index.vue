@@ -1,9 +1,8 @@
 <template>
   <div class="com-upload">
-    <img :src="imgUrl" class="com-upload-pic"/>
     <div class="com-upload-btn">
+      <img :src="imgUrl" v-if="imgUrl" class="com-upload-pic"/>
       <input type="file" class="com-upload-input" accept="image" @change="onChange" />
-      <slot></slot>
     </div>
   </div>
 </template>
@@ -59,17 +58,22 @@ export default {
      * @return {String} 错误信息
     */
     check (file) {
+      let errorMsg;
+      if (!file) {
+        errorMsg = '请选择图片';
+        return errorMsg;
+      }
       const size = file.size / 1024 / 1024;
       const [,type] = file.type.split('/');
       const reg = new RegExp(type);
-      let errorMsg;
       if (!reg.test(this.acceptType)) {
         errorMsg = '图片类型不对哦';
+        return errorMsg;
       }
       if (size > this.maxSize) {
         errorMsg = `图片超过${this.maxSize}M了哦`;
+        return errorMsg;
       }
-      return errorMsg;
     },
     /**
      * 图片转为base64编码
@@ -101,11 +105,12 @@ export default {
 <style lang="scss">
 .com-upload {
   height: rem(100);
+  width: rem(100);
   &-pic {
     display: inline-block;
-    width: rem(100);
-    height: rem(100);
-    border-radius: rem(8);
+    width: 100%;
+    height: auto;
+    min-height: 100%;
   }
   &-input {
     position: absolute;
@@ -119,10 +124,15 @@ export default {
     position: relative;
     display: inline-block;
     height: 100%;
-    width: rem(50);
-    vertical-align: top;
-    line-height: rem(100);
+    width: 100%;
     @include hid;
+    border: 1px dashed nth($fgray, 1);
+    border-radius: rem(8);
+    text-align: center;
+    &:after {
+      content: '+';
+      font-size: rem(48);
+    }
   }
 }
 </style>
