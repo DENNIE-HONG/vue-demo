@@ -1,6 +1,6 @@
 <template>
   <div class="com-select" @click="close">
-    <div class="com-select-btn" @click.stop="show">{{selected.name}}</div>
+    <div class="com-select-btn" @click.stop="show">{{selected[0].name}}</div>
     <div class="com-select-box modal-bg black" :class="{hide: isHide}">
       <ul class="com-select-list">
         <slot></slot>
@@ -16,24 +16,34 @@ export default {
     event: 'change'
   },
   props: {
-    value: [String, Number]
+    value: [String, Number, Array],
+    placeholder: {
+      default: '请选择',
+      type: String
+    },
+    multiple: {
+      default: false,
+      type: Boolean
+    }
   },
   data () {
     return {
       isHide: true,
-      selected: {
-        name: '',
+      selected: [{
+        name: this.placeholder,
         value: ''
-      }
+      }]
     }
   },
   created () {
     // 接受子组件option传递参数
     this.$on('selectChange', (data) => {
       this.isHide = true;
-      if (data.value !== this.selected.value) {
-        this.selected.value = data.value;
-        this.selected.name = data.name;
+      if (data.value !== this.selected[0].value) {
+        // this.selected = [];
+        this.selected[0].value = data.value;
+        this.selected[0].name = data.name;
+        // this.selected.push(data);
         this.$emit('change', data.value);
       }
     });
@@ -52,13 +62,14 @@ export default {
       }
     },
     getSelected () {
+      const value = Array.isArray(this.value) ? this.value: [this.value];
       for (let $child of this.$children) {
-        if ($child.value === this.value) {
-          this.selected = {
+        if ($child.value === value[0]) {
+          this.selected[0] = {
             name: $child.label,
             value: $child.value
           };
-          const data = Object.assign({}, this.selected)
+          const data = Object.assign({}, this.selected[0]);
           this.noticeChildrenSelected(data);
           break;
         }
@@ -78,7 +89,6 @@ export default {
   position: relative;
   height: rem(80);
   min-width: rem(300);
-  text-align: left;
   &-box {
     display: flex;
     align-items: center;

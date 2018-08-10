@@ -51,6 +51,15 @@
           </base-select>
         </div>
       </div>
+      <div class="info-item">
+        <span>标签</span>
+        <div class="info-item-right">
+          <base-select v-model="topic" :style="{textAlign: 'right'}">
+            <base-option value="1" label="沉迷学习"></base-option>
+            <base-option value="2" label="不可自拔"></base-option>
+          </base-select>
+        </div>
+      </div>
     </section>
   </div>
 </template>
@@ -96,7 +105,8 @@ export default {
       gender: 1,
       isHideGender: true,
       checked: true,
-      hobby: '1'
+      hobby: '1',
+      topic: ''
     }
   },
   computed: {
