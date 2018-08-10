@@ -1,6 +1,6 @@
 <template>
-  <div class="com-select">
-    <div class="com-select-btn" @click="onChange">{{seleted}}</div>
+  <div class="com-select" @click="close">
+    <div class="com-select-btn" @click.stop="show">{{selected.name}}</div>
     <div class="com-select-box modal-bg black" :class="{hide: isHide}">
       <ul class="com-select-list">
         <slot></slot>
@@ -9,7 +9,6 @@
   </div>
 </template>
 <script>
-import Bus from 'utils/bus.js';
 export default {
   name: 'BaseSelect',
   model: {
@@ -22,24 +21,54 @@ export default {
   data () {
     return {
       isHide: true,
-      seleted: this.value
-    }
-  },
-  watch: {
-    seleted (val) {
-      this.isHide = true;
-      this.$emit('change', val);
+      selected: {
+        name: '',
+        value: ''
+      }
     }
   },
   created () {
-    console.log(this);
-    Bus.$on('selectChange', (data) => {
-      this.seleted = data.key;
+    // 接受子组件option传递参数
+    this.$on('selectChange', (data) => {
+      this.isHide = true;
+      if (data.value !== this.selected.value) {
+        this.selected.value = data.value;
+        this.selected.name = data.name;
+        this.$emit('change', data.value);
+      }
     });
   },
+  mounted () {
+    // 获取初始选中的option
+    this.getSelected();
+  },
   methods: {
-    onChange () {
+    show () {
       this.isHide = false;
+    },
+    close ($event) {
+      if ($event.target.className.includes('com-select')) {
+        this.isHide = true;
+      }
+    },
+    getSelected () {
+      for (let $child of this.$children) {
+        if ($child.value === this.value) {
+          this.selected = {
+            name: $child.label,
+            value: $child.value
+          };
+          const data = Object.assign({}, this.selected)
+          this.noticeChildrenSelected(data);
+          break;
+        }
+      }
+    },
+    // 通知子组件初始选中值
+    noticeChildrenSelected (data) {
+      this.$children.map(($child) => {
+        $child.$options._componentTag === 'base-option' && $child.$emit('defaultSelected', data);
+      });
     }
   }
 }
@@ -48,7 +77,8 @@ export default {
 .com-select {
   position: relative;
   height: rem(80);
-  min-width: rem(200);
+  min-width: rem(300);
+  text-align: left;
   &-box {
     display: flex;
     align-items: center;
@@ -66,7 +96,4 @@ export default {
 
   }
 }
-
 </style>
-
-

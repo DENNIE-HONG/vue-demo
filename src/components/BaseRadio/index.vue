@@ -67,7 +67,7 @@ export default {
   font-size: rem(30);
   border-top: 1px solid nth($fgray, 1);
   &-input {
-    // opacity: 0;
+    opacity: 0;
   }
 }
 </style>

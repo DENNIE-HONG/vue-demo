@@ -45,7 +45,7 @@
       <div class="info-item">
         <span>兴趣</span>
         <div class="info-item-right">
-          <base-select v-model="hobby">
+          <base-select v-model="hobby" :style="{textAlign: 'right'}">
             <base-option value="1" label="吴亦凡"></base-option>
             <base-option value="2" label="黄景瑜"></base-option>
           </base-select>
@@ -96,7 +96,7 @@ export default {
       gender: 1,
       isHideGender: true,
       checked: true,
-      hobby: ''
+      hobby: '1'
     }
   },
   computed: {
