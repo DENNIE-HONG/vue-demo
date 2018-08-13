@@ -54,9 +54,11 @@
       <div class="info-item">
         <span>标签</span>
         <div class="info-item-right">
-          <base-select v-model="topic" :style="{textAlign: 'right'}">
-            <base-option value="1" label="沉迷学习"></base-option>
-            <base-option value="2" label="不可自拔"></base-option>
+          <base-select v-model="topic" :style="{textAlign: 'right'}" multiple>
+            <base-option value="3" label="沉迷学习"></base-option>
+            <base-option value="4" label="不可自拔"></base-option>
+            <base-option value="5" label="小点声"></base-option>
+            <base-option value="6" label="日渐肥硕"></base-option>
           </base-select>
         </div>
       </div>
@@ -106,7 +108,7 @@ export default {
       isHideGender: true,
       checked: true,
       hobby: '1',
-      topic: ''
+      topic: ['3', '4']
     }
   },
   computed: {

@@ -1,5 +1,5 @@
 <template>
-  <li :class="['com-option', {active: value === selected.value}]" :value="value" @click="onSelect">{{label}}</li>
+  <li :class="['com-option', {active: selected.includes(label)}]" :value="value" @click="onSelect">{{label}}</li>
 </template>
 <script>
 export default {
@@ -15,24 +15,33 @@ export default {
     }
   },
   created () {
-    this.$on('defaultSelected', (data) => {
-      this.selected = data;
+    // 接收初始选中的值,参数是{Array}，注意必须是引用对象，多个option需要共享同个数组
+    this.$on('defaultSelected', (selectedArr) => {
+      this.selected = selectedArr;
     });
+    this.multiple = this.$parent.multiple;
   },
   data () {
     return {
-      selected: {
-        name: '',
-        value: ''
-      }
+      multiple: false,
+      isSelected: false,
+      selected: []
     }
   },
   methods: {
-    onSelect ($event) {
+    onSelect () {
       // 向父组件通知
-      this.selected.name = $event.target.textContent;
-      this.selected.value = $event.target.__vue__.value;
-      this.$parent.$options._componentTag === 'base-select' && this.$parent.$emit('selectChange', this.selected);
+      const name = this.label;
+      const { value } = this;
+      const selectedData = {
+        name,
+        value
+      };
+      if (!this.multiple) {
+        this.selected.length = 0;
+      }
+      !this.selected.includes(name) && this.selected.push(name);
+      this.$parent.$options._componentTag === 'base-select' && this.$parent.$emit('selectChange', selectedData);
     }
   }
 }
