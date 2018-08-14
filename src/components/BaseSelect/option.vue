@@ -2,6 +2,13 @@
   <li :class="['com-option', {active: selected.includes(label)}]" :value="value" @click="onSelect">{{label}}</li>
 </template>
 <script>
+/**
+ * @param {String|Number}  value, 选项代表的值
+ * @param {String}         label, 选项的文本
+ * @author luyanhong   2018-08-14
+ * @example
+ * <base-option value="1" label="选项1""></base-option>
+*/
 export default {
   name: 'BaseOption',
   props: {

@@ -1,7 +1,7 @@
 <template>
   <label class="com-radio">
     <span><slot></slot></span>
-    <input type="radio" class="com-radio-input" :name="name" :value="label" :checked="value === label" v-model="model" />
+    <input type="radio" class="com-radio-input" :name="name" :value="label" :checked="value === label" v-model="model" @click="onChange" />
   </label>
 </template>
 <script>
@@ -54,7 +54,11 @@ export default {
     this.isGroup = this.$parent.$options._componentTag === 'base-radio-group';
   },
   methods: {
-    onChange () {
+    onChange ($event) {
+      // 选中的值没有改变, 也要关闭弹窗
+      if (this.model === $event.target._value) {
+        this.isGroup && this.$parent.noticeParentClose();
+      }
     }
   }
 }

@@ -15,6 +15,15 @@
   </div>
 </template>
 <script>
+/**
+ * 选择器
+ * @param {String}   placeholder, 提示文本
+ * @param {Array| Number| String} value, 选中的值
+ * @param {Boolean}  multiple, 是否是多选，默认否
+ * @author luyanhong 2018-08-14
+ * @example
+ * <base-select v-modal="xxx"></base-select>
+*/
 export default {
   name: 'BaseSelect',
   model: {
