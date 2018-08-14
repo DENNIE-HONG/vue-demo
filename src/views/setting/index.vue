@@ -49,6 +49,7 @@
             <base-option value="1" label="吴亦凡"></base-option>
             <base-option value="2" label="黄景瑜"></base-option>
           </base-select>
+          <i class="iconfont icon-right"></i>
         </div>
       </div>
       <div class="info-item">
@@ -60,6 +61,7 @@
             <base-option value="5" label="小点声"></base-option>
             <base-option value="6" label="日渐肥硕"></base-option>
           </base-select>
+          <i class="iconfont icon-right"></i>
         </div>
       </div>
     </section>

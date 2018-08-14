@@ -117,7 +117,7 @@ export default {
 <style lang="scss">
 .com-select {
   position: relative;
-  min-height: rem(80);
+  min-height: rem(90);
   min-width: rem(300);
   width: 90%;
   &-box {

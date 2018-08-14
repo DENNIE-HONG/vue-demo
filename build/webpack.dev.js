@@ -39,6 +39,11 @@ module.exports = (env) => {
           target: 'https://suggest.taobao.com',
           changeOrigin: true,
           pathRewrite: { '^/api': '' }
+        },
+        '/jdapi': {
+          target: 'https://m.jd.com',
+          changeOrigin: true,
+          pathRewrite: { '^/jdapi': '' }
         }
       },
     },

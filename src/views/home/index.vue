@@ -1,7 +1,8 @@
 <template>
   <div class="home">
     <TheHead />
-    <div>hello</div>
+    <div>猜你喜欢</div>
+    <product-list />
     <footer class="home-footer">
       <nav>
         <a class="active" href="javascript:;  "><i class="iconfont icon-home"></i><p class="footer-txt">首页</p></a>
@@ -11,11 +12,14 @@
   </div>
 </template>
 <script>
+import jsonp from 'jsonp';
 import TheHead from 'coms/TheHead/index.vue';
+import ProductList from 'coms/productList/index.vue';
 export default {
   name: 'Home',
   components: {
-    TheHead
+    TheHead,
+    ProductList
   },
   metaInfo: {
     title: 'My Vue Home',
@@ -29,6 +33,9 @@ export default {
         'content': 'vue练习首页'
       }
     ]
+  },
+  created () {
+
   }
 }
 </script>

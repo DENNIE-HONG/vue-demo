@@ -19,8 +19,6 @@
 
 .icon-piaofang:before { content: "\e600"; }
 
-.icon-left:before { content: "\e602"; }
-
 .icon-rili:before { content: "\e601"; }
 
 .icon-send:before { content: "\e893"; }
@@ -41,7 +39,13 @@
 
 .icon-lock:before { content: "\e8d5"; }
 
+.icon-left:before { content: "\e8ef"; }
+
 .icon-right:before { content: "\e8f1"; }
+
+.icon-down:before { content: "\e8f4"; }
+
+.icon-up:before { content: "\e8f5"; }
 
 .icon-empty:before { content: "\e6f7"; }
 
@@ -59,4 +63,4 @@
 
 .icon-info:before { content: "\e8f3"; }
 
-.icon-error:before { content: "\e845"; }
+.icon-error:before { content: "\e845" ;}
