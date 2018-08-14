@@ -108,7 +108,7 @@ export default {
       isHideGender: true,
       checked: true,
       hobby: '1',
-      topic: ['3', '4']
+      topic: ['3']
     }
   },
   computed: {

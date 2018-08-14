@@ -2,7 +2,10 @@
   <div class="com-select" @click="close">
     <div class="com-select-btn" @click.stop="show">
       <span v-if="!multiple">{{selectedNames.length ? selectedNames[0]: placeholder}}</span>
-      <span v-if="multiple" class="tag" v-for="tag in selectedNames">{{tag}}</span>
+    </div>
+    <div class="com-select-tags" v-if="multiple">
+      <span class="tag-default" v-for="tag in selectedNames" @click="cancel" :key="tag" :value="tag">{{tag}}<i class="iconfont icon-close"></i></span>
+      <span v-if="!selectedNames.length">{{placeholder}}</span>
     </div>
     <div class="com-select-box modal-bg black" :class="{hide: isHide}">
       <ul class="com-select-list">
@@ -41,7 +44,7 @@ export default {
     this.$on('selectChange', (data) => {
       this.isHide = true;
       if (!this.selected.has(data.name)) {
-        // 多选情况
+        // 多选情况/单选情况
         if (this.multiple) {
           this.selected.set(data.name, data.value);
           this.$emit('change', this.selectedNames);
@@ -61,6 +64,7 @@ export default {
     show () {
       this.isHide = false;
     },
+    // 点击空白区域收起
     close ($event) {
       if ($event.target.className.includes('com-select')) {
         this.isHide = true;
@@ -90,6 +94,13 @@ export default {
       this.$children.map(($child) => {
         $child.$options._componentTag === 'base-option' && $child.$emit('defaultSelected', selectedArr);
       });
+    },
+    // 删除当前选中标签
+    cancel ($event) {
+      const deleteName = $event.target.textContent;
+      const { selectedNames } = this;
+      this.selected.delete(deleteName);
+      selectedNames.splice(selectedNames.findIndex((item) => item === deleteName), 1);
     }
   }
 }
@@ -97,15 +108,20 @@ export default {
 <style lang="scss">
 .com-select {
   position: relative;
-  height: rem(80);
+  min-height: rem(80);
   min-width: rem(300);
+  width: 90%;
   &-box {
     display: flex;
     align-items: center;
     justify-content: center;
   }
   &-btn {
-    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
   }
   &-list {
     width: 80%;
@@ -114,6 +130,13 @@ export default {
     @include boxShadow;
     border-radius: rem(8);
 
+  }
+  &-tags {
+    .tag-default {
+      position: relative;
+      margin-bottom: rem(5);
+      z-index: 1;
+    }
   }
 }
 </style>

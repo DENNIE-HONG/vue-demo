@@ -41,6 +41,7 @@ export default {
         this.selected.length = 0;
       }
       !this.selected.includes(name) && this.selected.push(name);
+      // 通知父组件
       this.$parent.$options._componentTag === 'base-select' && this.$parent.$emit('selectChange', selectedData);
     }
   }
