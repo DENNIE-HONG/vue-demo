@@ -1,7 +1,7 @@
 <template>
   <section class="product-list">
     <dl class="product-list-box">
-      <dd class="product-list-item" v-for="list in productList" :key="list.wareId">
+      <dd class="product-list-item" v-for="(list, index) in productList" :key="list.wareId + index">
         <template v-if="list.itemType == 0">
           <div class="product-list-pic"><img :src="list.imageurl"/></div>
           <h4 class="product-list-title">{{list.wname}}</h4>
@@ -16,28 +16,44 @@
         </div>
       </dd>
     </dl>
+    <Loadmore :url="getProductUrl" :success="loadSuccess" :params="sendData"/>
   </section>
 </template>
 <script>
+import Loadmore from 'coms/loadmore/index.vue';
+/**
+ * 商品列表模块
+ * @author luyanhong 2018-08-15
+ * @example
+ * <product-list />
+*/
 export default {
   name: 'ProductList',
-  created () {
-    const sentData = {
-      page: 1
-    };
-    this.$api['api/recommend.action'](sentData).then((res) => {
-      if (res.status === 200) {
-        const result = JSON.parse(res.data.recommend);
-        this.productList = result.wareInfoList;
-        console.log(this.productList);
-      }
-    }).catch((err) => {
-      console.log(err);
-    });
+  components: {
+    Loadmore
   },
   data () {
     return {
-      productList: []
+      productList: [],
+      getProductUrl: 'api/recommend.action',
+      sendData: {
+        page: 1
+      }
+    }
+  },
+  methods: {
+    loadSuccess (res) {
+      if (res.status === 200) {
+        const result = JSON.parse(res.data.recommend);
+        if (result.wareInfoList.length) {
+          this.productList = this.productList.concat(result.wareInfoList);
+          this.sendData.page += 1;
+        } else {
+          this.$children[0].toEnd();
+        }
+      } else {
+        this.$children[0].fail(res.statusText);
+      }
     }
   }
 }

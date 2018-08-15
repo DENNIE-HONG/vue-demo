@@ -346,7 +346,8 @@ li {
 }
 
 ul,
-dd {
+dd,
+dl {
   margin: 0;
   padding: 0;
 }

@@ -1,8 +1,14 @@
 <template>
   <div class="home">
     <TheHead />
-    <div>猜你喜欢</div>
-    <product-list />
+    <section>
+      <div class="home-guess">
+        <span class="line"></span>
+        <h3 class="home-guess-txt"><i class="iconfont icon-search"></i>猜你喜欢</h3>
+      </div>
+      <product-list />
+    </section>
+    <TheFooter />
     <footer class="home-footer">
       <nav>
         <a class="active" href="javascript:;  "><i class="iconfont icon-home"></i><p class="footer-txt">首页</p></a>
@@ -12,14 +18,15 @@
   </div>
 </template>
 <script>
-import jsonp from 'jsonp';
 import TheHead from 'coms/TheHead/index.vue';
 import ProductList from 'coms/productList/index.vue';
+import TheFooter from 'coms/layout/theFooter.vue';
 export default {
   name: 'Home',
   components: {
     TheHead,
-    ProductList
+    ProductList,
+    TheFooter
   },
   metaInfo: {
     title: 'My Vue Home',
@@ -41,18 +48,46 @@ export default {
 </script>
 <style lang="scss">
 .home {
+  &-guess {
+    position: relative;
+    background-color: white;
+    text-align: center;
+    .line {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      display: inline-block;
+      width: 50%;
+      height: 1px;
+      margin-left: -25%;
+      background-color: nth($fgreen, 1);
+    }
+    &-txt {
+      position: relative;
+      display: inline-block;
+      padding: 0 rem(25);
+      background-color: white;
+      z-index: 2;
+      color: nth($fgreen, 1);
+      > .iconfont {
+        display: inline-block;
+        font-size: rem(44);
+        vertical-align: top;
+      }
+    }
+  }
   &-footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
     height: rem(90);
     border-top: 1px solid nth($fgray, 1);
-    background-color: white;
     > nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
       display: flex;
+      height: rem(90);
       justify-content: space-around;
-
+      background-color: white;
     }
     a {
       text-align: center;
