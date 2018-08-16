@@ -7,6 +7,7 @@
 <script>
 import Vue from 'vue';
 import Search from './search.vue';
+import router from '../../plugins/router';
 /**
  * 锁屏
 */
@@ -33,6 +34,7 @@ export default {
       new Vue({
         el: root,
         components: { Search },
+        router,
         render (createElement) {
           return createElement('Search', {
             props

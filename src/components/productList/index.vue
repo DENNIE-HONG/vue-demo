@@ -3,7 +3,7 @@
     <dl class="product-list-box">
       <dd class="product-list-item" v-for="(list, index) in productList" :key="list.wareId + index">
         <template v-if="list.itemType == 0">
-          <div class="product-list-pic"><img :src="list.imageurl"/></div>
+          <div class="product-list-pic"><img v-lazy="list.imageurl"/></div>
           <h4 class="product-list-title">{{list.wname}}</h4>
           <div class="product-list-info">
             <span>￥{{list.jdPrice}}</span>
@@ -16,13 +16,17 @@
         </div>
       </dd>
     </dl>
-    <Loadmore :url="getProductUrl" :success="loadSuccess" :params="sendData"/>
+    <Loadmore :url="getProductUrl" :success="loadSuccess" :params="sendData" ref="loadmore"/>
   </section>
 </template>
 <script>
 import Loadmore from 'coms/loadmore/index.vue';
+import { debounce } from 'throttle-debounce';
+import scrollBottom from 'utils/scroll-bottom.js';
+import loadingImg from 'assets/img/loading.gif';
 /**
  * 商品列表模块
+ * @param {String}  getProductUrl, 请求数据url
  * @author luyanhong 2018-08-15
  * @example
  * <product-list />
@@ -32,14 +36,24 @@ export default {
   components: {
     Loadmore
   },
+  props: {
+    getProductUrl: {
+      required: true,
+      type: String
+    }
+  },
   data () {
     return {
       productList: [],
-      getProductUrl: 'api/recommend.action',
       sendData: {
         page: 1
-      }
+      },
+      img: loadingImg
     }
+  },
+  created () {
+    const debounceScroll = debounce(300, this.scrollToBottomLoading.bind(this));
+    window.addEventListener('scroll', debounceScroll);
   },
   methods: {
     loadSuccess (res) {
@@ -49,10 +63,16 @@ export default {
           this.productList = this.productList.concat(result.wareInfoList);
           this.sendData.page += 1;
         } else {
-          this.$children[0].toEnd();
+          this.$refs.loadmore.toEnd();
         }
       } else {
-        this.$children[0].fail(res.statusText);
+        this.$refs.loadmore.fail(res.statusText);
+      }
+    },
+    // 触底加载事件
+    scrollToBottomLoading () {
+      if (scrollBottom(window, 30)) {
+        this.sendData.page % 3 !== 0 && this.$refs.loadmore.loadmore();
       }
     }
   }

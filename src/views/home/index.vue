@@ -6,7 +6,7 @@
         <span class="line"></span>
         <h3 class="home-guess-txt"><i class="iconfont icon-search"></i>猜你喜欢</h3>
       </div>
-      <product-list />
+      <product-list getProductUrl="api/recommend.action" />
     </section>
     <TheFooter />
     <footer class="home-footer">
@@ -42,7 +42,6 @@ export default {
     ]
   },
   created () {
-
   }
 }
 </script>

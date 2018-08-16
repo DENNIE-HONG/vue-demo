@@ -25,6 +25,7 @@
  * @author luyanhong 2018-07-30
 */
 import { debounce } from 'throttle-debounce';
+import message from 'coms/message/message.js';
 /**
  * @param {Array}   存储的数组
 */
@@ -76,7 +77,10 @@ export default {
       this.$api['api/sug'](this.sendData).then((res) => {
         this.result = res.data.result;
       }).catch((err) => {
-        console.log(err);
+        message({
+          type: 'error',
+          message: err
+        });
       });
     },
     submit (keyword = required()) {
@@ -85,6 +89,8 @@ export default {
       }
       this.historyWords.push(keyword);
       storage(this.historyWords);
+      this.$router.push({ path: '/search' });
+      this.destroy();
     }
   }
 }
@@ -100,6 +106,7 @@ export default {
   display: block;
   padding: rem(20);
   background-color: nth($fgray, 3);
+  z-index: 1000;
   &-box {
     display: flex;
     .search-header {

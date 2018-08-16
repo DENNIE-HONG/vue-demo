@@ -10,11 +10,15 @@ const required = () => {
 };
 const scrollBottom = (container = required(), threshold = 0) => {
   let container_H = container.scrollHeight;
+  let { scrollTop } = container;
+  let { offsetHeight } = container;
   if (container === window || container === document) {
     container_H = document.documentElement.scrollHeight;
+    ({ scrollTop } = document.documentElement);
+    offsetHeight = container.innerHeight;
   }
-  const scroll_H = container_H - container.offsetHeight;
-  if (scroll_H - container.scrollTop <= threshold) {
+  const scroll_H = container_H - offsetHeight;
+  if (scroll_H - scrollTop <= threshold) {
     return true;
   }
 };
