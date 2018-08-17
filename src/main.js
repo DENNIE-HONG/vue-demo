@@ -13,7 +13,7 @@ Vue.use(Meta);
 Vue.use(inject);
 
 Vue.use(VueLazyload, {
-  preLoad: 1.5,
+  preLoad: 1.3,
   error: errorImg,
   loading: loadingImg,
   attempt: 1

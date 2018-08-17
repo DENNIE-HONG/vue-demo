@@ -44,13 +44,13 @@ export default {
     justify-content: space-between;
   }
   &-item {
-    height: rem(500);
     width: 49%;
     margin-bottom: 2%;
     background-color: white;
   }
   &-pic {
-    height: rem(350);
+    position: relative;
+    height: rem(450);
     width: 100%;
     @include hid;
     &.small {
@@ -62,7 +62,14 @@ export default {
       }
     }
     > img {
-      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin: auto;
+      max-height: 100%;
+      max-width: 100%;
     }
   }
   &-title {

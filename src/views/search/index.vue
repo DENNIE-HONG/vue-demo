@@ -78,6 +78,8 @@ export default {
     display: flex;
     padding: rem(20) 0;
     align-items: center;
+    background-color: white;
+    border-bottom: 1px solid nth($fgray, 1);
     .search-header {
       flex: 1;
     }
