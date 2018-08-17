@@ -1,20 +1,20 @@
 <template>
-  <div class="search">
-    <header class="search-box">
+  <div class="com-search">
+    <header class="com-search-box">
       <div class="search-header">
         <i class="iconfont icon-search"></i>
-        <input type="text" class="search-header-input" :placeholder="placeholder" v-model="value" @keydown.13="submit(value)" />
+        <input type="text" class="com-search-header-input" :placeholder="placeholder" v-model="value" @keydown.13="submit(value)" />
       </div>
       <button v-on:click="destroy">取消</button>
     </header>
-    <article class="search-result">
+    <article class="com-search-result">
       <ul>
-        <li class="search-result-item" v-for="item in result" @click="submit(item[0])">{{item[0]}}</li>
+        <li class="com-search-result-item" v-for="item in result" @click="submit(item[0])">{{item[0]}}</li>
       </ul>
     </article>
     <section>
       <h3>历史搜索</h3>
-      <span class="tag" v-for="tag in historyWords">{{tag}}</span>
+      <span class="tag" v-for="tag in historyWords"><router-link :to="'/search?keyword='+ tag">{{tag}}</router-link></span>
     </section>
   </div>
 </template>
@@ -44,10 +44,10 @@ const required = () => {
 }
 export default {
   name: 'Search',
-  props: ['placeholder'],
+  props: ['placeholder', 'defaultValue'],
   data () {
     return {
-      value: '',
+      value: this.defaultValue,
       result: [],
       sendData: {
         q: ''
@@ -58,6 +58,10 @@ export default {
   watch: {
     value () {
       this.debounceGetSearch();
+    },
+    '$route' () {
+      // 对路由变化作出响应...
+      this.destroy();
     }
   },
   created () {
@@ -84,12 +88,20 @@ export default {
       });
     },
     submit (keyword = required()) {
-      if (!keyword || this.historyWords.includes(keyword)) {
+      keyword = keyword.trim();
+      if (!keyword) {
         return;
       }
-      this.historyWords.push(keyword);
-      storage(this.historyWords);
-      this.$router.push({ path: '/search' });
+      if (!this.historyWords.includes(keyword)) {
+        this.historyWords.push(keyword);
+        storage(this.historyWords);
+      }
+
+      this.$router.push({ path: `/search?keyword=${ keyword}` });
+      this.destroy();
+    },
+    linkToSearch (keyword) {
+      this.$router.push({ path: `/search?keyword=${ keyword}` });
       this.destroy();
     }
   }
@@ -97,7 +109,7 @@ export default {
 </script>
 
 <style lang="scss">
-.search {
+.com-search {
   position: fixed;
   top: 0;
   left: 0;

@@ -6,7 +6,8 @@
         <span class="line"></span>
         <h3 class="home-guess-txt"><i class="iconfont icon-search"></i>猜你喜欢</h3>
       </div>
-      <product-list getProductUrl="api/recommend.action" />
+      <product-list :productList="productList"/>
+      <Loadmore :url="url" :success="loadSuccess" :params="sendData" ref="loadmore"/>
     </section>
     <TheFooter />
     <footer class="home-footer">
@@ -21,12 +22,14 @@
 import TheHead from 'coms/TheHead/index.vue';
 import ProductList from 'coms/productList/index.vue';
 import TheFooter from 'coms/layout/theFooter.vue';
+import Loadmore from 'coms/loadmore/index.vue';
 export default {
   name: 'Home',
   components: {
     TheHead,
     ProductList,
-    TheFooter
+    TheFooter,
+    Loadmore
   },
   metaInfo: {
     title: 'My Vue Home',
@@ -41,7 +44,29 @@ export default {
       }
     ]
   },
-  created () {
+  data () {
+    return {
+      url: 'api/recommend.action',
+      productList: [],
+      sendData: {
+        page: 1
+      }
+    }
+  },
+  methods: {
+    loadSuccess (res) {
+      if (res.status === 200) {
+        const result = JSON.parse(res.data.recommend);
+        if (result.wareInfoList.length) {
+          this.productList = this.productList.concat(result.wareInfoList);
+          this.sendData.page += 1;
+        } else {
+          this.$refs.loadmore.toEnd();
+        }
+      } else {
+        this.$refs.loadmore.fail(res.statusText);
+      }
+    }
   }
 }
 </script>

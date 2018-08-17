@@ -12,6 +12,9 @@
   }
   &-txt {
     color: nth($fblack, 3);
+    &.active {
+      color: nth($fblack, 1);
+    }
   }
   &-input {
     flex: 1;

@@ -1,5 +1,5 @@
 <template>
-  <section class="product-list">
+  <section class="product-list" v-if="productList.length">
     <dl class="product-list-box">
       <dd class="product-list-item" v-for="(list, index) in productList" :key="list.wareId + index">
         <template v-if="list.itemType == 0">
@@ -16,64 +16,22 @@
         </div>
       </dd>
     </dl>
-    <Loadmore :url="getProductUrl" :success="loadSuccess" :params="sendData" ref="loadmore"/>
   </section>
 </template>
 <script>
-import Loadmore from 'coms/loadmore/index.vue';
-import { debounce } from 'throttle-debounce';
-import scrollBottom from 'utils/scroll-bottom.js';
-import loadingImg from 'assets/img/loading.gif';
 /**
  * 商品列表模块
- * @param {String}  getProductUrl, 请求数据url
+ * @param {Array} productList, 数据组
  * @author luyanhong 2018-08-15
  * @example
- * <product-list />
+ * <product-list productLis="xxx"/>
 */
 export default {
   name: 'ProductList',
-  components: {
-    Loadmore
-  },
   props: {
-    getProductUrl: {
-      required: true,
-      type: String
-    }
-  },
-  data () {
-    return {
-      productList: [],
-      sendData: {
-        page: 1
-      },
-      img: loadingImg
-    }
-  },
-  created () {
-    const debounceScroll = debounce(300, this.scrollToBottomLoading.bind(this));
-    window.addEventListener('scroll', debounceScroll);
-  },
-  methods: {
-    loadSuccess (res) {
-      if (res.status === 200) {
-        const result = JSON.parse(res.data.recommend);
-        if (result.wareInfoList.length) {
-          this.productList = this.productList.concat(result.wareInfoList);
-          this.sendData.page += 1;
-        } else {
-          this.$refs.loadmore.toEnd();
-        }
-      } else {
-        this.$refs.loadmore.fail(res.statusText);
-      }
-    },
-    // 触底加载事件
-    scrollToBottomLoading () {
-      if (scrollBottom(window, 30)) {
-        this.sendData.page % 3 !== 0 && this.$refs.loadmore.loadmore();
-      }
+    productList: {
+      default: [],
+      type: Array
     }
   }
 }

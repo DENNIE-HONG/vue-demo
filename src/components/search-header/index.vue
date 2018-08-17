@@ -1,7 +1,7 @@
 <template>
   <div class="search-header" v-on:click="showSearch">
     <i class="iconfont icon-search"></i>
-    <div class="search-header-txt">搜索你感兴趣的</div>
+    <div :class="['search-header-txt', {active: defaultValue}]">{{defaultValue ? defaultValue: placeholder}}</div>
   </div>
 </template>
 <script>
@@ -10,6 +10,7 @@ import Search from './search.vue';
 import router from '../../plugins/router';
 /**
  * 锁屏
+ * @param {Object} { isLock: true} 是否锁屏
 */
 function lockWindow ({ isLock = true } = {}) {
   isLock && document.documentElement.classList.add('lock');
@@ -19,17 +20,29 @@ function lockWindow ({ isLock = true } = {}) {
  * 搜索头部模块
  * @param {String}   placeholder
  * @author luyanhong 2018-07-30
+ * @example
+ * <search-header placeholder="搜索"></search-header>
 */
 export default {
   name: 'SearchHeader',
-  props: ['placeholder'],
+  props: {
+    placeholder: {
+      default: '搜索你感兴趣的',
+      type: String
+    },
+    defaultValue: {
+      default: '',
+      type: String
+    }
+  },
   methods: {
     showSearch () {
       lockWindow();
       const root = document.createElement('div');
       document.body.appendChild(root);
       const props = {
-        placeholder: this.placeholder || '搜索你感兴趣的'
+        placeholder: this.placeholder,
+        defaultValue: this.defaultValue
       };
       new Vue({
         el: root,
@@ -45,8 +58,4 @@ export default {
   }
 }
 </script>
-
-<style>
-
-</style>
 
