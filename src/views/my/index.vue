@@ -21,7 +21,7 @@
       <div
         v-if="isLogin"
         class="pull-right"
-        @click="">退出
+        @click="signOut">退出
       </div>
       <router-link
         v-else
