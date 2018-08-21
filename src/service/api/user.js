@@ -49,3 +49,22 @@ export function getUser () {
     msg: ''
   });
 }
+
+// 退出
+export function signOut () {
+  const name = cookies.get(userName);
+  return new Promise((resolve, reject) => {
+    if (name) {
+      cookies.remove(userName);
+      resolve({
+        code: 200,
+        msg: ''
+      });
+    } else {
+      reject({
+        code: 1,
+        msg: '您还没有登入哦'
+      });
+    }
+  });
+}

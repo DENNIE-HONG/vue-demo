@@ -3,24 +3,43 @@
     <header>
       <div class="my-behavior">
         <div class="my-info">
-          <img class="my-avatar" :src="avatar" />
+          <img
+            class="my-avatar"
+            :src="avatar"
+          />
           <span v-if="isLogin">{{name}}</span>
         </div>
       </div>
-      <router-link to="/setting" class="my-setting" v-if="isLogin">设置</router-link>
+      <router-link
+        v-if="isLogin"
+        to="/setting"
+        class="my-setting">设置
+      </router-link>
     </header>
     <div class="my-login">
       <span>{{name}}</span>
-      <router-link to="/login" class="pull-right">{{isLogin? '退出' : '登入'}}</router-link>
+      <div
+        v-if="isLogin"
+        class="pull-right"
+        @click="">退出
+      </div>
+      <router-link
+        v-else
+        to="/login"
+        class="pull-right">登入
+      </router-link>
     </div>
-    <!-- <the-footer></the-footer> -->
+    <the-footer />
   </div>
 </template>
 <script>
-import { getUser } from 'service/api/user.js';
+import { getUser, signOut } from 'service/api/user.js';
 import TheFooter from 'coms/Layout/TheFooter.vue';
 export default {
   name: 'My',
+  components: {
+    TheFooter
+  },
   data () {
     return {
       avatar: '',
@@ -34,6 +53,15 @@ export default {
       this.name = res.data.name;
       this.isLogin = res.data.isLogin;
     });
+  },
+  methods: {
+    signOut () {
+      signOut().then(() => {
+        this.$router.push('/login');
+      }).catch((error) => {
+        console.log(error);
+      });
+    }
   }
 }
 </script>

@@ -7,6 +7,7 @@
       :maxlength="maxlength"
       :value="value"
       @input="onInput"
+      autocomplete="off"
     />
     <i
       v-if="clearable"

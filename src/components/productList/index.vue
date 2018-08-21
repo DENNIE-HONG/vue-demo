@@ -17,7 +17,7 @@
         <div
           v-if="list.itemType == 1"
           class="product-list-shop">
-          <div class="product-list-pic small"><img :src="list.imageurl"/></div>
+          <div class="product-list-pic small"><img v-lazy="list.imageurl"/></div>
           <h4 class="product-list-title">{{list.wname}}</h4>
           <span>{{list.followCount}}人关注</span>
         </div>
@@ -62,7 +62,7 @@ export default {
     @include hid;
     &.small {
       width: 60%;
-      height: auto;
+      height: rem(150);
       margin: rem(30) auto rem(20);
       > img {
         width: 100%;
