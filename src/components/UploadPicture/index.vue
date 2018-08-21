@@ -1,8 +1,16 @@
 <template>
   <div class="com-upload">
     <div class="com-upload-btn">
-      <img :src="imgUrl" v-if="imgUrl" class="com-upload-pic"/>
-      <input type="file" class="com-upload-input" accept="image" @change="onChange" />
+      <img
+        v-if="imgUrl"
+        :src="imgUrl"
+        class="com-upload-pic"/>
+      <input
+        type="file"
+        class="com-upload-input"
+        accept="image"
+        @change="onChange"
+      />
     </div>
   </div>
 </template>
@@ -16,7 +24,7 @@
 */
 import message from 'coms/message/message.js';
 export default {
-  name: 'Upload',
+  name: 'UploadPicture',
   model: {
     prop: 'imgUrl',
     event: 'change'

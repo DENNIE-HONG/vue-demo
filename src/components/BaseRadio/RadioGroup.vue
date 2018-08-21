@@ -1,5 +1,7 @@
 <template>
-  <div class="com-radio-group modal-bg black" :class="{hide: isHide}" @click="close">
+  <div
+    :class="['com-radio-group', 'modal-bg', 'black', {hide: isHide}]"
+    @click="close">
     <div class="com-radio-box">
       <h3>{{title}}</h3>
       <slot></slot>

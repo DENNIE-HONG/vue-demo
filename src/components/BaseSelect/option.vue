@@ -1,5 +1,9 @@
 <template>
-  <li :class="['com-option', {active: selected.includes(label)}]" :value="value" @click="onSelect">{{label}}</li>
+  <li
+    :class="['com-option', {active: selected.includes(label)}]"
+    :value="value"
+    @click="onSelect">{{label}}
+  </li>
 </template>
 <script>
 /**

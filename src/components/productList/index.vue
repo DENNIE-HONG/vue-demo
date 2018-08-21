@@ -1,7 +1,12 @@
 <template>
-  <section class="product-list" v-if="productList.length">
+  <section
+    v-if="productList.length"
+    class="product-list">
     <dl class="product-list-box">
-      <dd class="product-list-item" v-for="(list, index) in productList" :key="list.wareId + index">
+      <dd
+        v-for="(list, index) in productList"
+        :key="list.wareId + index"
+        class="product-list-item">
         <template v-if="list.itemType == 0">
           <div class="product-list-pic"><img v-lazy="list.imageurl"/></div>
           <h4 class="product-list-title">{{list.wname}}</h4>
@@ -9,7 +14,9 @@
             <span>￥{{list.jdPrice}}</span>
           </div>
         </template>
-        <div v-if="list.itemType == 1" class="product-list-shop">
+        <div
+          v-if="list.itemType == 1"
+          class="product-list-shop">
           <div class="product-list-pic small"><img :src="list.imageurl"/></div>
           <h4 class="product-list-title">{{list.wname}}</h4>
           <span>{{list.followCount}}人关注</span>

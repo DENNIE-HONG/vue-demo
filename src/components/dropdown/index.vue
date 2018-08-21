@@ -1,14 +1,16 @@
 <template>
   <div class="com-dropdown">
     <span @click.stop="toggleShow"><slot></slot></span>
-    <div :class="['com-dropdown-box', {hide: isHide}]" ref="dropmenu">
+    <div
+      ref="dropmenu"
+      :class="['com-dropdown-box', {hide: isHide}]">
       <slot name="dropdown"></slot>
     </div>
   </div>
 </template>
 <script>
 export default {
-  name: 'Dropdown',
+  name: 'DropDown',
   data () {
     return {
       isHide: true
@@ -17,7 +19,7 @@ export default {
   created () {
     const body = document.querySelector('body');
     body.addEventListener('click', (e) => {
-      if (!this.$refs.dropmenu.contains(e.target)) {
+      if (this.$refs.dropmenu && !this.$refs.dropmenu.contains(e.target)) {
         this.isHide = true;
       }
     });

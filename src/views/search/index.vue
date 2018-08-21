@@ -3,41 +3,44 @@
     <header class="search-head">
       <router-link to="/" class="header-go-back" v-once><i class="iconfont icon-left"></i></router-link>
       <search-header :defaultValue="keyword"/>
-      <dropdown>
+      <drop-down>
         <div class="header-more"><i class="iconfont icon-transverse-more"></i></div>
-        <dropdown-menu slot="dropdown">
-          <dropdown-item>
+        <drop-down-menu slot="dropdown">
+          <drop-down-item>
             <router-link to="/"><i class="iconfont icon-home"></i>首页</router-link>
-          </dropdown-item>
-          <dropdown-item>
+          </drop-down-item>
+          <drop-down-item>
             <router-link to="/my"><i class="iconfont icon-user"></i>我的vue</router-link>
-          </dropdown-item>
-        </dropdown-menu>
-      </dropdown>
+          </drop-down-item>
+        </drop-down-menu>
+      </drop-down>
     </header>
     <product-list :productList="searchList" />
-    <Empty v-if="firstLoadEmpty" text="暂时搜索不到该商品"/>
-    <Loadmore v-else :url="url" :success="loadSuccess" :params="sendData" jsonp ref="loadmore"/>
+    <empty-list v-if="firstLoadEmpty" text="暂时搜索不到该商品"/>
+    <load-more v-else :url="url" :success="loadSuccess" :params="sendData" jsonp ref="loadmore"/>
+    <the-footer />
   </div>
 </template>
 <script>
-import SearchHeader from 'coms/search-header/index.vue';
-import Loadmore from 'coms/loadmore/index.vue';
-import ProductList from 'coms/productList/index.vue';
-import Empty from 'coms/empty/index.vue';
-import Dropdown from 'coms/dropdown/index.vue';
-import DropdownMenu from 'coms/dropdown/menu.vue';
-import DropdownItem from 'coms/dropdown/item.vue';
+import SearchHeader from 'coms/SearchHeader/index.vue';
+import LoadMore from 'coms/LoadMore/index.vue';
+import ProductList from 'coms/ProductList/index.vue';
+import EmptyList from 'coms/EmptyList/index.vue';
+import DropDown from 'coms/DropDown/index.vue';
+import DropDownMenu from 'coms/DropDown/menu.vue';
+import DropDownItem from 'coms/DropDown/item.vue';
+import TheFooter from 'coms/Layout/TheFooter.vue';
 export default {
   name: 'Search',
   components: {
     SearchHeader,
-    Loadmore,
+    LoadMore,
     ProductList,
-    Empty,
-    Dropdown,
-    DropdownMenu,
-    DropdownItem
+    EmptyList,
+    DropDown,
+    DropDownMenu,
+    DropDownItem,
+    TheFooter
   },
   computed: {
     keyword () {

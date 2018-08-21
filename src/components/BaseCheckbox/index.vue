@@ -1,6 +1,11 @@
 <template>
   <label class="com-checkbox">
-    <input type="checkbox" class="com-checkbox-input" :checked="checked" @change="$emit('change', $event.target.checked)"/>
+    <input
+      type="checkbox"
+      class="com-checkbox-input"
+      :checked="checked"
+      @change="$emit('change', $event.target.checked)"
+    />
     <div class="com-checkbox-box"><i class="checked"></i></div>
     <span class="com-checkbox-txt"><slot></slot></span>
   </label>
@@ -13,7 +18,10 @@ export default {
     event: 'change'
   },
   props: {
-    checked: Boolean
+    checked: {
+      default: false,
+      type: Boolean
+    }
   }
 }
 </script>

@@ -5,7 +5,7 @@
 </template>
 <script>
 export default {
-  name: 'DropdownItem'
+  name: 'DropDownItem'
 }
 </script>
 <style lang="scss">

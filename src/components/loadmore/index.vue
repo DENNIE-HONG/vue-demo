@@ -1,9 +1,21 @@
 <template>
   <div class="com-loadmore">
-    <div v-if="state === 0" @click="loadmore">点击加载更多</div>
-    <div v-if="state === 1" class="com-loadmore-loading">拼命加载中...</div>
-    <div v-if="state === 2" class="com-loadmore-end"><span>我也是有底线的</span></div>
-    <div v-if="state === 3" @click="loadmore">加载失败</div>
+    <div
+      v-show="state === 0"
+      @click="loadmore">点击加载更多
+    </div>
+    <div
+      v-show="state === 1"
+      class="com-loadmore-loading">拼命加载中...
+    </div>
+    <div
+      v-show="state === 2"
+      class="com-loadmore-end"><span>我也是有底线的</span>
+    </div>
+    <div
+      v-show="state === 3"
+      @click="loadmore">加载失败
+    </div>
   </div>
 </template>
 <script>
@@ -16,7 +28,7 @@
  * @param {Boolean}     jsonp, 是否跨域，默认否
  * @author luyanhong 2018-08-15
  * @example
- * <Loadmore url="xxx" success="function" params="{}" />
+ * <load-more url="xxx" success="function" params="{}" />
 */
 import message from 'coms/message/message.js';
 import jsonp from 'jsonp';
@@ -31,7 +43,7 @@ const required = () => {
   throw Error('missing parameter error!');
 }
 export default {
-  name: 'Loadmore',
+  name: 'LoadMore',
   props: {
     url: {
       required: true,

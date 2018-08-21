@@ -1,7 +1,19 @@
 <template>
   <div class="com-input">
-    <input class="com-input-box" :type="type" :placeholder="placeholder" :maxlength="maxlength" :value="value" @input="onInput"/>
-    <i v-if="clearable" class="iconfont icon-close" @click="clear" :class="{ hide: isHideClearBtn}"></i>
+    <input
+      class="com-input-box"
+      :type="type"
+      :placeholder="placeholder"
+      :maxlength="maxlength"
+      :value="value"
+      @input="onInput"
+    />
+    <i
+      v-if="clearable"
+      class="iconfont icon-close"
+      @click="clear"
+      :class="{ hide: isHideClearBtn}">
+    </i>
   </div>
 </template>
 <script>
@@ -15,14 +27,22 @@ export default {
   inheritAttrs: false,
   props: {
     type: {
-      default: 'text'
+      default: 'text',
+      type: String,
+      validator (value) {
+        return ['email', 'number', 'password', 'search', 'text', 'url', 'tel'].indexOf(value) !== - 1
+      }
     },
 
     maxlength: {
-      default: 100
+      default: 100,
+      type: Number
     },
 
-    placeholder: String,
+    placeholder: {
+      default: '',
+      type: String
+    },
 
     value: String,
 

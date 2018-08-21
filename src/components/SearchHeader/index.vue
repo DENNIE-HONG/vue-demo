@@ -1,12 +1,14 @@
 <template>
-  <div class="search-header" v-on:click="showSearch">
+  <div
+    class="search-header"
+    @click="showSearch">
     <i class="iconfont icon-search"></i>
     <div :class="['search-header-txt', {active: defaultValue}]">{{defaultValue ? defaultValue: placeholder}}</div>
   </div>
 </template>
 <script>
 import Vue from 'vue';
-import Search from './search.vue';
+import SearchSuggest from './SearchSuggest.vue';
 import router from '../../plugins/router';
 /**
  * 锁屏
@@ -46,10 +48,10 @@ export default {
       };
       new Vue({
         el: root,
-        components: { Search },
+        components: { SearchSuggest },
         router,
         render (createElement) {
-          return createElement('Search', {
+          return createElement('SearchSuggest', {
             props
           });
         }

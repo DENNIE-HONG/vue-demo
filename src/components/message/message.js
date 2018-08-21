@@ -5,7 +5,7 @@
  * @author luyanhong 2018-08-03
 */
 import Vue from 'vue';
-import Message from './index.vue';
+import MessageBox from './index.vue';
 const required = () => {
   throw Error('missing parameter message');
 }
@@ -18,9 +18,9 @@ const message = ({ type = 'info', message = required() }) => {
   };
   new Vue({
     el: root,
-    components: { Message },
+    components: { MessageBox },
     render (createElement) {
-      return createElement('Message', {
+      return createElement('MessageBox', {
         props
       })
     }

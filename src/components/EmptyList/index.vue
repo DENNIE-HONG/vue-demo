@@ -1,12 +1,14 @@
 <template>
   <div class="com-empty">
     <div class="com-empty-pic"></div>
-    <span class="com-empty-txt" v-once>{{text}}</span>
+    <span
+      v-once
+      class="com-empty-txt">{{text}}</span>
   </div>
 </template>
 <script>
 export default {
-  name: 'Empty',
+  name: 'EmptyList',
   props: {
     text: {
       default: '这里空空如也',

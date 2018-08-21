@@ -1,7 +1,7 @@
 <template>
   <div class="com-message modal-bg">
-    <div class="com-message-txt" :class="type">
-      <i class="iconfont" :class="'icon-' + type"></i>
+    <div :class="['com-message-txt', type]">
+      <i :class="['iconfont', 'icon-' + type]"></i>
       {{message}}
     </div>
   </div>
@@ -12,11 +12,14 @@
  * @author luyanhong 2018-08-03
 */
 export default {
-  name: 'Message',
+  name: 'MessageBox',
   props: {
     type: {
       default: 'info',
-      type: String
+      type: String,
+      validator (value) {
+        return ['success', 'info', 'error', 'warning'].indexOf(value) !== - 1
+      }
     },
 
     message: {

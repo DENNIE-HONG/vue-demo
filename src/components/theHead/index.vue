@@ -2,11 +2,11 @@
   <div class="com-header">
     <a href="javascript:;" class="com-header-user"><i class="iconfont icon-user"></i></a>
     <div class="com-header-logo"></div>
-    <SearchHeader />
+    <search-header />
   </div>
 </template>
 <script>
-import SearchHeader from 'coms/search-header/index.vue';
+import SearchHeader from 'coms/SearchHeader/index.vue';
 export default {
   name: 'TheHead',
   components: {

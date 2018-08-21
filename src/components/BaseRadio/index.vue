@@ -1,7 +1,15 @@
 <template>
   <label class="com-radio">
     <span><slot></slot></span>
-    <input type="radio" class="com-radio-input" :name="name" :value="label" :checked="value === label" v-model="model" @click="onChange" />
+    <input
+      type="radio"
+      class="com-radio-input"
+      :name="name"
+      :value="label"
+      :checked="value === label"
+      @click="onChange"
+      v-model="model"
+    />
   </label>
 </template>
 <script>

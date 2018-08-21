@@ -48,4 +48,4 @@ module.exports = (env) => {
       publicPath: WEBPACK_PROD_CONFIG.assetsPublicPath
     }
   });
-}
+};

@@ -13,10 +13,12 @@
       <span>{{name}}</span>
       <router-link to="/login" class="pull-right">{{isLogin? '退出' : '登入'}}</router-link>
     </div>
+    <!-- <the-footer></the-footer> -->
   </div>
 </template>
 <script>
 import { getUser } from 'service/api/user.js';
+import TheFooter from 'coms/Layout/TheFooter.vue';
 export default {
   name: 'My',
   data () {

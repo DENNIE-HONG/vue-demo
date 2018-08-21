@@ -9,7 +9,7 @@
       <div class="info-item">
         <span>vue头像</span>
         <div class="info-item-right">
-          <Upload v-model="avatar" class="info-item-pic"></Upload>
+          <upload-picture v-model="avatar" class="info-item-pic"></upload-picture>
         </div>
       </div>
       <div class="info-item">
@@ -73,10 +73,10 @@
  * @author luyanhong 2018-08-05
 */
 import { getUser } from 'service/api/user.js';
-import BaseRadioGroup from 'coms/BaseRadio/radio-group.vue';
+import BaseRadioGroup from 'coms/BaseRadio/RadioGroup.vue';
 import BaseRadio from 'coms/BaseRadio/index.vue';
 import BaseCheckbox from 'coms/BaseCheckbox/index.vue';
-import Upload from 'coms/upload/index.vue';
+import UploadPicture from 'coms/UploadPicture/index.vue';
 import BaseSelect from 'coms/BaseSelect/index.vue';
 import BaseOption from 'coms/BaseSelect/option.vue';
 export default {
@@ -98,7 +98,7 @@ export default {
     BaseRadioGroup,
     BaseRadio,
     BaseCheckbox,
-    Upload,
+    UploadPicture,
     BaseSelect,
     BaseOption
   },

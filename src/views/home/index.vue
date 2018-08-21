@@ -1,15 +1,15 @@
 <template>
   <div class="home">
-    <TheHead />
+    <the-head />
     <section>
       <div class="home-guess">
         <span class="line"></span>
         <h3 class="home-guess-txt"><i class="iconfont icon-search"></i>猜你喜欢</h3>
       </div>
       <product-list :productList="productList"/>
-      <Loadmore :url="url" :success="loadSuccess" :params="sendData" ref="loadmore"/>
+      <load-more :url="url" :success="loadSuccess" :params="sendData" ref="loadmore"/>
     </section>
-    <TheFooter />
+    <the-footer />
     <footer class="home-footer">
       <nav>
         <a class="active" href="javascript:;  "><i class="iconfont icon-home"></i><p class="footer-txt">首页</p></a>
@@ -20,16 +20,16 @@
 </template>
 <script>
 import TheHead from 'coms/TheHead/index.vue';
-import ProductList from 'coms/productList/index.vue';
-import TheFooter from 'coms/layout/theFooter.vue';
-import Loadmore from 'coms/loadmore/index.vue';
+import ProductList from 'coms/ProductList/index.vue';
+import TheFooter from 'coms/Layout/TheFooter.vue';
+import LoadMore from 'coms/LoadMore/index.vue';
 export default {
   name: 'Home',
   components: {
     TheHead,
     ProductList,
     TheFooter,
-    Loadmore
+    LoadMore
   },
   metaInfo: {
     title: 'My Vue Home',

@@ -1,13 +1,25 @@
 <template>
-  <div class="com-select" @click="close">
-    <div class="com-select-btn" @click.stop="show">
+  <div
+    class="com-select"
+    @click="close">
+    <div
+      class="com-select-btn"
+      @click.stop="show">
       <span v-if="!multiple">{{selectedNames.length ? selectedNames[0]: placeholder}}</span>
     </div>
-    <div class="com-select-tags" v-if="multiple">
-      <span class="tag-default" v-for="tag in selectedNames" @click="cancel" :key="tag" :value="tag">{{tag}}<i class="iconfont icon-close"></i></span>
+    <div
+      v-if="multiple"
+      class="com-select-tags">
+      <span
+        v-for="tag in selectedNames"
+        class="tag-default"
+        @click="cancel"
+        :key="tag"
+        :value="tag">{{tag}}<i class="iconfont icon-close"></i>
+      </span>
       <span v-if="!selectedNames.length">{{placeholder}}</span>
     </div>
-    <div class="com-select-box modal-bg black" :class="{hide: isHide}">
+    <div :class="['com-select-box', 'modal-bg', 'black', {hide: isHide}]">
       <ul class="com-select-list">
         <slot></slot>
       </ul>
