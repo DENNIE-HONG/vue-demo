@@ -129,8 +129,7 @@ export default {
 <style lang="scss">
 .com-select {
   position: relative;
-  min-height: rem(90);
-  min-width: rem(300);
+  height: 100%;
   width: 90%;
   &-box {
     display: flex;
@@ -150,7 +149,7 @@ export default {
     background-color: white;
     @include boxShadow;
     border-radius: rem(8);
-
+    color: nth($fblack, 1);
   }
   &-tags {
     .tag-default {

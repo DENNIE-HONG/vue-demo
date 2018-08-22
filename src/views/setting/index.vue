@@ -45,7 +45,7 @@
       <div class="info-item">
         <span>兴趣</span>
         <div class="info-item-right">
-          <base-select v-model="hobby" :style="{textAlign: 'right'}">
+          <base-select v-model="hobby" :style="{textAlign: 'right', height: '1.2rem'}">
             <base-option value="1" label="吴亦凡"></base-option>
             <base-option value="2" label="黄景瑜"></base-option>
           </base-select>
@@ -184,10 +184,12 @@ export default {
       &-right {
         flex: 1;
         display: flex;
+        min-height: rem(90);
         align-items: center;
         justify-content: flex-end;
         color: nth($fblack, 3);
         font-size: rem(30);
+        width: 100%;
         > .iconfont {
           font-size: rem(36);
         }

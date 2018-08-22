@@ -15,6 +15,28 @@
         </drop-down-menu>
       </drop-down>
     </header>
+    <nav class="tab">
+      <li
+        :class="['tab-item', {active: searchType === 1}]"
+        @click="changeType(1)">
+        <base-select v-model="sendData.sort_type">
+          <base-option label="综合" value=""></base-option>
+          <base-option label="最新上架" value="sort_winsdate_desc"></base-option>
+          <base-option label="价格最低" value="sort_dredisprice_asc"></base-option>
+          <base-option label="价格最高" value="sort_dredisprice_desc"></base-option>
+          <base-option label="评论最多" value="sort_commentcount_desc"></base-option>
+        </base-select>
+        <i class="iconfont icon-down"></i>
+      </li>
+      <li
+        :class="['tab-item', {active: searchType === 2}]"
+        @click="changeType(2, 'sort_totalsales15_desc')">销量
+      </li>
+      <li
+        :class="['tab-item', {active: searchType === 3}]"
+        >服务
+      </li>
+    </nav>
     <product-list :productList="searchList" />
     <empty-list v-if="firstLoadEmpty" text="暂时搜索不到该商品"/>
     <load-more v-else :url="url" :success="loadSuccess" :params="sendData" jsonp ref="loadmore"/>
@@ -30,6 +52,8 @@ import DropDown from 'coms/DropDown/index.vue';
 import DropDownMenu from 'coms/DropDown/menu.vue';
 import DropDownItem from 'coms/DropDown/item.vue';
 import TheFooter from 'coms/Layout/TheFooter.vue';
+import BaseSelect from 'coms/BaseSelect/index.vue';
+import BaseOption from 'coms/BaseSelect/option.vue';
 export default {
   name: 'Search',
   components: {
@@ -40,7 +64,9 @@ export default {
     DropDown,
     DropDownMenu,
     DropDownItem,
-    TheFooter
+    TheFooter,
+    BaseSelect,
+    BaseOption
   },
   computed: {
     keyword () {
@@ -50,6 +76,10 @@ export default {
   watch: {
     '$route' () {
       window.location.reload(true);
+    },
+    'sendData.sort_type' () {
+      this.reload();
+      this.$refs.loadmore.loadmore();
     }
   },
   data () {
@@ -59,9 +89,11 @@ export default {
       sendData: {
         keyword: this.$route.query.keyword,
         page: 1,
-        fdesc: '北京'
+        fdesc: '北京',
+        sort_type: ''
       },
-      firstLoadEmpty: false
+      firstLoadEmpty: false,
+      searchType: 1
     }
   },
   created () {
@@ -87,6 +119,15 @@ export default {
         this.sendData.page === 1 && (this.firstLoadEmpty = true);
       }
 
+    },
+    reload () {
+      this.searchList = [];
+      this.sendData.page = 1;
+      this.firstLoadEmpty = false;
+    },
+    changeType (searchType, sortType) {
+      this.searchType = searchType;
+      sortType && (this.sendData.sort_type = sortType);
     }
   }
 }
@@ -102,6 +143,11 @@ export default {
     .search-header {
       flex: 1;
     }
+  }
+  .tab-item {
+    width: rem(160);
+    display: flex;
+    justify-content: center;
   }
 }
 </style>
