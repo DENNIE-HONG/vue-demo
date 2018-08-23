@@ -40,6 +40,7 @@
 */
 import { debounce } from 'throttle-debounce';
 import message from 'coms/message/message.js';
+import lockWindow from 'utils/lockWindow.js';
 const MAX_HISTORY_WORDS = 10;
 /**
  * @param {Array}   存储的数组
@@ -100,6 +101,9 @@ export default {
   methods: {
     destroy () {
       this.$el.parentNode.removeChild(this.$el);
+      lockWindow({
+        isLock: false
+      });
       this.$destroy();
     },
     getSearch () {

@@ -5,15 +5,15 @@
     <div
       class="com-select-btn"
       @click.stop="show">
-      <span v-if="!multiple">{{selectedNames.length ? selectedNames[0]: placeholder}}</span>
+      <span v-if="!multiple || collapseTags">{{selectedNames.length ? selectedNames.toString(): placeholder}}</span>
     </div>
     <div
-      v-if="multiple"
+      v-if="multiple && !collapseTags"
       class="com-select-tags">
       <span
         v-for="tag in selectedNames"
         class="tag-default"
-        @click="cancel"
+        @click="cancel(tag)"
         :key="tag"
         :value="tag">{{tag}}<i class="iconfont icon-close"></i>
       </span>
@@ -32,10 +32,12 @@
  * @param {String}   placeholder, 提示文本
  * @param {Array| Number| String} value, 选中的值
  * @param {Boolean}  multiple, 是否是多选，默认否
+ * @param {Boolean}  collapseTags, 是否将选中值合并为一段文字，默认否，
  * @author luyanhong 2018-08-14
  * @example
  * <base-select v-modal="xxx"></base-select>
 */
+import lockWindow from 'utils/lockWindow.js';
 export default {
   name: 'BaseSelect',
   model: {
@@ -51,6 +53,10 @@ export default {
     multiple: {
       default: false,
       type: Boolean
+    },
+    collapseTags: {
+      default: false,
+      type: Boolean
     }
   },
   data () {
@@ -63,19 +69,24 @@ export default {
   created () {
     // 接受子组件option传递参数, 当前选中对象，{Object}
     this.$on('selectChange', (data) => {
-      this.isHide = true;
       if (!this.selected.has(data.name)) {
         // 多选情况/单选情况
         if (this.multiple) {
           this.selected.set(data.name, data.value);
-          this.$emit('change', this.selectedNames);
+          this.$emit('change', [...this.selected.values()]);
         } else {
+          this.showOff();
           this.selected.clear();
           this.selected.set(data.name, data.value);
           this.$emit('change', data.value);
         }
       }
     });
+    // 多选情况，接受子组件取消事件
+    this.$on('cancelSelected', (data) => {
+      this.selected.delete(data.name);
+      this.$emit('change', [...this.selected.values()]);
+    })
   },
   mounted () {
     // 获取初始选中的option
@@ -84,11 +95,20 @@ export default {
   methods: {
     show () {
       this.isHide = false;
+      lockWindow({
+        isLock: true
+      });
+    },
+    showOff () {
+      this.isHide = true;
+      lockWindow({
+        isLock: false
+      });
     },
     // 点击空白区域收起
     close ($event) {
       if ($event.target.className.includes('com-select')) {
-        this.isHide = true;
+        this.showOff();
       }
     },
     getSelected () {
@@ -117,11 +137,11 @@ export default {
       });
     },
     // 删除当前选中标签
-    cancel ($event) {
-      const deleteName = $event.target.textContent;
+    cancel (tagName) {
       const { selectedNames } = this;
-      this.selected.delete(deleteName);
-      selectedNames.splice(selectedNames.findIndex((item) => item === deleteName), 1);
+      this.selected.delete(tagName);
+      selectedNames.splice(selectedNames.findIndex((item) => item === tagName), 1);
+      this.$emit('change', [...this.selected.values()]);
     }
   }
 }
@@ -131,6 +151,7 @@ export default {
   position: relative;
   height: 100%;
   width: 90%;
+  @include hid;
   &-box {
     display: flex;
     align-items: center;

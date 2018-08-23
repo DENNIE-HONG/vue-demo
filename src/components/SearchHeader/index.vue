@@ -10,14 +10,8 @@
 import Vue from 'vue';
 import SearchSuggest from './SearchSuggest.vue';
 import router from '../../plugins/router';
-/**
- * 锁屏
- * @param {Object} { isLock: true} 是否锁屏
-*/
-function lockWindow ({ isLock = true } = {}) {
-  isLock && document.documentElement.classList.add('lock');
-  !isLock && document.documentElement.classList.remove('lock');
-}
+import lockWindow from 'utils/lockWindow';
+
 /**
  * 搜索头部模块
  * @param {String}   placeholder
@@ -39,7 +33,9 @@ export default {
   },
   methods: {
     showSearch () {
-      lockWindow();
+      lockWindow({
+        isLock: true
+      });
       const root = document.createElement('div');
       document.body.appendChild(root);
       const props = {

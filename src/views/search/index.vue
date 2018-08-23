@@ -1,45 +1,55 @@
 <template>
   <div class="search">
-    <header class="search-head">
-      <router-link to="/" class="header-go-back" v-once><i class="iconfont icon-left"></i></router-link>
-      <search-header :defaultValue="keyword"/>
-      <drop-down>
-        <div class="header-more"><i class="iconfont icon-transverse-more"></i></div>
-        <drop-down-menu slot="dropdown">
-          <drop-down-item>
-            <router-link to="/"><i class="iconfont icon-home"></i>首页</router-link>
-          </drop-down-item>
-          <drop-down-item>
-            <router-link to="/my"><i class="iconfont icon-user"></i>我的vue</router-link>
-          </drop-down-item>
-        </drop-down-menu>
-      </drop-down>
-    </header>
-    <nav class="tab">
-      <li
-        :class="['tab-item', {active: searchType === 1}]"
-        @click="changeType(1)">
-        <base-select v-model="sendData.sort_type">
-          <base-option label="综合" value=""></base-option>
-          <base-option label="最新上架" value="sort_winsdate_desc"></base-option>
-          <base-option label="价格最低" value="sort_dredisprice_asc"></base-option>
-          <base-option label="价格最高" value="sort_dredisprice_desc"></base-option>
-          <base-option label="评论最多" value="sort_commentcount_desc"></base-option>
-        </base-select>
-        <i class="iconfont icon-down"></i>
-      </li>
-      <li
-        :class="['tab-item', {active: searchType === 2}]"
-        @click="changeType(2, 'sort_totalsales15_desc')">销量
-      </li>
-      <li
-        :class="['tab-item', {active: searchType === 3}]"
-        >服务
-      </li>
-    </nav>
-    <product-list :productList="searchList" />
-    <empty-list v-if="firstLoadEmpty" text="暂时搜索不到该商品"/>
-    <load-more v-else :url="url" :success="loadSuccess" :params="sendData" jsonp ref="loadmore"/>
+    <div class="content">
+      <header class="search-head">
+        <router-link to="/" class="header-go-back" v-once><i class="iconfont icon-left"></i></router-link>
+        <search-header :defaultValue="keyword"/>
+        <drop-down>
+          <div class="header-more"><i class="iconfont icon-transverse-more"></i></div>
+          <drop-down-menu slot="dropdown">
+            <drop-down-item>
+              <router-link to="/"><i class="iconfont icon-home"></i>首页</router-link>
+            </drop-down-item>
+            <drop-down-item>
+              <router-link to="/my"><i class="iconfont icon-user"></i>我的vue</router-link>
+            </drop-down-item>
+          </drop-down-menu>
+        </drop-down>
+      </header>
+      <nav class="tab">
+        <li
+          :class="['tab-item', {active: searchType === 1}]"
+          @click="changeType(1)">
+          <base-select v-model="sendData.sort_type">
+            <base-option label="综合" value=""></base-option>
+            <base-option label="最新上架" value="sort_winsdate_desc"></base-option>
+            <base-option label="价格最低" value="sort_dredisprice_asc"></base-option>
+            <base-option label="价格最高" value="sort_dredisprice_desc"></base-option>
+            <base-option label="评论最多" value="sort_commentcount_desc"></base-option>
+          </base-select>
+          <i class="iconfont icon-down"></i>
+        </li>
+        <li
+          :class="['tab-item', {active: searchType === 2}]"
+          @click="changeType(2, 'sort_totalsales15_desc')">销量
+        </li>
+        <li
+          :class="['tab-item', {active: searchType === 3}]"
+          @click="changeType(3)">
+          <base-select v-model="filtType" placeholder="服务" multiple collapseTags>
+            <base-option label="京东物流" value="col_type,L0M0"></base-option>
+            <base-option label="京尊达" value="product_ext,b3v1"></base-option>
+            <base-option label="有货优先" value="redisstore,1"></base-option>
+            <base-option label="货到付款" value="cod,L1M1"></base-option>
+            <base-option label="全球购商品" value="product_ext,b11v1"></base-option>
+          </base-select>
+          <i class="iconfont icon-down"></i>
+        </li>
+      </nav>
+      <product-list :productList="searchList" />
+      <empty-list v-if="firstLoadEmpty" text="暂时搜索不到该商品"/>
+      <load-more v-else :url="url" :success="loadSuccess" :params="sendData" jsonp ref="loadmore"/>
+    </div>
     <the-footer />
   </div>
 </template>
@@ -80,6 +90,11 @@ export default {
     'sendData.sort_type' () {
       this.reload();
       this.$refs.loadmore.loadmore();
+    },
+    filtType (val) {
+      this.sendData.filt_type = val.join(';');
+      this.reload();
+      this.$refs.loadmore.loadmore();
     }
   },
   data () {
@@ -90,10 +105,12 @@ export default {
         keyword: this.$route.query.keyword,
         page: 1,
         fdesc: '北京',
-        sort_type: ''
+        sort_type: '',
+        filt_type: ''
       },
       firstLoadEmpty: false,
-      searchType: 1
+      searchType: 1,
+      filtType: []
     }
   },
   created () {
@@ -145,11 +162,13 @@ export default {
     }
   }
   .tab-item {
-    width: rem(160);
+    width: rem(150);
     display: flex;
     justify-content: center;
+    @include txthid;
+    @include hid;
+    text-align: right;
   }
 }
 </style>
-
 

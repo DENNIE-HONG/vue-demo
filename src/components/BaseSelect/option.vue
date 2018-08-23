@@ -31,12 +31,14 @@ export default {
       this.selected = selectedArr;
     });
     this.multiple = this.$parent.multiple;
+    this.isGroup = this.$parent.$options._componentTag === 'base-select';
   },
   data () {
     return {
       multiple: false,
       isSelected: false,
-      selected: []
+      selected: [],
+      isGroup: false
     }
   },
   methods: {
@@ -51,9 +53,15 @@ export default {
       if (!this.multiple) {
         this.selected.length = 0;
       }
-      !this.selected.includes(name) && this.selected.push(name);
+      if (this.selected.includes(name)) {
+        // 多选情况，再次点击是取消选项
+        this.selected.splice(this.selected.findIndex((item) => { item === name}));
+        this.isGroup && this.$parent.$emit('cancelSelected', selectedData);
+      } else {
+        this.selected.push(name);
+        this.isGroup && this.$parent.$emit('selectChange', selectedData);
+      }
       // 通知父组件
-      this.$parent.$options._componentTag === 'base-select' && this.$parent.$emit('selectChange', selectedData);
     }
   }
 }

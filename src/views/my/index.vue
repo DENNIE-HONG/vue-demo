@@ -1,33 +1,35 @@
 <template>
-  <div class="my">
-    <header>
-      <div class="my-behavior">
-        <div class="my-info">
-          <img
-            class="my-avatar"
-            :src="avatar"
-          />
-          <span v-if="isLogin">{{name}}</span>
+  <div class="page my">
+    <div class="content">
+      <header>
+        <div class="my-behavior">
+          <div class="my-info">
+            <img
+              class="my-avatar"
+              :src="avatar"
+            />
+            <span v-if="isLogin">{{name}}</span>
+          </div>
         </div>
+        <router-link
+          v-if="isLogin"
+          to="/setting"
+          class="my-setting">设置
+        </router-link>
+      </header>
+      <div class="my-login">
+        <span>{{name}}</span>
+        <div
+          v-if="isLogin"
+          class="pull-right"
+          @click="signOut">退出
+        </div>
+        <router-link
+          v-else
+          to="/login"
+          class="pull-right">登入
+        </router-link>
       </div>
-      <router-link
-        v-if="isLogin"
-        to="/setting"
-        class="my-setting">设置
-      </router-link>
-    </header>
-    <div class="my-login">
-      <span>{{name}}</span>
-      <div
-        v-if="isLogin"
-        class="pull-right"
-        @click="signOut">退出
-      </div>
-      <router-link
-        v-else
-        to="/login"
-        class="pull-right">登入
-      </router-link>
     </div>
     <the-footer />
   </div>
