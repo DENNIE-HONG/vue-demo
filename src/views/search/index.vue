@@ -1,21 +1,9 @@
 <template>
   <div class="page search">
     <div class="content">
-      <header class="search-head">
-        <router-link to="/" class="header-go-back" v-once><i class="iconfont icon-left"></i></router-link>
+      <header-banner>
         <search-header :defaultValue="keyword"/>
-        <drop-down>
-          <div class="header-more"><i class="iconfont icon-transverse-more"></i></div>
-          <drop-down-menu slot="dropdown">
-            <drop-down-item>
-              <router-link to="/"><i class="iconfont icon-home"></i>首页</router-link>
-            </drop-down-item>
-            <drop-down-item>
-              <router-link to="/my"><i class="iconfont icon-user"></i>我的vue</router-link>
-            </drop-down-item>
-          </drop-down-menu>
-        </drop-down>
-      </header>
+      </header-banner>
       <nav class="tab">
         <li
           :class="['tab-item', {active: searchType === 1}]"
@@ -58,12 +46,10 @@ import SearchHeader from 'coms/SearchHeader/index.vue';
 import LoadMore from 'coms/LoadMore/index.vue';
 import ProductList from 'coms/ProductList/index.vue';
 import EmptyList from 'coms/EmptyList/index.vue';
-import DropDown from 'coms/DropDown/index.vue';
-import DropDownMenu from 'coms/DropDown/menu.vue';
-import DropDownItem from 'coms/DropDown/item.vue';
 import TheFooter from 'coms/Layout/TheFooter.vue';
 import BaseSelect from 'coms/BaseSelect/index.vue';
 import BaseOption from 'coms/BaseSelect/option.vue';
+import HeaderBanner from 'coms/HeaderBanner/index.vue';
 export default {
   name: 'Search',
   components: {
@@ -71,12 +57,10 @@ export default {
     LoadMore,
     ProductList,
     EmptyList,
-    DropDown,
-    DropDownMenu,
-    DropDownItem,
     TheFooter,
     BaseSelect,
-    BaseOption
+    BaseOption,
+    HeaderBanner
   },
   metaInfo: {
     title: 'My Vue Search',
@@ -164,16 +148,6 @@ export default {
 </script>
 <style lang="scss">
 .search {
-  &-head {
-    display: flex;
-    padding: rem(20) 0;
-    align-items: center;
-    background-color: white;
-    border-bottom: 1px solid nth($fgray, 1);
-    .search-header {
-      flex: 1;
-    }
-  }
   .tab-item {
     width: rem(150);
     display: flex;

@@ -3,25 +3,32 @@
  * @author luyanhong 2018-08-03
 */
 import Cookie from 'universal-cookie';
+import jwt from 'jsonwebtoken';
 const cookies = new Cookie();
 const required = () => {
   throw Error('missing parameter');
 }
 const userName = 'name';
 const defaultName = 'vue宝宝';
+const vueToken = 'vue_token';
 import defaultAvatar from 'assets/img/user.png';
 // 登入
 export function postLogin (params = required()) {
   return new Promise((resolve, reject) => {
-    if (!params.name) {
+    const { name } = params;
+    if (!name) {
       reject({
         code: 1,
         msg: '缺少参数name'
       });
     }
-    cookies.set(userName, params.name, {
+    const token = jwt.sign({
+      name
+    }, 'secret', { expiresIn: '3 days' });
+    cookies.set(vueToken, token, {
       path: '/'
     });
+    localStorage.setItem(userName, name);
     resolve({
       code: 200,
       msg: ''
@@ -36,8 +43,10 @@ export function getUser () {
     name: defaultName,
     isLogin: false
   };
-  const name = cookies.get(userName);
-  if (name) {
+  const token = cookies.get(vueToken);
+  const decoded = token && jwt.verify(token, 'secret');
+  if (decoded && decoded[userName]) {
+    const name = localStorage.getItem(userName);
     Object.assign(data, {
       name,
       isLogin: true
@@ -52,10 +61,10 @@ export function getUser () {
 
 // 退出
 export function signOut () {
-  const name = cookies.get(userName);
+  const token = cookies.get(vueToken);
   return new Promise((resolve, reject) => {
-    if (name) {
-      cookies.remove(userName);
+    if (token) {
+      cookies.remove(vueToken);
       resolve({
         code: 200,
         msg: ''

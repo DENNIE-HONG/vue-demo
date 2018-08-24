@@ -57,12 +57,12 @@ export default {
   }
   &-pic {
     position: relative;
-    height: rem(450);
-    width: 100%;
+    height: 0;
+    padding-top: 100%;
     @include hid;
     &.small {
-      width: 60%;
-      height: rem(150);
+      padding-top: 40%;
+      width: 70%;
       margin: rem(30) auto rem(20);
       > img {
         width: 100%;
@@ -72,11 +72,8 @@ export default {
       position: absolute;
       top: 0;
       left: 0;
-      right: 0;
-      bottom: 0;
-      margin: auto;
-      max-height: 100%;
-      max-width: 100%;
+      height: auto;
+      width: 100%;
     }
   }
   &-title {

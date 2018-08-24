@@ -1,11 +1,7 @@
 <template>
   <div class="page setting">
     <div class="content">
-      <header>
-        <router-link to="/my" class="header-btn"><i class="iconfont icon-left"></i></router-link>
-        <span>设置</span>
-        <router-link to="/" class="header-btn header-home"><i class="iconfont icon-home"></i></router-link>
-      </header>
+      <header-banner>设置</header-banner>
       <section class="setting-info">
         <div class="info-item">
           <span>vue头像</span>
@@ -83,6 +79,7 @@ import UploadPicture from 'coms/UploadPicture/index.vue';
 import BaseSelect from 'coms/BaseSelect/index.vue';
 import BaseOption from 'coms/BaseSelect/option.vue';
 import TheFooter from 'coms/Layout/TheFooter.vue';
+import HeaderBanner from 'coms/HeaderBanner/index.vue';
 export default {
   name: 'Setting',
   metaInfo: {
@@ -105,7 +102,8 @@ export default {
     UploadPicture,
     BaseSelect,
     BaseOption,
-    TheFooter
+    TheFooter,
+    HeaderBanner
   },
   data () {
     return {
@@ -157,28 +155,6 @@ export default {
 </script>
 <style lang="scss">
 .setting {
-  header {
-    display: flex;
-    height: rem(88);
-    padding: 0 rem(20);
-    background-color: white;
-    justify-content: space-between;
-    align-items: center;
-    font-size: rem(34);
-    border-bottom: 1px solid nth($fgray, 1);
-    .header-btn {
-      width: rem(100);
-      > .iconfont {
-        font-size: rem(36);
-      }
-    }
-    .header-home {
-      text-align: right;
-      > .iconfont {
-        font-size: rem(50);
-      }
-    }
-  }
   &-info {
     margin-bottom: rem(15);
     .info-item {

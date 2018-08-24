@@ -12,6 +12,7 @@
   }
   &-txt {
     color: nth($fblack, 3);
+    font-size: rem(28);
     &.active {
       color: nth($fblack, 1);
     }

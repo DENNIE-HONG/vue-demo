@@ -1,7 +1,8 @@
 <template>
   <div class="page my">
     <div class="content">
-      <header>
+      <header-banner>我的vue</header-banner>
+      <div class="my-header">
         <div class="my-behavior">
           <div class="my-info">
             <img
@@ -16,7 +17,7 @@
           to="/setting"
           class="my-setting">设置
         </router-link>
-      </header>
+      </div>
       <div class="my-login">
         <span>{{name}}</span>
         <div
@@ -37,10 +38,12 @@
 <script>
 import { getUser, signOut } from 'service/api/user.js';
 import TheFooter from 'coms/Layout/TheFooter.vue';
+import HeaderBanner from 'coms/HeaderBanner/index.vue';
 export default {
   name: 'My',
   components: {
-    TheFooter
+    TheFooter,
+    HeaderBanner
   },
   data () {
     return {
@@ -69,7 +72,7 @@ export default {
 </script>
 <style lang="scss">
 .my {
-  header {
+  &-header {
     position: relative;
     height: rem(400);
     background: url('./img/bg.png') top/100% no-repeat;
