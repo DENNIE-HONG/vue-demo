@@ -31,7 +31,7 @@ export default {
       default: 'text',
       type: String,
       validator (value) {
-        return ['email', 'number', 'password', 'search', 'text', 'url', 'tel'].indexOf(value) !== - 1
+        return ['email', 'number', 'password', 'search', 'text', 'url', 'tel'].indexOf(value) !== -1
       }
     },
 

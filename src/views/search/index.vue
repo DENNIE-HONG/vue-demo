@@ -132,7 +132,6 @@ export default {
         this.$refs.loadmore.toEnd();
         this.sendData.page === 1 && (this.firstLoadEmpty = true);
       }
-
     },
     reload () {
       this.searchList = [];

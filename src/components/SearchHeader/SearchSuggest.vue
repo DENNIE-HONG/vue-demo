@@ -90,7 +90,7 @@ export default {
     },
     historyWords () {
       if (this.historyWords.length > MAX_HISTORY_WORDS) {
-        this.historyWords.splice(- 1, 1);
+        this.historyWords.splice(-1, 1);
       }
     }
   },
@@ -130,11 +130,11 @@ export default {
         storage(this.historyWords);
       }
 
-      this.$router.push({ path: `/search?keyword=${ keyword}` });
+      this.$router.push({ path: `/search?keyword=${keyword}` });
       this.destroy();
     },
     linkToSearch (keyword) {
-      this.$router.push({ path: `/search?keyword=${ keyword}` });
+      this.$router.push({ path: `/search?keyword=${keyword}` });
       this.destroy();
     }
   }

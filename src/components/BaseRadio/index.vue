@@ -50,7 +50,7 @@ export default {
   computed: {
     model: {
       get () {
-        return this.isGroup ? this.$parent.value: this.value;
+        return this.isGroup ? this.$parent.value : this.value;
       },
       set (val) {
         !this.isGroup && this.$emit('change', val);

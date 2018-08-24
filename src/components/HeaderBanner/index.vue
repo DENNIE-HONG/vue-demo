@@ -39,7 +39,7 @@ export default {
   },
   methods: {
     goBack () {
-      this.$router.go(- 1);
+      this.$router.go(-1);
     }
   }
 }

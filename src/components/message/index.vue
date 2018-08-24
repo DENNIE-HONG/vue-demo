@@ -18,7 +18,7 @@ export default {
       default: 'info',
       type: String,
       validator (value) {
-        return ['success', 'info', 'error', 'warning'].indexOf(value) !== - 1
+        return ['success', 'info', 'error', 'warning'].indexOf(value) !== -1
       }
     },
 

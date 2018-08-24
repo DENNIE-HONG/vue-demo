@@ -58,7 +58,6 @@ export default {
       } catch (error) {
         this.fail(error);
       }
-
     },
     /**
      * 校验图片

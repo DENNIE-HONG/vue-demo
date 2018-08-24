@@ -22,7 +22,6 @@
     "arrow-body-style": [2,"as-needed"],
     "class-methods-use-this": 0,
     "comma-dangle": [2, "never"],
-    "camelcase": [2, { "properties": "always" }],
     "comma-style": [2, "last"],
     "constructor-super": 2,
     "dot-location": [2, "property"],

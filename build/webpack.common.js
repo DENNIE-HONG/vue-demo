@@ -77,7 +77,7 @@ module.exports = (env) => {
         },
         {
           test: /\.js$/,
-          loader: 'babel-loader',
+          loader: env.production ? 'babel-loader' : ['babel-loader', 'eslint-loader'],
           exclude: /node_modules/
         },
         {

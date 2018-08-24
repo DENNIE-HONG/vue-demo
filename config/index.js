@@ -7,7 +7,7 @@ const WEBPACK_COMMON_CONFIG = {
   entry: {
     main: resolve('src/main.js')
   },
-  sourceCode: resolve('src'),       // 源码目录路径
+  sourceCode: resolve('src'), // 源码目录路径
   assetsDirectory: resolve('dist'), // 资源路径
   projectRoot: resolve('/'),
   assetsViews: resolve('index.html'),

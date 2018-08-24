@@ -137,7 +137,7 @@ export default {
   created () {
     getUser().then((res) => {
       this.name = res.data.name;
-      this.avatar= res.data.avatar;
+      this.avatar = res.data.avatar;
     });
   },
   methods: {
