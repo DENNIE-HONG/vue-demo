@@ -1,12 +1,13 @@
 .btn-default,
 .btn-primary {
   display: inline-block;
-  padding: rem(20);
+  padding: rem(25) rem(30);
   font-size: rem(28);
   border-style: solid;
   border-width: 1px;
   border-radius: rem(10);
   text-align: center;
+  line-height: 1;
 }
 .btn-default {
   border-color: nth($fgray, 1);

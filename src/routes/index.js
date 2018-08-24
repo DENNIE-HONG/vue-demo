@@ -7,6 +7,7 @@ import My from 'views/my/index.vue';
 import Login from 'views/login/index.vue';
 import Setting from 'views/setting/index.vue';
 import Search from 'views/search/index.vue';
+import NotFound from 'views/404/index.vue';
 
 const routes = [
   { path: '/', component: Home },
@@ -16,6 +17,7 @@ const routes = [
   { path: '/setting',
     component: Setting,
     meta: { requiresAuth: true }
-  }
+  },
+  { path: '*', component: NotFound }
 ];
 export default routes;

@@ -1,5 +1,5 @@
 <template>
-  <div class="search">
+  <div class="page search">
     <div class="content">
       <header class="search-head">
         <router-link to="/" class="header-go-back" v-once><i class="iconfont icon-left"></i></router-link>
@@ -77,6 +77,19 @@ export default {
     TheFooter,
     BaseSelect,
     BaseOption
+  },
+  metaInfo: {
+    title: 'My Vue Search',
+    meta: [
+      {
+        'property': 'keywords',
+        'content': 'vue练习搜索页'
+      },
+      {
+        'property': 'description',
+        'content': 'vue练习搜索页'
+      }
+    ]
   },
   computed: {
     keyword () {
