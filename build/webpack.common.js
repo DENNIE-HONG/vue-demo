@@ -28,8 +28,9 @@ module.exports = (env) => {
         cacheGroups: {
           common: {
             chunks: 'all',
-            minChunks: 5,
-            name: 'common'
+            minChunks: 3,
+            name: 'common',
+            minSize: 1000
           },
           vendors: {
             test: /node_modules/,
