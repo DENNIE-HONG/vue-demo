@@ -8,6 +8,7 @@ import Login from 'views/login/index.vue';
 import Setting from 'views/setting/index.vue';
 import Search from 'views/search/index.vue';
 import NotFound from 'views/404/index.vue';
+import Product from 'views/product/index.vue';
 
 const routes = [
   { path: '/', component: Home },
@@ -18,6 +19,7 @@ const routes = [
     component: Setting,
     meta: { requiresAuth: true }
   },
+  { path: '/product/:productId', component: Product },
   { path: '*', component: NotFound }
 ];
 export default routes;

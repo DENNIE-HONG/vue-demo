@@ -7,13 +7,15 @@
         v-for="(list, index) in productList"
         :key="list.wareId + index"
         class="product-list-item">
-        <template v-if="list.itemType == 0">
+        <router-link
+          v-if="list.itemType == 0"
+          :to="'product/' + list.wareId">
           <div class="product-list-pic"><img v-lazy="list.imageurl"/></div>
           <h4 class="product-list-title">{{list.wname}}</h4>
           <div class="product-list-info">
             <span>￥{{list.jdPrice}}</span>
           </div>
-        </template>
+        </router-link>
         <div
           v-if="list.itemType == 1"
           class="product-list-shop">
