@@ -70,6 +70,10 @@
   </div>
 </template>
 <script>
+/**
+ * 评论模块
+ * @author luyanhong 2018-08-29
+*/
 import LoadMore from 'coms/LoadMore';
 import BaseCheckbox from 'coms/BaseCheckbox';
 export default {
@@ -77,6 +81,12 @@ export default {
   components: {
     LoadMore,
     BaseCheckbox
+  },
+  props: {
+    isSimple: {
+      default: true,
+      type: Boolean
+    }
   },
   data () {
     return {
