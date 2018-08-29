@@ -44,8 +44,16 @@ export function getUser () {
     isLogin: false
   };
   const token = cookies.get(vueToken);
-  const decoded = token && jwt.verify(token, 'secret');
-  if (decoded && decoded[userName]) {
+  let deCoded;
+  if (token) {
+    jwt.verify(token, 'secret', function (err, decoded) {
+      if (err) {
+        return;
+      }
+      deCoded = decoded;
+    });
+  }
+  if (deCoded && deCoded[userName]) {
     const name = localStorage.getItem(userName);
     Object.assign(data, {
       name,

@@ -117,7 +117,7 @@ export default {
     // 触底加载事件
     scrollToBottomLoading () {
       if (scrollBottom(window, 30)) {
-        this.params.page % 3 !== 0 && this.loadmore();
+        this.state !== END && this.params.page % 3 !== 0 && this.loadmore();
       }
     }
   }

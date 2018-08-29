@@ -11,6 +11,13 @@
   </label>
 </template>
 <script>
+/**
+ * 多选框
+ * @param {Boolean} checked, 是否选中，默认否
+ * @author luyanhong 2018-08-08
+ * @example
+ * <base-checkbox model="xx"></base-checkbox>
+*/
 export default {
   name: 'BaseCheckbox',
   model: {
@@ -51,7 +58,6 @@ export default {
       display: none;
       color: white;
       font-size: rem(24);
-      line-height: rem(28);
       &:after {
         display: block;
         content: '\2713';
@@ -60,11 +66,10 @@ export default {
   }
   &-txt {
     display: inline-block;
-    line-height: rem(28);
     vertical-align: top;
+    font-size: rem(28);
   }
 }
-
 </style>
 
 

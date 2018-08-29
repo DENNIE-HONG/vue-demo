@@ -3,9 +3,8 @@
     <div class="content">
       <header-banner>商品页</header-banner>
       <empty-list text="哈哈哈哈哈，抓不到数据啦" />
-      <section>
+      <section class="product-comment">
         <comment-list />
-
       </section>
     </div>
     <the-footer />
@@ -37,3 +36,11 @@ export default {
   }
 }
 </script>
+<style lang="scss">
+.product {
+  &-comment {
+    margin-top: rem(15);
+  }
+}
+</style>
+
