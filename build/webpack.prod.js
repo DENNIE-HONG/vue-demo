@@ -3,7 +3,6 @@
  * webpack生产环境配置
  * @author luyanhong 2018-07-24
 */
-const webpack = require('webpack');
 const merge = require('webpack-merge');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
@@ -33,14 +32,14 @@ module.exports = (env) => {
             remove: false
           }
         })
-      ]
+      ],
+      moduleIds: 'hashed'
     },
     plugins: [
       new MiniCssExtractPlugin({
         filename: 'css/[name].[contenthash:8].css',
         chunkFilename: 'css/[name].[contenthash:8].css'
-      }),
-      new webpack.HashedModuleIdsPlugin()
+      })
     ],
     output: {
       filename: 'js/[name].[chunkhash:8].js',
