@@ -1,19 +1,21 @@
 <template>
-  <div class="com-loadmore">
+  <div
+    v-show="state"
+    class="com-loadmore">
     <div
-      v-show="state === 0"
+      v-show="state === 1"
       @click="loadmore">点击加载更多
     </div>
     <div
-      v-show="state === 1"
+      v-show="state === 2"
       class="com-loadmore-loading">拼命加载中...
     </div>
     <div
-      v-show="state === 2"
+      v-show="state === 3"
       class="com-loadmore-end"><span>我也是有底线的</span>
     </div>
     <div
-      v-show="state === 3"
+      v-show="state === 4"
       @click="loadmore">加载失败
     </div>
   </div>
@@ -35,10 +37,11 @@ import jsonp from 'jsonp';
 import querystring from 'querystring';
 import { debounce } from 'throttle-debounce';
 import scrollBottom from 'utils/scroll-bottom.js';
-const READY = 0; // 准备
-const LOADING = 1; // 加载中动画
-const END = 2; // 加载到底了
-const FAIL = 3; // 加载失败
+const READY = 1; // 准备
+const LOADING = 2; // 加载中动画
+const END = 3; // 加载到底了
+const FAIL = 4; // 加载失败
+const HIDE = 0
 const required = () => {
   throw Error('missing parameter error!');
 }
@@ -117,8 +120,12 @@ export default {
     // 触底加载事件
     scrollToBottomLoading () {
       if (scrollBottom(window, 30)) {
-        this.state !== END && this.params.page % 3 !== 0 && this.loadmore();
+        const isHide = this.$el.offsetParent === null;
+        !isHide && this.state !== END && this.params.page % 3 !== 0 && this.loadmore();
       }
+    },
+    hide () {
+      this.state = HIDE;
     }
   }
 }

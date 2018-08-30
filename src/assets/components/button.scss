@@ -1,7 +1,7 @@
 .btn-default,
 .btn-primary {
   display: inline-block;
-  padding: rem(25) rem(30);
+  padding: rem(20) rem(30);
   font-size: rem(28);
   border-style: solid;
   border-width: 1px;
@@ -15,7 +15,7 @@
   }
 }
 .btn-default {
-  border-color: nth($fgray, 1);
+  border-color: nth($fgray, 5);
   background-color: white;
 }
 .btn-primary {

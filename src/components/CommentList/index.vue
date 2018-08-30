@@ -1,71 +1,66 @@
 <template>
-  <div :class="['com-comment', {active: !simple}]">
-    <div class="com-comment-tab">
-      <template v-if="simple">
-        评价
-        <span class="tab-good-score">好评{{summary.GoodRateShow}}%</span>
-        <div
-          class="pull-right"
-          @click="checkMore">共 {{summary.CommentCountStr}} 条<i class="iconfont icon-right"></i></div>
-      </template>
-      <template v-else>
+  <div class="com-comment">
+    <simple-comment-list
+      v-show="isSimple"
+      :commentList="simpleCommentList"
+      :summary="simpleSummary"
+      @changeScore="simpleChangeScore"
+      @checkMore="checkMore"/>
+    <div v-show="!isSimple">
+      <div class="com-comment-tab">
         <base-checkbox v-model="onlyCurrent">只看当前商品</base-checkbox>
         <div class="pull-right">好评度{{summary.GoodRateShow}}%</div>
-      </template>
-    </div>
-    <div
-      class="com-comment-type"
-      @click="changeScore($event)">
+      </div>
       <div
-        :class="['com-comment-tag', 'tag-default', {active :sendData.score === 0}]"
-        data-score="0">全部{{summary.CommentCountStr}}</div>
-      <div
-        :class="['com-comment-tag', 'tag-default', {active :sendData.score === 3}]"
-        data-score="3">好评{{summary.GoodCountStr}}</div>
-      <div
-        :class="['com-comment-tag', 'tag-default', {active :sendData.score === 2}]"
-        data-score="2"
-        >中评{{summary.GeneralCountStr}}</div>
-      <div
-        :class="['com-comment-tag', 'tag-default', {active :sendData.score === 1}]"
-        data-score="1"
-        >差评{{summary.PoorCountStr}}</div>
-    </div>
-    <ul class="com-comment-list">
-      <li
-        v-for="(item,index) in commentList"
-        v-show="(simple && index < 2) || !simple"
-        class="com-comment-item">
-          <div class="com-comment-info">
-            <span class="com-comment-name">{{item.nickname}}</span>
-            <div class="com-comment-time pull-right">{{item.referenceTime}}</div>
-          </div>
-          <p class="com-comment-detail">{{item.content}}</p>
-          <div
-            v-if="item.imageCount"
-            class="com-comment-pics">
-            <div
-              v-for="img in item.images"
-              class="com-comment-pic pull-left">
-              <img :src="img.imgUrl + '!cc_100x100.dpg'"/>
+        class="com-comment-type"
+        @click="changeScore($event)">
+        <div
+          :class="['com-comment-tag', 'tag-default', {active :sendData.score === 0}]"
+          data-score="0">全部{{summary.CommentCountStr}}</div>
+        <div
+          :class="['com-comment-tag', 'tag-default', {active :sendData.score === 3}]"
+          data-score="3">好评{{summary.GoodCountStr}}</div>
+        <div
+          :class="['com-comment-tag', 'tag-default', {active :sendData.score === 2}]"
+          data-score="2"
+          >中评{{summary.GeneralCountStr}}</div>
+        <div
+          :class="['com-comment-tag', 'tag-default', {active :sendData.score === 1}]"
+          data-score="1"
+          >差评{{summary.PoorCountStr}}</div>
+      </div>
+      <ul class="com-comment-list">
+        <li
+          v-for="(item,index) in commentList"
+          :key="item.id + index"
+          class="com-comment-item">
+            <div class="com-comment-info">
+              <span class="com-comment-name">{{item.nickname}}</span>
+              <div class="com-comment-time pull-right">{{item.referenceTime}}</div>
             </div>
-          </div>
-      </li>
-    </ul>
-    <load-more
+            <p class="com-comment-detail">{{item.content}}</p>
+            <div
+              v-if="item.imageCount"
+              class="com-comment-pics">
+              <div
+                v-for="img in item.images"
+                class="com-comment-pic pull-left">
+                <img :src="img.imgUrl + '!cc_100x100.dpg'"/>
+              </div>
+            </div>
+        </li>
+      </ul>
+      <div
+        v-show="FirstLoadEmpty"
+        class="com-comment-empty">暂无评价，欢迎您购买之后留下您的宝贵评价：）
+      </div>
+      <load-more
+        v-show="!FirstLoadEmpty"
         url="https://wq.jd.com/commodity/comment/getcommentlist" :success="loadSuccess"
         :params="sendData"
         jsonp
         ref="loadmore"
-        :class="{hide: simple}"
       />
-    <div
-      v-if="simple"
-      class="com-comment-more">
-      <div
-        class="btn-default"
-        @click="checkMore">查看全部评价<i class="iconfont icon-right"></i>
-      </div>
     </div>
   </div>
 </template>
@@ -76,32 +71,38 @@
 */
 import LoadMore from 'coms/LoadMore';
 import BaseCheckbox from 'coms/BaseCheckbox';
+import SimpleCommentList from './SimpleCommentList';
+const PAGE_SIZE = 10;
 export default {
   name: 'CommentList',
   components: {
     LoadMore,
-    BaseCheckbox
+    BaseCheckbox,
+    SimpleCommentList
   },
   props: {
     isSimple: {
       default: true,
       type: Boolean
-    }
+    },
+    showComment: Function
   },
   data () {
     return {
       commentList: [],
+      simpleCommentList: [],
+      simpleSummary: {},
       sendData: {
         sorttype: 5,
         sku: this.$route.params.productId,
         page: 1,
         score: 0,
-        pagesize: 10
+        pagesize: PAGE_SIZE
       },
       summary: '',
       type: '',
-      simple: true,
-      onlyCurrent: false
+      onlyCurrent: false,
+      FirstLoadEmpty: false
     }
   },
   watch: {
@@ -123,26 +124,55 @@ export default {
         this.$refs.loadmore.fail(res.errmsg);
         return;
       }
-      if (res.result.comments.length) {
-        this.commentList = this.commentList.concat(res.result.comments);
+      const { comments } = res.result;
+      if (comments.length) {
+        this.FirstLoadEmpty = false;
+        this.commentList = this.commentList.concat(comments);
         this.summary = res.result.productCommentSummary;
-        this.sendData.page += 1;
+        if (comments.length < PAGE_SIZE) {
+          // 如果是第一页则隐藏加载更多
+          if (this.sendData.page === 1) {
+            this.$refs.loadmore.hide();
+          } else {
+            this.$refs.loadmore.toEnd();
+          }
+        } else {
+          this.sendData.page += 1;
+        }
+        this.setSimpleData(res.result);
       } else {
+        this.sendData.page === 1 && (this.FirstLoadEmpty = true);
         this.$refs.loadmore.toEnd();
       }
     },
+    // 查看好评、差评
     changeScore ($event) {
       const { score } = $event.target.dataset;
       score && (this.sendData.score = parseInt(score));
       this.checkMore();
     },
+    // 查看更多评论
     checkMore () {
-      this.simple = false;
+      const isSimple = false;
+      this.$emit('showComment', isSimple);
     },
+    // 重置数据并重载
     reload () {
       this.commentList = [];
       this.sendData.page = 1;
       this.$refs.loadmore.loadmore();
+    },
+    // 简版子组件设置score回调
+    simpleChangeScore (score) {
+      this.sendData.score = score;
+      this.checkMore();
+    },
+    setSimpleData (result) {
+      if (this.simpleCommentList.length) {
+        return;
+      }
+      this.simpleSummary = result.productCommentSummary;
+      this.simpleCommentList = result.comments.slice(0, 2);
     }
   }
 }
@@ -205,6 +235,10 @@ export default {
   }
   &-more {
     padding: rem(18) 0;
+    text-align: center;
+  }
+  &-empty {
+    padding: rem(30) rem(20);
     text-align: center;
   }
   &.active {

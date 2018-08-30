@@ -1,10 +1,25 @@
 <template>
   <div class="product page">
     <div class="content">
-      <header-banner>商品页</header-banner>
-      <empty-list text="哈哈哈哈哈，抓不到数据啦" />
+      <section
+        v-show="isCommentSimple"
+        class="product-content">
+        <header-banner>商品页</header-banner>
+        <empty-list text="哈哈哈哈哈，抓不到数据啦" />
+      </section>
       <section class="product-comment">
-        <comment-list />
+        <div
+          v-show="!isCommentSimple"
+          class="com-header-banner">
+          <div
+            @click="showComment(true)"
+            class="header-go-back"><i class="iconfont icon-left"></i></div>
+          <span class="com-header-banner-slot">商品评价</span>
+        </div>
+        <comment-list
+          :isSimple="isCommentSimple"
+          @showComment="showComment"
+        />
       </section>
     </div>
     <the-footer />
@@ -25,21 +40,25 @@ export default {
   },
   data () {
     return {
-
+      isCommentSimple: true
     }
   },
   created () {
-
   },
   methods: {
-
+    /**
+     * 评论切换是否查看更多
+    */
+    showComment (isCommentSimple) {
+      this.isCommentSimple = isCommentSimple;
+    }
   }
 }
 </script>
 <style lang="scss">
 .product {
-  &-comment {
-    margin-top: rem(15);
+  &-content {
+    margin-bottom: rem(15);
   }
 }
 </style>
