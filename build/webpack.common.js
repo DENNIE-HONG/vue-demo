@@ -9,6 +9,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 const WEBPACK_COMMON_CONFIG = require('../config/index.js').WEBPACK_COMMON_CONFIG;
+const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 module.exports = (env) => {
   const config = {
     entry: WEBPACK_COMMON_CONFIG.entry,
@@ -27,7 +28,6 @@ module.exports = (env) => {
       splitChunks: {
         cacheGroups: {
           common: {
-            chunks: 'all',
             minChunks: 3,
             name: 'common',
             minSize: 1000
@@ -67,6 +67,9 @@ module.exports = (env) => {
       }),
       new StyleLintPlugin({
         files: ['**/*.{vue,htm,html,css,sss,less,scss,sass}'],
+      }),
+      new ScriptExtHtmlWebpackPlugin({
+        inline: 'manifest.js'
       }),
     ],
     module: {

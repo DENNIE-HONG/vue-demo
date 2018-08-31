@@ -1,5 +1,5 @@
 <template>
-  <div class="com-comment">
+  <div class="com-comment simple">
     <div class="com-comment-tab">
       评价
       <span class="tab-good-score">好评{{summary.GoodRateShow}}%</span>
@@ -28,7 +28,8 @@
     <ul class="com-comment-list">
       <li
         v-for="item in commentList"
-        class="com-comment-item">
+        class="com-comment-item"
+        @click="checkMore">
           <div class="com-comment-info">
             <span class="com-comment-name">{{item.nickname}}</span>
             <div class="com-comment-time pull-right">{{item.referenceTime}}</div>
@@ -68,6 +69,7 @@ export default {
     }
   },
   methods: {
+    // 绑定查看评论类型
     changeScore ($event) {
       let { score } = $event.target.dataset;
       if (score) {
@@ -75,10 +77,19 @@ export default {
         this.$emit('changeScore', score);
       }
     },
+    // 查看更多评论
     checkMore () {
       this.$emit('checkMore');
     }
   }
 }
 </script>
+<style lang="scss">
+.com-comment.simple {
+  .com-comment-detail {
+    @include linehid(3);
+  }
+}
+</style>
+
 

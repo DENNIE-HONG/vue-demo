@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Meta from 'vue-meta';
 import VueLazyload from 'vue-lazyload';
+import VueTouch from 'vue-touch';
 
 // 引入插件
 import router from './plugins/router';
@@ -11,6 +12,7 @@ import loadingImg from 'assets/img/loading.gif';
 import errorImg from 'assets/img/error.png';
 Vue.use(Meta);
 Vue.use(inject);
+Vue.use(VueTouch, { name: 'v-touch' });
 
 Vue.use(VueLazyload, {
   preLoad: 1.3,

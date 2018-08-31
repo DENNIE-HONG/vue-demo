@@ -45,7 +45,7 @@
               <div
                 v-for="img in item.images"
                 class="com-comment-pic pull-left">
-                <img :src="img.imgUrl + '!cc_100x100.dpg'"/>
+                <img v-lazy="img.imgUrl + '!cc_100x100.dpg'"/>
               </div>
             </div>
         </li>
@@ -62,23 +62,29 @@
         ref="loadmore"
       />
     </div>
+    <big-pictures :imgList="imgList"/>
   </div>
 </template>
 <script>
 /**
  * 评论模块
+ * @param {Boolean}   isSimple, 是否简易版，默认是
+ * @param {Function}  showComment, 通知父组件切换成评论详细版
  * @author luyanhong 2018-08-29
+ * @example
 */
 import LoadMore from 'coms/LoadMore';
 import BaseCheckbox from 'coms/BaseCheckbox';
 import SimpleCommentList from './SimpleCommentList';
+import BigPictures from 'coms/BigPictures';
 const PAGE_SIZE = 10;
 export default {
   name: 'CommentList',
   components: {
     LoadMore,
     BaseCheckbox,
-    SimpleCommentList
+    SimpleCommentList,
+    BigPictures
   },
   props: {
     isSimple: {
@@ -102,7 +108,8 @@ export default {
       summary: '',
       type: '',
       onlyCurrent: false,
-      FirstLoadEmpty: false
+      FirstLoadEmpty: false,
+      imgList: []
     }
   },
   watch: {
@@ -129,6 +136,7 @@ export default {
         this.FirstLoadEmpty = false;
         this.commentList = this.commentList.concat(comments);
         this.summary = res.result.productCommentSummary;
+        this.imgList = comments[0].images;
         if (comments.length < PAGE_SIZE) {
           // 如果是第一页则隐藏加载更多
           if (this.sendData.page === 1) {
@@ -240,10 +248,6 @@ export default {
   &-empty {
     padding: rem(30) rem(20);
     text-align: center;
-  }
-  &.active {
-
-
   }
 }
 </style>
