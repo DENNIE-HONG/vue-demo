@@ -5,7 +5,8 @@
       :commentList="simpleCommentList"
       :summary="simpleSummary"
       @changeScore="simpleChangeScore"
-      @checkMore="checkMore"/>
+      @checkMore="checkMore"
+      @checkImgDetail="checkImgDetail"/>
     <div v-show="!isSimple">
       <div class="com-comment-tab">
         <base-checkbox v-model="onlyCurrent">只看当前商品</base-checkbox>
@@ -43,8 +44,9 @@
               v-if="item.imageCount"
               class="com-comment-pics">
               <div
-                v-for="img in item.images"
-                class="com-comment-pic pull-left">
+                v-for="(img, i) in item.images"
+                class="com-comment-pic pull-left"
+                @click="checkImgDetail(item.images, i+1)">
                 <img v-lazy="img.imgUrl + '!cc_100x100.dpg'"/>
               </div>
             </div>
@@ -62,7 +64,7 @@
         ref="loadmore"
       />
     </div>
-    <big-pictures :imgList="imgList"/>
+    <big-pictures :imgList="imgList" :startIndex="imgStartIndex"/>
   </div>
 </template>
 <script>
@@ -109,7 +111,8 @@ export default {
       type: '',
       onlyCurrent: false,
       FirstLoadEmpty: false,
-      imgList: []
+      imgList: [],
+      imgStartIndex: 1
     }
   },
   watch: {
@@ -136,7 +139,7 @@ export default {
         this.FirstLoadEmpty = false;
         this.commentList = this.commentList.concat(comments);
         this.summary = res.result.productCommentSummary;
-        this.imgList = comments[0].images;
+        // this.imgList = comments[0].images;
         if (comments.length < PAGE_SIZE) {
           // 如果是第一页则隐藏加载更多
           if (this.sendData.page === 1) {
@@ -181,6 +184,15 @@ export default {
       }
       this.simpleSummary = result.productCommentSummary;
       this.simpleCommentList = result.comments.slice(0, 2);
+    },
+    // 查看大图
+    checkImgDetail (imgList, startIndex) {
+      imgList.map((img) => {
+        img.imgUrl = img.imgUrl.replace('s128x96_', '');
+        return img;
+      });
+      this.imgList = [...imgList];
+      this.imgStartIndex = startIndex;
     }
   }
 }

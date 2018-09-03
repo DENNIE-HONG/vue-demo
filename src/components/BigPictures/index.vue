@@ -1,6 +1,8 @@
 <template>
-  <div class="com-bigpic">
-    <div class="modal-bg black">
+  <div :class="['com-bigpic', {hide: isHide}]">
+    <div
+      class="modal-bg"
+      @click="close">
       <div class="com-bigpic-box">
         <v-touch
           ref="swiper"
@@ -13,7 +15,7 @@
             v-for="img in imgList"
             :key="img.id"
             class="com-bigpic-item">
-            <img :src="img.imgUrl" />
+            <img v-lazy="img.imgUrl" />
           </li>
         </v-touch>
       </div>
@@ -26,6 +28,8 @@
  * @param {Array}  imgList, 图片列表
  * @param {Number} startIndex, 从第几张开始看
  * @author luyanhong 2018-08-31
+ * @example
+ * <big-pictures imgList="[]" />
 */
 import lockWindow from 'utils/lockWindow.js';
 export default {
@@ -42,7 +46,8 @@ export default {
   },
   data () {
     return {
-      imgIndex: this.startIndex
+      imgIndex: this.startIndex,
+      isHide: true
     }
   },
   computed: {
@@ -52,15 +57,22 @@ export default {
   },
   watch: {
     imgIndex (index) {
-      const percent = -1 / this.imgCount * (index - 1) * 100;
-      this.$refs.swiper.$el.style.transform = `translateX(${percent}%)`;
+      this.setTransform(index);
+    },
+    imgList () {
+      this.setTransform(this.startIndex);
+      this.imgIndex = this.startIndex;
+      this.isHide = false;
+    },
+    isHide (isHide) {
+      if (isHide) {
+        lockWindow({ isLock: false });
+      } else {
+        lockWindow();
+      }
     }
   },
   created () {
-    lockWindow();
-    if (this.startIndex > 1) {
-      this.c
-    }
   },
   methods: {
     // 向左滑动
@@ -68,7 +80,6 @@ export default {
       if (this.imgIndex === this.imgCount) {
         return;
       }
-      console.log(this.imgIndex);
       this.imgIndex += 1;
     },
     // 向右滑动
@@ -77,10 +88,15 @@ export default {
         return;
       }
       this.imgIndex -= 1;
-      console.log(this.imgIndex);
     },
-    setTransform (translateX) {
+    // 根据index设置图片滚动距离
+    setTransform (index) {
+      const translateX = -1 / this.imgCount * (index - 1) * 100;
       this.$refs.swiper.$el.style.transform = `translateX(${translateX}%)`;
+    },
+    // 点击其他区域关闭
+    close () {
+      this.isHide = true;
     }
   }
 }
@@ -91,23 +107,30 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: black;
   }
   &-box {
+    height: 100%;
     @include hid;
   }
   &-list {
     display: flex;
     width: 200%;
+    height: 100%;
     transition: transform 0.5s ease;
   }
   &-item {
+    display: flex;
     width: 100%;
+    height: 100%;
     @include hid;
+    align-items: center;
     > img {
       display: block;
-      max-width: 100%;
+      max-width: 90%;
       height: auto;
       margin: auto;
+      @include hid;
     }
   }
 }

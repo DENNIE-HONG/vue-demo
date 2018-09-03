@@ -28,19 +28,21 @@
     <ul class="com-comment-list">
       <li
         v-for="item in commentList"
-        class="com-comment-item"
-        @click="checkMore">
+        class="com-comment-item">
           <div class="com-comment-info">
             <span class="com-comment-name">{{item.nickname}}</span>
             <div class="com-comment-time pull-right">{{item.referenceTime}}</div>
           </div>
-          <p class="com-comment-detail">{{item.content}}</p>
+          <p
+            class="com-comment-detail"
+            @click="checkMore">{{item.content}}</p>
           <div
             v-if="item.imageCount"
             class="com-comment-pics">
             <div
-              v-for="img in item.images"
-              class="com-comment-pic pull-left">
+              v-for="(img, index) in item.images"
+              class="com-comment-pic pull-left"
+              @click="checkImgDetail(item.images, index + 1)">
               <img :src="img.imgUrl + '!cc_100x100.dpg'"/>
             </div>
           </div>
@@ -80,6 +82,9 @@ export default {
     // 查看更多评论
     checkMore () {
       this.$emit('checkMore');
+    },
+    checkImgDetail (imgList, imgIndex) {
+      this.$emit('checkImgDetail', imgList, imgIndex);
     }
   }
 }
