@@ -41,7 +41,7 @@
             class="com-comment-pics">
             <div
               v-for="(img, index) in item.images"
-              class="com-comment-pic pull-left"
+              class="com-comment-pic"
               @click="checkImgDetail(item.images, index + 1)">
               <img :src="img.imgUrl + '!cc_100x100.dpg'"/>
             </div>
@@ -91,8 +91,14 @@ export default {
 </script>
 <style lang="scss">
 .com-comment.simple {
-  .com-comment-detail {
-    @include linehid(3);
+  .com-comment {
+    &-detail {
+      @include linehid(3);
+    }
+    &-tab,
+    &-type {
+      position: static;
+    }
   }
 }
 </style>

@@ -45,7 +45,7 @@
               class="com-comment-pics">
               <div
                 v-for="(img, i) in item.images"
-                class="com-comment-pic pull-left"
+                class="com-comment-pic"
                 @click="checkImgDetail(item.images, i+1)">
                 <img v-lazy="img.imgUrl + '!cc_100x100.dpg'"/>
               </div>
@@ -201,9 +201,12 @@ export default {
 .com-comment {
   background-color: white;
   &-tab {
+    position: sticky;
+    top: rem(98);
     padding: rem(20);
     border-bottom: 1px solid nth($fgray, 1);
     font-size: rem(28);
+    background-color: white;
     .tab-good-score {
       padding-left: rem(5);
       color: nth($fred, 1);
@@ -222,17 +225,23 @@ export default {
     padding: rem(20) 0;
     border-bottom: 1px solid nth($fgray, 1);
     font-size: rem(24);
+    &:last-child {
+      border-bottom: 0;
+    }
   }
   &-name,
   &-time {
     color: nth($fblack, 3);
   }
   &-pics {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
     @include hid;
   }
   &-pic {
-    width: rem(140);
-    height: rem(140);
+    width: rem(160);
+    height: rem(160);
     margin-right: rem(10);
     margin-bottom: rem(10);
     @include hid;
@@ -243,7 +252,10 @@ export default {
     }
   }
   &-type {
+    position: sticky;
+    top: rem(188);
     padding-left: rem(20);
+    background-color: white;
   }
   &-tag {
     margin-top: rem(20);
@@ -251,11 +263,13 @@ export default {
     &.active {
       background-color: nth($fgreen, 1);
       color: white;
+      border-color: nth($fgreen, 1);
     }
   }
   &-more {
     padding: rem(18) 0;
     text-align: center;
+    border-top: 1px solid nth($fgray, 1);
   }
   &-empty {
     padding: rem(30) rem(20);

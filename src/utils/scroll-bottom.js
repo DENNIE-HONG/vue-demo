@@ -14,7 +14,7 @@ const scrollBottom = (container = required(), threshold = 0) => {
   let { offsetHeight } = container;
   if (container === window || container === document) {
     container_H = document.documentElement.scrollHeight;
-    ({ scrollTop } = document.documentElement);
+    scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
     offsetHeight = container.innerHeight;
   }
   const scroll_H = container_H - offsetHeight;

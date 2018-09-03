@@ -4,7 +4,11 @@
       <section
         v-show="isCommentSimple"
         class="product-content">
-        <header-banner>商品页</header-banner>
+        <header-banner>
+          <span class="product-tab iconfont">商品</span>
+          <span class="product-tab iconfont">评价</span>
+          <span class="product-tab iconfont">推荐</span>
+        </header-banner>
         <empty-list text="哈哈哈哈哈，抓不到数据啦" />
       </section>
       <section class="product-comment">
@@ -59,6 +63,25 @@ export default {
 .product {
   &-content {
     margin-bottom: rem(15);
+  }
+  &-comment {
+    .com-header-banner {
+      position: sticky;
+      top: 0;
+    }
+  }
+  &-tab {
+    margin-right: rem(35);
+    &:last-child {
+      margin-right: 0;
+    }
+    &:active,
+    &:hover {
+      color: red;
+      &:before {
+        content: "\e6c1"
+      }
+    }
   }
 }
 </style>
