@@ -32,7 +32,6 @@
  * @example
  * <load-more url="xxx" success="function" params="{}" />
 */
-import message from 'coms/message/message.js';
 import jsonp from 'jsonp';
 import querystring from 'querystring';
 import { debounce } from 'throttle-debounce';
@@ -108,7 +107,7 @@ export default {
     */
     fail (error = required()) {
       this.state = FAIL;
-      message({
+      this.$message({
         type: 'error',
         message: error
       });

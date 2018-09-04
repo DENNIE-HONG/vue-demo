@@ -39,7 +39,6 @@
  * @author luyanhong 2018-07-30
 */
 import { debounce } from 'throttle-debounce';
-import message from 'coms/message/message.js';
 import lockWindow from 'utils/lockWindow.js';
 const MAX_HISTORY_WORDS = 10;
 /**
@@ -114,9 +113,9 @@ export default {
       this.$api['api/sug'](this.sendData).then((res) => {
         this.result = res.data.result;
       }).catch((err) => {
-        message({
+        this.$message({
           type: 'error',
-          message: err
+          message: err.toSring()
         });
       });
     },

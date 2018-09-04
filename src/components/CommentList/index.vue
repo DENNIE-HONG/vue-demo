@@ -93,7 +93,11 @@ export default {
       default: true,
       type: Boolean
     },
-    showComment: Function
+    showComment: Function,
+    productId: {
+      required: true,
+      type: String
+    }
   },
   data () {
     return {
@@ -102,7 +106,7 @@ export default {
       simpleSummary: {},
       sendData: {
         sorttype: 5,
-        sku: this.$route.params.productId,
+        sku: this.productId,
         page: 1,
         score: 0,
         pagesize: PAGE_SIZE

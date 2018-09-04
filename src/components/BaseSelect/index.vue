@@ -112,7 +112,7 @@ export default {
       }
     },
     getSelected () {
-      let valueArr = Array.isArray(this.value) ? this.value: [this.value];
+      let valueArr = Array.isArray(this.value) ? this.value : [this.value];
       if (!this.multiple && valueArr.length > 1) {
         [valueArr] = valueArr;
       }

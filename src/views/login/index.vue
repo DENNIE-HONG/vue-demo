@@ -23,7 +23,6 @@
 </template>
 <script>
 import BaseInput from 'coms/BaseInput';
-import message from 'coms/message/message.js';
 import { postLogin } from 'service/api/user.js';
 export default {
   name: 'Login',
@@ -83,7 +82,7 @@ export default {
     },
 
     showError (text) {
-      message({
+      this.$message({
         type: 'error',
         message: text
       });

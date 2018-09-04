@@ -22,7 +22,6 @@
  * @param {String}      acceptType, 可接受图片类型
  * @author luyanhong 2018-08-08
 */
-import message from 'coms/message/message.js';
 export default {
   name: 'UploadPicture',
   model: {
@@ -51,7 +50,7 @@ export default {
       try {
         const newUrl = await this.changeToBase64(file);
         this.$emit('change', newUrl);
-        message({
+        this.$message({
           type: 'success',
           message: '图片上传成功'
         });
@@ -101,7 +100,7 @@ export default {
     },
 
     fail (error) {
-      message({
+      this.$message({
         type: 'error',
         message: error
       });
