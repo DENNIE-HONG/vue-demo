@@ -11,7 +11,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "devServer": "webpack-dev-server --env.production=false --config build/webpack.dev.js",
     "dev": "webpack  --env.production=false --config build/webpack.dev.js",
-    "build": "webpack --env.production --config build/webpack.prod.js"
+    "build": "webpack --env.production --config build/webpack.prod.js",
+    "build:sit-preview": "npm_config_report=true webpack --env.production=false --config build/webpack.prod.js"
   },
   "repository": {
     "type": "git",
@@ -74,6 +75,7 @@
     "vue-lazyload": "^1.2.6",
     "vue-loader": "^15.2.6",
     "webpack": "^4.16.2",
+    "webpack-bundle-analyzer": "^2.13.1",
     "webpack-cli": "^3.0.8",
     "webpack-dev-server": "^3.1.4",
     "webpack-merge": "^4.1.3"

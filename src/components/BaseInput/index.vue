@@ -3,8 +3,7 @@
     <input
       class="com-input-box"
       :type="type"
-      :placeholder="placeholder"
-      :maxlength="maxlength"
+      v-bind="$attrs"
       :value="value"
       @input="onInput"
       autocomplete="off"
@@ -20,8 +19,7 @@
 <script>
 /**
  * 输入模块
- * @param {Number}  maxlength    输入最大个数，默认100
- * @param {String}  placeholder  提示文本
+ * @author luyanhong
 */
 export default {
   name: 'BaseInput',
@@ -34,19 +32,7 @@ export default {
         return ['email', 'number', 'password', 'search', 'text', 'url', 'tel'].indexOf(value) !== -1
       }
     },
-
-    maxlength: {
-      default: 100,
-      type: Number
-    },
-
-    placeholder: {
-      default: '',
-      type: String
-    },
-
     value: String,
-
     clearable: {
       type: Boolean,
       default: false

@@ -6,14 +6,14 @@
         placeholder="昵称"
         v-model="name"
         class="login-input"
-        :maxlength="10"
+        maxlength="10"
         clearable
       />
       <BaseInput
         placeholder="密码"
         v-model="password"
         class="login-input"
-        :maxlength="20"
+        maxlength="20"
         type="password"
         clearable
       />

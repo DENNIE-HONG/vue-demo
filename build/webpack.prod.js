@@ -10,7 +10,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const common = require('./webpack.common');
 const WEBPACK_PROD_CONFIG = require('../config/index.js').WEBPACK_PROD_CONFIG;
 module.exports = (env) => {
-  return merge(common(env), {
+  const webpackConfig = merge(common(env), {
     mode: 'production',
     optimization: {
       minimizer: [
@@ -28,8 +28,7 @@ module.exports = (env) => {
         }),
         new OptimizeCSSAssetsPlugin({
           cssProcessorOptions: {
-            safe: true,
-            discardComments: { removeAll: true }
+            preset: ['default', { discardComments: { removeAll: true } }]
           },
         })
       ],
@@ -47,4 +46,9 @@ module.exports = (env) => {
       publicPath: WEBPACK_PROD_CONFIG.assetsPublicPath
     }
   });
+  if (process.env.npm_config_report) {
+    const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+    webpackConfig.plugins.push(new BundleAnalyzerPlugin());
+  }
+  return webpackConfig;
 };
