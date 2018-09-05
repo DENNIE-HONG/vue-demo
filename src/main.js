@@ -6,6 +6,7 @@ import VueTouch from 'vue-touch';
 // 引入插件
 import router from './plugins/router';
 import inject from './plugins/inject.js';
+require('./plugins/componentRegister.js');
 import App from './App';
 import 'assets/main.scss';
 import loadingImg from 'assets/img/loading.gif';

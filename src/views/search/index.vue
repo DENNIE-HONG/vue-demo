@@ -48,7 +48,7 @@ import ProductList from 'coms/ProductList/index.vue';
 import EmptyList from 'coms/EmptyList/index.vue';
 import TheFooter from 'coms/Layout/TheFooter.vue';
 import BaseSelect from 'coms/BaseSelect/index.vue';
-import BaseOption from 'coms/BaseSelect/option.vue';
+import BaseOption from 'coms/BaseSelect/BaseOption.vue';
 import HeaderBanner from 'coms/HeaderBanner/index.vue';
 export default {
   name: 'Search',

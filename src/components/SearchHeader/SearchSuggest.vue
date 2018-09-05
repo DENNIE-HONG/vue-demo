@@ -27,7 +27,9 @@
       <span
         v-for="tag in historyWords"
         class="tag">
-        <router-link :to="'/search?keyword='+ tag">{{tag}}</router-link>
+        <router-link
+          :to="'/search?keyword='+ tag"
+          :key="$route.fullpath  + new Date()">{{tag}}</router-link>
       </span>
     </section>
   </div>

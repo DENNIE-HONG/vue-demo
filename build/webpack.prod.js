@@ -27,10 +27,10 @@ module.exports = (env) => {
           }
         }),
         new OptimizeCSSAssetsPlugin({
-          safe: true,
-          autoprefixer: {
-            remove: false
-          }
+          cssProcessorOptions: {
+            safe: true,
+            discardComments: { removeAll: true }
+          },
         })
       ],
       moduleIds: 'hashed'

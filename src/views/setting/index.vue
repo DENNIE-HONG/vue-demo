@@ -77,7 +77,7 @@ import BaseRadio from 'coms/BaseRadio/index.vue';
 import BaseCheckbox from 'coms/BaseCheckbox/index.vue';
 import UploadPicture from 'coms/UploadPicture/index.vue';
 import BaseSelect from 'coms/BaseSelect/index.vue';
-import BaseOption from 'coms/BaseSelect/option.vue';
+import BaseOption from 'coms/BaseSelect/BaseOption.vue';
 import TheFooter from 'coms/Layout/TheFooter.vue';
 import HeaderBanner from 'coms/HeaderBanner/index.vue';
 export default {
