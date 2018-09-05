@@ -29,7 +29,6 @@ requireComponent.keys().forEach((filePath) => {
     const componentName = fileName.toLowerCase() === 'index'
       ? capitalizeFirstLetter(componentConfig.default.name)
       : fileName;
-    console.log(componentName);
     Vue.component(componentName, componentConfig.default || componentConfig)
   }
 });

@@ -76,7 +76,6 @@
  * @example
 */
 import LoadMore from 'coms/LoadMore';
-import BaseCheckbox from 'coms/BaseCheckbox';
 import SimpleCommentList from './SimpleCommentList';
 import BigPictures from 'coms/BigPictures';
 const PAGE_SIZE = 10;
@@ -84,7 +83,6 @@ export default {
   name: 'CommentList',
   components: {
     LoadMore,
-    BaseCheckbox,
     SimpleCommentList,
     BigPictures
   },

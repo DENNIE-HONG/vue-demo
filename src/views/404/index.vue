@@ -13,6 +13,19 @@
 import TheFooter from 'coms/Layout/TheFooter.vue';
 export default {
   name: 'NotFound',
+  metaInfo: {
+    title: 'not-found',
+    meta: [
+      {
+        'property': 'keywords',
+        'content': 'vue404页'
+      },
+      {
+        'property': 'description',
+        'content': 'vue404页'
+      }
+    ]
+  },
   components: {
     TheFooter
   }

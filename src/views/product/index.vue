@@ -50,6 +50,19 @@ import EmptyList from 'coms/EmptyList';
 import BroadCast from 'coms/BroadCast';
 export default {
   name: 'Product',
+  metaInfo: {
+    title: 'my pruduct',
+    meta: [
+      {
+        'property': 'keywords',
+        'content': 'vue商品详情页'
+      },
+      {
+        'property': 'description',
+        'content': 'vue商品详情页'
+      }
+    ]
+  },
   components: {
     TheFooter,
     HeaderBanner,

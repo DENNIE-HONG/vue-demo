@@ -22,14 +22,22 @@
   </div>
 </template>
 <script>
-import BaseInput from 'coms/BaseInput';
 import { postLogin } from 'service/api/user.js';
 export default {
   name: 'Login',
-  components: {
-    BaseInput
+  metaInfo: {
+    title: 'my login',
+    meta: [
+      {
+        'property': 'keywords',
+        'content': 'vue登录页'
+      },
+      {
+        'property': 'description',
+        'content': 'vue登录页'
+      }
+    ]
   },
-
   data () {
     return {
       name: '',
