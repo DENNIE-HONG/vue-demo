@@ -211,7 +211,7 @@ export default {
     background-color: white;
     .tab-good-score {
       padding-left: rem(5);
-      color: nth($fred, 1);
+      color: nth($fgreen, 1);
       font-size: rem(24);
     }
     .pull-right {

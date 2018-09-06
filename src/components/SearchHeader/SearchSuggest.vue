@@ -26,10 +26,8 @@
       <h3>历史搜索</h3>
       <span
         v-for="tag in historyWords"
-        class="tag">
-        <router-link
-          :to="'/search?keyword='+ tag"
-          :key="$route.fullpath  + new Date()">{{tag}}</router-link>
+        class="tag"
+        @click="linkToSearch(tag)">{{tag}}
       </span>
     </section>
   </div>

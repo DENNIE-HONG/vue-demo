@@ -1,19 +1,21 @@
 <template>
   <div class="product page">
     <div class="content">
+      <header-banner v-show="isCommentSimple">
+        <span
+          :class="['product-tab', 'iconfont', {active: tabType === 1}]"
+          @click="switchTab('.com-empty', 1)"
+          >商品</span>
+        <span
+          :class="['product-tab', 'iconfont', {active: tabType === 2}]"
+          @click="switchTab('.product-comment', 2)">评价</span>
+        <span
+          :class="['product-tab', 'iconfont', {active: tabType === 3}]"
+          @click="switchTab('.product-guess', 3)">推荐</span>
+      </header-banner>
       <section
         v-show="isCommentSimple"
         class="product-content">
-        <header-banner>
-          <span
-            :class="['product-tab', 'iconfont', {active: tabType === 1}]"
-            @click="switchTab('.com-empty', 1)"
-            >商品</span>
-          <span
-            :class="['product-tab', 'iconfont', {active: tabType === 2}]"
-            @click="switchTab('.product-comment', 2)">评价</span>
-          <span class="product-tab iconfont">推荐</span>
-        </header-banner>
         <empty-list text="哈哈哈哈哈，抓不到数据啦"/>
       </section>
       <section class="product-comment">
@@ -31,7 +33,9 @@
           :productId="productId"
         />
       </section>
-      <section class="product-guess">
+      <section
+        v-show="isCommentSimple"
+        class="product-guess">
         <h4>猜你喜欢</h4>
         <broad-cast
           :broadcastList="broadcastList"/>
@@ -131,7 +135,7 @@ export default {
       margin-right: 0;
     }
     &.active {
-      color: nth($fred, 1);
+      color: nth($fgreen, 1);
       &:before {
         content: "\e8ff";
       }
@@ -141,7 +145,9 @@ export default {
     background-color: white;
     @include hid;
     h4 {
-      margin: rem(20);
+      padding: rem(20);
+      margin: 0;
+      border-bottom: 1px solid nth($fgray, 1);
     }
   }
 }

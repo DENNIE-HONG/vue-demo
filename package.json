@@ -3,10 +3,6 @@
   "version": "1.0.0",
   "description": "vue test",
   "main": "index.js",
-  "sideEffects": [
-    "*.scss",
-    "*.css"
-  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "devServer": "webpack-dev-server --env.production=false --config build/webpack.dev.js",
