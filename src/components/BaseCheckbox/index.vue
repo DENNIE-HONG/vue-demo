@@ -53,6 +53,7 @@ export default {
     height: rem(28);
     border: 1px solid nth($fgreen, 1);
     text-align: center;
+    vertical-align: middle;
     @include hid;
     .checked {
       display: none;
@@ -66,7 +67,8 @@ export default {
   }
   &-txt {
     display: inline-block;
-    vertical-align: top;
+    margin-top: rem(4);
+    vertical-align: middle;
     font-size: rem(28);
   }
 }

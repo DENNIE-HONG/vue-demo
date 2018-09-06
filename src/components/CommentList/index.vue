@@ -204,7 +204,7 @@ export default {
   background-color: white;
   &-tab {
     position: sticky;
-    top: rem(98);
+    top: rem(102);
     padding: rem(20);
     border-bottom: 1px solid nth($fgray, 1);
     font-size: rem(28);
@@ -255,7 +255,7 @@ export default {
   }
   &-type {
     position: sticky;
-    top: rem(188);
+    top: rem(194);
     padding-left: rem(20);
     background-color: white;
   }

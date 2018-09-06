@@ -51,6 +51,7 @@ export default {
   align-items: center;
   background-color: white;
   border-bottom: 1px solid nth($fgray, 1);
+  box-sizing: border-box;
   &-slot {
     flex: 1;
     text-align: center;

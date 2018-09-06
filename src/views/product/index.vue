@@ -125,8 +125,7 @@ export default {
     position: sticky;
     top: 0;
   }
-  &-content,
-  &-comment {
+  &-content {
     margin-bottom: rem(15);
   }
   &-tab {
@@ -142,6 +141,7 @@ export default {
     }
   }
   &-guess {
+    margin-top: rem(15);
     background-color: white;
     @include hid;
     h4 {

@@ -12,7 +12,7 @@
         v-for="(item, i) in broadcastList"
         :key="item.sku"
         class="com-broadcast-item"
-        :style="{width: 1/toatl/column * 100 + '%'}">
+        :style="{width: 1/total/column * 100 + '%'}">
         <div class="pic">
           <img :src="'//img14.360buyimg.com/mobilecms/s270x270_'+ item.img">
         </div>
@@ -22,7 +22,7 @@
     </v-touch>
     <div class="com-broadcast-page">
       <span
-        v-for="page in total"
+        v-for="page in 5"
         :class="['page-spot', {active: page === index}]"></span>
     </div>
   </div>
