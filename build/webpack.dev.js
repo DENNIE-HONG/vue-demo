@@ -20,7 +20,7 @@ module.exports = (env) => {
     devServer: {
       host: '0.0.0.0',
       disableHostCheck: true,
-      contentBase: WEBPACK_DEV_CONFIG.assetsViews,
+      contentBase: WEBPACK_DEV_CONFIG.assetsPublicPath,
       watchContentBase: true,
       port: WEBPACK_DEV_CONFIG.port,
       compress: true,
