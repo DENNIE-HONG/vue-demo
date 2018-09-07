@@ -53,6 +53,13 @@ export default {
       }
     }
   },
+  created () {
+    this.$api['kaola/cart']({}).then((res) => {
+      console.log(res);
+    }).catch((err) => {
+      console.log(err);
+    });
+  },
   methods: {
     loadSuccess (res) {
       if (res.status === 200) {

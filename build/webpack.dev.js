@@ -46,6 +46,11 @@ module.exports = (env) => {
           target: 'https://m.jd.com',
           changeOrigin: true,
           pathRewrite: { '^/jdapi': '' }
+        },
+        '/kaola': {
+          target: 'https://m.kaola.com',
+          changeOrigin: true,
+          pathRewrite: { '^/kaola': '' }
         }
       },
     },

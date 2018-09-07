@@ -19,5 +19,12 @@ export default {
       page: 1,
       _format_: 'json'
     }
+  }],
+  kaola: [{
+    name: 'cart',
+    method: 'GET',
+    desc: '',
+    path: '/kaola/cart/cartdata.html',
+    params: {}
   }]
 }

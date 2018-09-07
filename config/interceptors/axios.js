@@ -9,7 +9,7 @@ export const requestFailFunc = (err) => {
   return Promise.reject(err);
 };
 export const responseSuccessFunc = (response) => {
-  return response.data;
+  return response;
 };
 export const responseFailFunc = (err) => {
   return Promise.reject(err);

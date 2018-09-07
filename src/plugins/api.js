@@ -2,7 +2,7 @@
  * 服务层api插件
  * @author luyanhong 2018-07-27
 */
-import axios from 'axios';
+import axios from './axios.js';
 import isEmpty from 'utils/isEmpty.js';
 const config = require('config/index.js');
 const { AXIOS_DEFAULT_CONFIG } = config;
