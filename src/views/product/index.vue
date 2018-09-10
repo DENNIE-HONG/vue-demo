@@ -1,57 +1,74 @@
 <template>
-  <div class="product page">
-    <div class="content">
-      <header-banner v-show="isCommentSimple">
-        <span
-          :class="['product-tab', 'iconfont', {active: tabType === 1}]"
-          @click="switchTab('.com-empty', 1)"
-          >商品</span>
-        <span
-          :class="['product-tab', 'iconfont', {active: tabType === 2}]"
-          @click="switchTab('.product-comment', 2)">评价</span>
-        <span
-          :class="['product-tab', 'iconfont', {active: tabType === 3}]"
-          @click="switchTab('.product-guess', 3)">推荐</span>
-      </header-banner>
-      <section
-        v-show="isCommentSimple"
-        class="product-content">
-        <empty-list text="哈哈哈哈哈，抓不到数据啦"/>
-      </section>
-      <section class="product-comment">
+  <div class="product">
+    <header-banner v-show="isCommentSimple">
+      <span
+        :class="['product-tab', 'iconfont', {active: tabType === 1}]"
+        @click="switchTab('.com-empty', 1)"
+        >商品</span>
+      <span
+        :class="['product-tab', 'iconfont', {active: tabType === 2}]"
+        @click="switchTab('.product-comment', 2)">评价</span>
+      <span
+        :class="['product-tab', 'iconfont', {active: tabType === 3}]"
+        @click="switchTab('.product-guess', 3)">推荐</span>
+    </header-banner>
+    <section
+      v-show="isCommentSimple"
+      class="product-content">
+      <empty-list text="哈哈哈哈哈，抓不到数据啦"/>
+    </section>
+    <section class="product-comment">
+      <div
+        v-show="!isCommentSimple"
+        class="com-header-banner">
         <div
-          v-show="!isCommentSimple"
-          class="com-header-banner">
-          <div
-            @click="showComment(true)"
-            class="header-go-back"><i class="iconfont icon-left"></i></div>
-          <span class="com-header-banner-slot">商品评价</span>
-        </div>
-        <comment-list
-          :isSimple="isCommentSimple"
-          @showComment="showComment"
-          :productId="productId"
-        />
-      </section>
-      <section
-        v-show="isCommentSimple"
-        class="product-guess">
-        <h4>猜你喜欢</h4>
-        <broad-cast
-          :broadcastList="broadcastList"/>
-      </section>
-    </div>
-    <the-footer />
+          @click="showComment(true)"
+          class="header-go-back"><i class="iconfont icon-left"></i></div>
+        <span class="com-header-banner-slot">商品评价</span>
+      </div>
+      <comment-list
+        :isSimple="isCommentSimple"
+        @showComment="showComment"
+        :productId="productId"
+      />
+    </section>
+    <section
+      v-show="isCommentSimple"
+      class="product-question">
+      <h4 class="title">
+        问答专区
+        <router-link
+          class="pull-right"
+          :to="'/question/' + productId">查看全部问答<i class="iconfont icon-right"></i></router-link>
+      </h4>
+      <ul class="question-list">
+        <li
+          v-for="item in questionList"
+          :key="item.id"
+          class="question-list-item">
+          <span class="txt"><i class="iconfont icon-ask"></i>{{item.content}}</span>
+          <div class="pull-right">共{{item.answerCount}}个回答</div>
+        </li>
+      </ul>
+    </section>
+    <section
+      v-show="isCommentSimple"
+      class="product-guess">
+      <h4 class="title">猜你喜欢</h4>
+      <broad-cast
+        :broadcastList="broadcastList"/>
+    </section>
   </div>
 </template>
 <script>
 import jsonp from 'jsonp';
 import querystring from 'querystring';
-import TheFooter from 'coms/Layout/TheFooter.vue';
 import HeaderBanner from 'coms/HeaderBanner';
 import CommentList from 'coms/CommentList';
 import EmptyList from 'coms/EmptyList';
 import BroadCast from 'coms/BroadCast';
+const GET_GUESS_URL = 'https://wqcoss.jd.com/mcoss/reclike/getrecinfo';
+const GET_QUESTION_URL = 'https://wq.jd.com/questionanswer/GetSkuQuestionListWeChat';
 export default {
   name: 'Product',
   metaInfo: {
@@ -68,7 +85,6 @@ export default {
     ]
   },
   components: {
-    TheFooter,
     HeaderBanner,
     CommentList,
     EmptyList,
@@ -79,11 +95,13 @@ export default {
       isCommentSimple: true,
       tabType: 1,
       broadcastList: [],
-      productId: this.$route.params.productId
+      productId: this.$route.params.productId,
+      questionList: []
     }
   },
   created () {
     this.fetchGuess();
+    this.fetchQuestion();
   },
   methods: {
     /**
@@ -104,16 +122,45 @@ export default {
         sku: this.productId,
         pc: 30
       }
-      const q = querystring.encode(params);
-      jsonp(`https://wqcoss.jd.com/mcoss/reclike/getrecinfo?${q}`, { timeout: 8000 }, (err, res) => {
-        if (err) {
-          this.$message({
-            type: 'error',
-            message: '网络不给力，请稍后再试哦'
-          });
-          return;
-        }
+      this.fetchJsonp(GET_GUESS_URL, params).then((res)=> {
         this.broadcastList = res.data;
+      }).catch((err) => {
+        this.fetchFail(err);
+      });
+    },
+    // 获取问答数据
+    fetchQuestion () {
+      const params = {
+        productId: this.productId
+      };
+      this.fetchJsonp(GET_QUESTION_URL, params).then((res) => {
+        if (res.resultCode === '0') {
+          this.questionList = res.result.questionList;
+        }
+      }).catch((err) => {
+        this.fetchFail(err);
+      })
+    },
+    /**
+     * jsonp请求
+     * @param {String}   url,
+     * @param {Object}   params， 数据
+    */
+    fetchJsonp (url, params) {
+      const q = querystring.encode(params);
+      return new Promise((resolve, reject) => {
+        jsonp(`${url}?${q}`, { timeout: 10000 }, (err, res) => {
+          if (err) {
+            reject('网络不给力，请稍后再试');
+          }
+          resolve(res);
+        })
+      });
+    },
+    fetchFail (error) {
+      this.$message({
+        type: 'error',
+        message: error
       });
     }
   }
@@ -144,10 +191,32 @@ export default {
     margin-top: rem(15);
     background-color: white;
     @include hid;
-    h4 {
-      padding: rem(20);
-      margin: 0;
-      border-bottom: 1px solid nth($fgray, 1);
+  }
+  &-question {
+    background-color: white;
+    border-top: 1px solid nth($fgray, 1);
+    .question-list {
+      padding: 0 rem(20);
+      &-item {
+        display: flex;
+        align-items: center;
+        height: rem(70);
+        .pull-right {
+          color: nth($fblack, 3);
+          font-size: rem(24);
+        }
+        .iconfont {
+          padding-right: rem(5);
+          color: nth($fyellow, 2);
+        }
+        .txt {
+          flex: 1;
+          padding-right: rem(10);
+          @include wordbreak;
+          @include txthid;
+          @include hid;
+        }
+      }
     }
   }
 }

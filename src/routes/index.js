@@ -9,7 +9,7 @@ import Setting from 'views/setting/index.vue';
 import Search from 'views/search/index.vue';
 import NotFound from 'views/404/index.vue';
 import Product from 'views/product/index.vue';
-
+import Question from 'views/question';
 const routes = [
   { path: '/', component: Home },
   { path: '/my', component: My },
@@ -20,6 +20,7 @@ const routes = [
     meta: { requiresAuth: true }
   },
   { path: '/product/:productId', component: Product },
+  { path: '/question/:productId', component: Question },
   { path: '*', component: NotFound }
 ];
 export default routes;

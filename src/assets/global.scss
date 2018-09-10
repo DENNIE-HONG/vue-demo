@@ -34,10 +34,6 @@ a {
   clear: both;
 }
 
-.content {
-  flex: 1;
-}
-
 .pull-right {
   float: right;
 }
@@ -72,12 +68,4 @@ html {
 }
 .hide {
   display: none;
-}
-#app,
-.page {
-  height: 100%;
-}
-.page {
-  display: flex;
-  flex-direction: column;
 }

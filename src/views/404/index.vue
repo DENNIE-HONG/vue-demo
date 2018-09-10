@@ -1,16 +1,11 @@
 <template>
-  <div class="page not-found">
-    <div class="content">
-      <div class="not-found-pic"></div>
-      <h1 class="not-found-title">404</h1>
-      <p class="not-found-txt">this page is missing</p>
-      <router-link to="/" class="btn-primary">go Home</router-link>
-    </div>
-    <the-footer />
+  <div class="not-found">
+    <div class="not-found-pic"></div>
+    <h1 class="not-found-title">404</h1>
+    <p class="not-found-txt">this page is missing</p>
   </div>
 </template>
 <script>
-import TheFooter from 'coms/Layout/TheFooter.vue';
 export default {
   name: 'NotFound',
   metaInfo: {
@@ -25,9 +20,6 @@ export default {
         'content': 'vue404页'
       }
     ]
-  },
-  components: {
-    TheFooter
   }
 }
 </script>

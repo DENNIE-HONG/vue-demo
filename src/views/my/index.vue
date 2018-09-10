@@ -1,48 +1,43 @@
 <template>
-  <div class="page my">
-    <div class="content">
-      <header-banner>我的vue</header-banner>
-      <div class="my-header">
-        <div class="my-behavior">
-          <div class="my-info">
-            <img
-              class="my-avatar"
-              :src="avatar"
-            />
-            <span v-if="isLogin">{{name}}</span>
-          </div>
+  <div class="my">
+    <header-banner>我的vue</header-banner>
+    <div class="my-header">
+      <div class="my-behavior">
+        <div class="my-info">
+          <img
+            class="my-avatar"
+            :src="avatar"
+          />
+          <span v-if="isLogin">{{name}}</span>
         </div>
-        <router-link
-          v-if="isLogin"
-          to="/setting"
-          class="my-setting">设置
-        </router-link>
       </div>
-      <div class="my-login">
-        <span>{{name}}</span>
-        <div
-          v-if="isLogin"
-          class="pull-right"
-          @click="signOut">退出
-        </div>
-        <router-link
-          v-else
-          to="/login"
-          class="pull-right">登入
-        </router-link>
-      </div>
+      <router-link
+        v-if="isLogin"
+        to="/setting"
+        class="my-setting">设置
+      </router-link>
     </div>
-    <the-footer />
+    <div class="my-login">
+      <span>{{name}}</span>
+      <div
+        v-if="isLogin"
+        class="pull-right"
+        @click="signOut">退出
+      </div>
+      <router-link
+        v-else
+        to="/login"
+        class="pull-right">登入
+      </router-link>
+    </div>
   </div>
 </template>
 <script>
 import { getUser, signOut } from 'service/api/user.js';
-import TheFooter from 'coms/Layout/TheFooter.vue';
 import HeaderBanner from 'coms/HeaderBanner/index.vue';
 export default {
   name: 'My',
   components: {
-    TheFooter,
     HeaderBanner
   },
   data () {

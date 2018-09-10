@@ -9,7 +9,6 @@
       <product-list :productList="productList"/>
       <load-more :url="url" :success="loadSuccess" :params="sendData" ref="loadmore"/>
     </section>
-    <the-footer />
     <footer class="home-footer">
       <nav>
         <a class="active" href="javascript:;  "><i class="iconfont icon-home"></i><p class="footer-txt">首页</p></a>
@@ -21,14 +20,12 @@
 <script>
 import TheHead from 'coms/TheHead/index.vue';
 import ProductList from 'coms/ProductList/index.vue';
-import TheFooter from 'coms/Layout/TheFooter.vue';
 import LoadMore from 'coms/LoadMore/index.vue';
 export default {
   name: 'Home',
   components: {
     TheHead,
     ProductList,
-    TheFooter,
     LoadMore
   },
   metaInfo: {
@@ -108,15 +105,16 @@ export default {
     }
   }
   &-footer {
+    position: fixed;
     height: rem(90);
+    width: 100%;
     border-top: 1px solid nth($fgray, 1);
+    bottom: 0;
+    box-sizing: border-box;
+    box-shadow: 0 0 10px 0 hsla(0,6%,58%,.6);
     > nav {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
       display: flex;
-      height: rem(90);
+      height: 100%;
       justify-content: space-around;
       background-color: white;
     }
@@ -134,4 +132,3 @@ export default {
   }
 }
 </style>
-

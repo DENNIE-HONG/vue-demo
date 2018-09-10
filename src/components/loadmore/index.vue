@@ -131,7 +131,6 @@ export default {
 </script>
 <style lang="scss">
 .com-loadmore {
-  height: rem(80);
   text-align: center;
   border-top: 1px solid nth($fgray, 1);
   border-bottom: 1px solid nth($fgray, 1);
@@ -141,7 +140,7 @@ export default {
   @include hid;
   &-end {
     width: 60%;
-    margin: rem(40) auto 0;
+    margin: rem(80) auto 0;
     border-top: 1px solid nth($fblack, 3);
     > span {
       display: inline-block;

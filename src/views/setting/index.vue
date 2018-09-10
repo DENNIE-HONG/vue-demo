@@ -1,69 +1,66 @@
 <template>
-  <div class="page setting">
-    <div class="content">
-      <header-banner>设置</header-banner>
-      <section class="setting-info">
-        <div class="info-item">
-          <span>vue头像</span>
-          <div class="info-item-right">
-            <upload-picture v-model="avatar" class="info-item-pic"></upload-picture>
-          </div>
+  <div class="setting">
+    <header-banner>设置</header-banner>
+    <section class="setting-info">
+      <div class="info-item">
+        <span>vue头像</span>
+        <div class="info-item-right">
+          <upload-picture v-model="avatar" class="info-item-pic"></upload-picture>
         </div>
-        <div class="info-item">
-          <span>vue昵称</span>
-          <div class="info-item-right">
-            {{name}}
-            <i class="iconfont icon-right"></i>
-          </div>
+      </div>
+      <div class="info-item">
+        <span>vue昵称</span>
+        <div class="info-item-right">
+          {{name}}
+          <i class="iconfont icon-right"></i>
         </div>
-      </section>
-      <section class="setting-info">
-        <div class="info-item">
-          <span>性别</span>
-          <div class="info-item-right" @click="handleGender">
-            {{sex}}
-            <i class="iconfont icon-right"></i>
-          </div>
+      </div>
+    </section>
+    <section class="setting-info">
+      <div class="info-item">
+        <span>性别</span>
+        <div class="info-item-right" @click="handleGender">
+          {{sex}}
+          <i class="iconfont icon-right"></i>
         </div>
-        <base-radio-group
-          title="修改性别"
-          v-model="gender"
-          :is-hide="isHideGender"
-          @closeRadio="closeGender">
-          <base-radio :label="1">女</base-radio>
-          <base-radio :label="2">男</base-radio>
-        </base-radio-group>
-        <div class="info-item">
-          <span>帅吗</span>
-          <div class="info-item-right">
-            <base-checkbox v-model="checked"/>
-          </div>
+      </div>
+      <base-radio-group
+        title="修改性别"
+        v-model="gender"
+        :is-hide="isHideGender"
+        @closeRadio="closeGender">
+        <base-radio :label="1">女</base-radio>
+        <base-radio :label="2">男</base-radio>
+      </base-radio-group>
+      <div class="info-item">
+        <span>帅吗</span>
+        <div class="info-item-right">
+          <base-checkbox v-model="checked"/>
         </div>
-        <div class="info-item">
-          <span>兴趣</span>
-          <div class="info-item-right">
-            <base-select v-model="hobby" :style="{textAlign: 'right', height: '1.2rem'}">
-              <base-option value="1" label="吴亦凡"></base-option>
-              <base-option value="2" label="黄景瑜"></base-option>
-            </base-select>
-            <i class="iconfont icon-right"></i>
-          </div>
+      </div>
+      <div class="info-item">
+        <span>兴趣</span>
+        <div class="info-item-right">
+          <base-select v-model="hobby" :style="{textAlign: 'right', height: '1.2rem'}">
+            <base-option value="1" label="吴亦凡"></base-option>
+            <base-option value="2" label="黄景瑜"></base-option>
+          </base-select>
+          <i class="iconfont icon-right"></i>
         </div>
-        <div class="info-item">
-          <span>标签</span>
-          <div class="info-item-right">
-            <base-select v-model="topic" :style="{textAlign: 'right'}" multiple>
-              <base-option value="3" label="沉迷学习"></base-option>
-              <base-option value="4" label="不可自拔"></base-option>
-              <base-option value="5" label="小点声"></base-option>
-              <base-option value="6" label="日渐肥硕"></base-option>
-            </base-select>
-            <i class="iconfont icon-right"></i>
-          </div>
+      </div>
+      <div class="info-item">
+        <span>标签</span>
+        <div class="info-item-right">
+          <base-select v-model="topic" :style="{textAlign: 'right'}" multiple>
+            <base-option value="3" label="沉迷学习"></base-option>
+            <base-option value="4" label="不可自拔"></base-option>
+            <base-option value="5" label="小点声"></base-option>
+            <base-option value="6" label="日渐肥硕"></base-option>
+          </base-select>
+          <i class="iconfont icon-right"></i>
         </div>
-      </section>
-    </div>
-    <the-footer />
+      </div>
+    </section>
   </div>
 </template>
 <script>
@@ -73,7 +70,6 @@
 */
 import { getUser } from 'service/api/user.js';
 import UploadPicture from 'coms/UploadPicture/index.vue';
-import TheFooter from 'coms/Layout/TheFooter.vue';
 import HeaderBanner from 'coms/HeaderBanner/index.vue';
 export default {
   name: 'Setting',
@@ -92,7 +88,6 @@ export default {
   },
   components: {
     UploadPicture,
-    TheFooter,
     HeaderBanner
   },
   data () {
