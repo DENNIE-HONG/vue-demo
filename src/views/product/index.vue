@@ -33,6 +33,7 @@
       />
     </section>
     <section
+      v-if="questionList.length"
       v-show="isCommentSimple"
       class="product-question">
       <h4 class="title">

@@ -3,8 +3,7 @@
     <header-banner>问答专区</header-banner>
     <router-link
       :to="'/product/' + productId"
-      class="question-link title">
-      关于“ <span class="question-link-txt">{{questionTitle}}</span>” 的{{total}}个问题
+      class="title question-link">关于“ <span class="question-link-txt">{{questionTitle}}</span>” 的{{total}}个问题
       <span class="pull-right"><i class="iconfont icon-right"></i></span>
     </router-link>
     <section class="question-box">
@@ -18,8 +17,11 @@
             <span class="pull-right">{{item.created}}</span>
           </div>
           <h3 class="question-title"><i class="iconfont icon-ask"></i>{{item.content}}</h3>
-          <div class="question-content"><i class="iconfont icon-write"></i>{{item.answerList[0].content}}</div>
-          <div class="question-more pull-right">查看全部{{item.answerCount}}个回答<i class="iconfont icon-right"></i></div>
+          <div class="question-content"><i class="iconfont icon-write"></i>{{item.answerCount ? item.answerList[0].content:
+          '暂无回答'}}</div>
+          <div
+            v-if="item.answerCount"
+            class="question-more pull-right">查看全部{{item.answerCount}}个回答<i class="iconfont icon-right"></i></div>
         </dd>
       </dl>
       <load-more
@@ -94,12 +96,16 @@ export default {
 </script>
 <style lang="scss">
 .question {
-  &-link-txt {
-    display: inline-block;
-    max-width: 60%;
-    @include txthid;
-    @include hid;
-    vertical-align: bottom;
+  .question-link {
+    display: flex;
+    &-txt {
+      display: inline-block;
+      flex: 1;
+      @include txthid;
+      @include hid;
+      @include wordbreak;
+      // vertical-align: bottom;
+    }
   }
   &-item {
     padding: rem(20);
