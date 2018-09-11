@@ -7,6 +7,13 @@
   </div>
 </template>
 <script>
+/**
+ * 列表为空模块
+ * @param {String}  text，提示文案
+ * @author luyanhong 2018-08-15
+ * @example
+ * <empty-list text="这里什么也没有" />
+*/
 export default {
   name: 'EmptyList',
   props: {

@@ -12,16 +12,18 @@
           v-for="item in questionList"
           :key="item.id"
           class="question-item">
-          <div class="question-info">
-            {{item.pin}}的提问
-            <span class="pull-right">{{item.created}}</span>
-          </div>
-          <h3 class="question-title"><i class="iconfont icon-ask"></i>{{item.content}}</h3>
-          <div class="question-content"><i class="iconfont icon-write"></i>{{item.answerCount ? item.answerList[0].content:
-          '暂无回答'}}</div>
-          <div
-            v-if="item.answerCount"
-            class="question-more pull-right">查看全部{{item.answerCount}}个回答<i class="iconfont icon-right"></i></div>
+          <router-link :to="'/question/' + productId + '/detail/' + item.id">
+            <div class="question-info">
+              {{item.pin}}的提问:
+              <span class="pull-right">{{item.created}}</span>
+            </div>
+            <h3 class="question-title"><i class="iconfont icon-ask"></i>{{item.content}}</h3>
+            <div class="question-content"><i class="iconfont icon-write"></i>{{item.answerCount ? item.answerList[0].content:
+            '暂无回答'}}</div>
+            <div
+              v-if="item.answerCount"
+              class="question-more pull-right">查看全部{{item.answerCount}}个回答<i class="iconfont icon-right"></i></div>
+          </router-link>
         </dd>
       </dl>
       <load-more
@@ -80,7 +82,11 @@ export default {
         if (questionList.length) {
           this.questionList = this.questionList.concat(questionList);
           if (questionList.length < this.sentData.pageSize) {
-            this.$refs.loadmore.toEnd();
+            if (this.sentData.page === 1) {
+              this.$refs.loadmore.hide();
+            } else {
+              this.$refs.loadmore.toEnd();
+            }
             return;
           }
           this.sentData.page += 1;
@@ -143,4 +149,3 @@ export default {
   }
 }
 </style>
-
