@@ -5,7 +5,7 @@
       <router-link
         :to="'/product/' + productId"
         class="question-detail-product">
-        <img :src="'//img12.360buyimg.com/evalpic/s240x240_' + productInfo.imgUrl" />
+        <div class="detail-pic"><img :src="'//img12.360buyimg.com/evalpic/s240x240_' + productInfo.imgUrl" /></div>
         <h5 class="product-title">{{productInfo.fullName}}</h5>
         <div class="pull-right"><i class="iconfont icon-right"></i></div>
       </router-link>
@@ -15,7 +15,7 @@
       </div>
     </section>
     <section class="question-detail-answer">
-      <p class="detail-count">{{questionInfo.answerCount? questionInfo.answerCount + '个回答': '暂无回答'}}</p>
+      <p class="detail-count">{{questionInfo.answerCount? '共' + questionInfo.answerCount + '个回答': '暂无回答'}}</p>
       <ul
         v-if="answerList.length"
         class="question-detail-list">
@@ -140,14 +140,24 @@ export default {
   &-product {
     display: flex;
     align-items: center;
-    > img {
+    .detail-pic {
+      position: relative;
       width: rem(100);
       height: rem(100);
       margin-right: rem(20);
+      > img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        transform: translate(-50%,-50%);
+      }
     }
     .product-title {
-      margin: rem(10) 0;
+      margin: 0 0 rem(10);
       @include linehid(2);
+      flex: 1;
     }
     .pull-right {
       > .iconfont {
@@ -158,7 +168,7 @@ export default {
   &-box {
     position: relative;
     padding: rem(15);
-    margin-top: rem(10);
+    margin-top: rem(20);
     background-color: nth($fgray, 2);
     border-radius: rem(5);
     .detail-user {
@@ -228,5 +238,4 @@ export default {
   }
 }
 </style>
-
 

@@ -1,8 +1,7 @@
 <template>
-  <div class="com-comment">
+  <div class="simple">
     <div
-      v-if="commentList.length"
-      class="simple">
+      v-if="commentList.length">
       <div class="com-comment-tab">
         评价
         <span class="tab-good-score">好评{{summary.GoodRateShow}}%</span>
@@ -100,14 +99,16 @@ export default {
 }
 </script>
 <style lang="scss">
-.com-comment.simple {
-  .com-comment {
-    &-detail {
-      @include linehid(3);
-    }
-    &-tab,
-    &-type {
-      position: static;
+.com-comment {
+  .simple {
+    .com-comment{
+      &-detail {
+        @include linehid(3);
+      }
+      &-tab,
+      &-type {
+        position: static;
+      }
     }
   }
 }

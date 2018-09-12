@@ -12,7 +12,7 @@
     </div>
     <div
       v-show="state === 3"
-      class="com-loadmore-end"><span>我也是有底线的</span>
+      class="com-loadmore-end"><span>我是有底线的</span>
     </div>
     <div
       v-show="state === 4"

@@ -8,6 +8,12 @@
       @checkMore="checkMore"
       @checkImgDetail="checkImgDetail"/>
     <div v-show="!isSimple">
+      <div class="com-header-banner">
+        <div
+          @click="backToSimple"
+          class="header-go-back"><i class="iconfont icon-left"></i></div>
+        <span class="com-header-banner-slot">商品评价</span>
+      </div>
       <div class="com-comment-tab">
         <base-checkbox v-model="onlyCurrent">只看当前商品</base-checkbox>
         <div class="pull-right">好评度{{summary.GoodRateShow}}%</div>
@@ -78,13 +84,15 @@
 import LoadMore from 'coms/LoadMore';
 import SimpleCommentList from './SimpleCommentList';
 import BigPictures from 'coms/BigPictures';
+import HeaderBanner from 'coms/HeaderBanner';
 const PAGE_SIZE = 10;
 export default {
   name: 'CommentList',
   components: {
     LoadMore,
     SimpleCommentList,
-    BigPictures
+    BigPictures,
+    HeaderBanner
   },
   props: {
     isSimple: {
@@ -131,6 +139,7 @@ export default {
     }
   },
   methods: {
+    // 数据加载成功后回调
     loadSuccess (res) {
       if (res.errcode !== '0') {
         this.$refs.loadmore.fail(res.errmsg);
@@ -195,6 +204,11 @@ export default {
       });
       this.imgList = [...imgList];
       this.imgStartIndex = startIndex;
+    },
+    // 返回评论简版
+    backToSimple () {
+      const isSimple = true;
+      this.$emit('showComment', isSimple);
     }
   }
 }
@@ -202,6 +216,10 @@ export default {
 <style lang="scss">
 .com-comment {
   background-color: white;
+  .com-header-banner {
+    position: sticky;
+    top: 0;
+  }
   &-tab {
     position: sticky;
     top: rem(102);
