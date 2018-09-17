@@ -4,78 +4,72 @@
     <nav class="com-basetab-box">
       <li
         v-for="tab in tabs"
-        class="tab">{{tab}}</li>
+        :class="['tab', { active: tab.name === activeName }]"
+        @click="changeTab(tab.name)">{{tab.label}}</li>
     </nav>
     <div class="com-basetab-content">
-      <!-- <div v-for="item in slots">{item}</div> -->
+      <template v-for="tab in tabs">
+        <base-tabs-slots
+          v-show="tab.name === activeName"
+          :panels="tab.panels"></base-tabs-slots>
+      </template>
     </div>
-
   </div>
 </template>
 <script>
-// import Vue from 'vue';
-// import BaseTabsPane from './BaseTabsPane';
+/**
+ * tabs页
+ * @param {String}   activeName, 当前默认tab
+ * @author luyanhong 2018-09-17
+ * @example
+ * <base-tabs>
+ *  <base-tabs-pane name="1" label="1">我是一</base-tabs-pane>
+ * </base-tabs>
+*/
+import Vue from 'vue';
 export default {
   name: 'BaseTabs',
-  data () {
-    return {
-      tabs: [],
-      slots: []
+  model: {
+    prop: 'activeName',
+    event: 'tab-change'
+  },
+  props: {
+    activeName: {
+      type: String,
+      required: true
     }
   },
-  created () {
-    console.log(this);
+  data () {
+    return {
+      tabs: []
+    }
   },
   mounted () {
     this.getTabs();
+    Vue.component('BaseTabsSlots', {
+      props: ['panels'],
+      render (h) {
+        const tag = 'div';
+        return h(tag, this.panels);
+      }
+    });
   },
   methods: {
     getTabs () {
       this.$children.map((child) => {
-        console.log(child);
-        this.tabs.push(child.label);
-        this.slots.push(child.$slots.default);
-        // new Vue({
-        //   el: this.$refs.content,
-        //   render (createElement) {
-        //     return createElement('div', child.$slots.default)
-        //   }
-        // });
-        // Vue.component('BaseTabsPane', {
-        //   render (h) {
-        //     const tag = 'div';
-        //     return h(tag, child.$slots.default);
-        //   }
-        //   // props: {
-        //   //   name: '1',
-        //   //   label: '1'
-        //   // }
-        // });
+        const data = {
+          name: child.name,
+          label: child.label,
+          panels: child.$slots.default
+        };
+        this.tabs.push(data);
       });
+    },
+    // 标签切换
+    changeTab (activeName) {
+      this.$emit('tab-change', activeName);
     }
   }
-  // render (h) {
-  //   const { tab } = this;
-  //   return h('div', {
-  //     'class': 'com-basetab-box'
-  //   }, [h('nav')]);
-
-  // const header = (
-  //   <nav class="com-basetab-box">
-  //     <li
-  //       v-for="tab in tabs"
-  //       class="tab">{{ tab }}</li>
-  //   </nav>
-  // );
-  // const panels = (
-  //   <div class="com-basetab-content">
-  //     2
-  //   </div>
-  // );
-  // return (
-  //   <div class="com-basetab">{[header, panels]}</div>
-  // );
-  // }
 }
 </script>
 <style lang="scss">
@@ -90,6 +84,9 @@ export default {
       padding: rem(15) 0;
       flex: 1;
       border-right: 1px solid nth($fgray, 1);
+      &.active {
+        color: nth($fgreen, 1);
+      }
     }
   }
 }

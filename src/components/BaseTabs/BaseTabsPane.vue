@@ -1,6 +1,5 @@
 <template>
   <div class="com-basetab-pane">
-    <div class="tab">{{label}}</div>
     <slot></slot>
   </div>
 </template>

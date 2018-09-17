@@ -52,9 +52,15 @@
         :broadcastList="broadcastList"/>
     </section>
     <section class="product-specifications">
-      <base-tabs>
+      <base-tabs v-model="activeName">
         <base-tabs-pane label="商品介绍" name="detail">哈哈，我是详情</base-tabs-pane>
-        <base-tabs-pane label="规格参数" name="xx">商品参数</base-tabs-pane>
+        <base-tabs-pane label="规格参数" name="specification">
+          <div class="product-title-line"><span>规格参数</span></div>
+          <base-table :data="specification">
+            <base-table-column label="序号" prop="id"></base-table-column>
+            <base-table-column label="ip" prop="val"></base-table-column>
+          </base-table>
+        </base-tabs-pane>
       </base-tabs>
     </section>
   </div>
@@ -69,6 +75,7 @@ import BroadCast from 'coms/BroadCast';
 const GET_GUESS_URL = 'https://wqcoss.jd.com/mcoss/reclike/getrecinfo';
 const GET_QUESTION_URL = 'https://wq.jd.com/questionanswer/GetSkuQuestionListWeChat';
 // const GET_SHOP_URL = 'https://wq.jd.com/mshop/BatchGetShopInfoByVenderId';
+const GET_SPECIFICATION_URL = 'https://wq.jd.com/commodity/itembranch/getspecification';
 export default {
   name: 'Product',
   metaInfo: {
@@ -97,14 +104,14 @@ export default {
       broadcastList: [],
       productId: this.$route.params.productId,
       questionList: [],
-      venderId: null,
-      shopInfo: {}
+      activeName: 'specification',
+      specification: [{ id: 1, val: 'xxxxxxx' }]
     }
   },
   created () {
     this.fetchGuess();
     this.fetchQuestion();
-    // this.fetchShop();
+    this.fetchSpecification();
   },
   methods: {
     /**
@@ -144,21 +151,19 @@ export default {
         this.fetchFail(err);
       })
     },
-    // 获取店铺信息
-    async fetchShop () {
+    // 获取规格参数
+    fetchSpecification () {
       const params = {
-        pid: this.productId,
-        g_ty: 'ls'
+        skuid: this.productId
       };
-      try {
-        const res = await this.fetchJsonp('https://chat1.jd.com/api/checkChat', params);
-        this.venderId = res.shopId;
-        // const shopRes = await this.fetchJsonp(GET_SHOP_URL, { venderIds: res.shopId });
-        // console.log(shopRes);
-        // this.shopInfo = shopRes.shopInfo;
-      } catch (err) {
+      this.fetchJsonp(GET_SPECIFICATION_URL, params).then((res) => {
+        console.log(res);
+        if (res.errcode === '0') {
+          // this.specification = res.data.propGroups;
+        }
+      }).catch((err) => {
         this.fetchFail(err);
-      }
+      });
     },
     /**
      * jsonp请求
@@ -237,17 +242,20 @@ export default {
   &-specifications {
     margin-top: rem(15);
     background-color: white;
-    &-tab {
-      height: rem(90);
-      display: flex;
-      justify-content: space-around;
-      // border-bottom: 1px solid nth($fgray, 1);
-      align-items: center;
-      .tab {
-        padding: rem(15) 0;
-        flex: 1;
-        border-right: 1px solid nth($fgray, 1);
-      }
+  }
+  &-title-line {
+    border-top: 1px solid nth($fgray, 5);
+    width: 80%;
+    margin: rem(40) auto;
+    text-align: center;
+    font-size: rem(24);
+    color: nth($fblack, 3);
+    > span {
+      position: relative;
+      top: rem(-25);
+      display: inline-block;
+      padding: 0 rem(20);
+      background-color: white;
     }
   }
 }
