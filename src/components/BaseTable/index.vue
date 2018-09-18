@@ -1,16 +1,20 @@
 <template>
   <div class="com-table">
-    <table
-      class="com-table-box">
+    <table class="com-table-box">
       <thead>
         <tr>
-          <th v-for="item in headers">{{item.label}}</th>
+          <template
+            v-for="(item, index) in headers">
+            <th
+              v-if="item.label"
+              :key="item.prop + index">{{item.label}}</th>
+          </template>
         </tr>
       </thead>
       <tbody>
-        <div v-show="false"><slot v-show="false"></slot></div>
-        <tr v-for="row in data">
-          <td v-for="item in headers">{{row[item.prop]}}</td>
+        <slot></slot>
+        <tr v-for="row in list">
+          <td v-for="val in headers">{{row[val.prop].toString()}}</td>
         </tr>
       </tbody>
     </table>
@@ -20,8 +24,9 @@
 export default {
   name: 'BaseTable',
   props: {
-    data: {
-      required: true
+    list: {
+      required: true,
+      type: Array
     }
   },
   data () {
@@ -30,14 +35,18 @@ export default {
     }
   },
   mounted () {
-    this.$children.map((child) => {
-      console.log(child);
-      const data = {
-        label: child.label,
-        prop: child.prop
-      };
-      this.headers.push(data);
-    })
+    this.getHeaders();
+  },
+  methods: {
+    getHeaders () {
+      this.$children.map((child) => {
+        const data = {
+          label: child.label,
+          prop: child.prop
+        };
+        this.headers.push(data);
+      });
+    }
   }
 }
 </script>
@@ -56,4 +65,3 @@ export default {
   }
 }
 </style>
-

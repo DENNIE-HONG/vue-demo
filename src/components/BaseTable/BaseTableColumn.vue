@@ -1,7 +1,4 @@
 <template>
-  <tr>
-    <th>{{prop}}</th>
-  </tr>
 </template>
 <script>
 export default {

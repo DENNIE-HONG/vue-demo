@@ -56,9 +56,11 @@
         <base-tabs-pane label="商品介绍" name="detail">哈哈，我是详情</base-tabs-pane>
         <base-tabs-pane label="规格参数" name="specification">
           <div class="product-title-line"><span>规格参数</span></div>
-          <base-table :data="specification">
-            <base-table-column label="序号" prop="id"></base-table-column>
-            <base-table-column label="ip" prop="val"></base-table-column>
+          <base-table
+            :list="specification"
+            class="product-table">
+            <base-table-column prop="attName"></base-table-column>
+            <base-table-column prop="vals"></base-table-column>
           </base-table>
         </base-tabs-pane>
       </base-tabs>
@@ -105,7 +107,7 @@ export default {
       productId: this.$route.params.productId,
       questionList: [],
       activeName: 'specification',
-      specification: [{ id: 1, val: 'xxxxxxx' }]
+      specification: []
     }
   },
   created () {
@@ -157,9 +159,11 @@ export default {
         skuid: this.productId
       };
       this.fetchJsonp(GET_SPECIFICATION_URL, params).then((res) => {
-        console.log(res);
         if (res.errcode === '0') {
-          // this.specification = res.data.propGroups;
+          res.data.propGroups[0].atts.map((item) => {
+            this.specification.push(item);
+          });
+          // this.specification = [].concat(res.data.propGroups[0].atts);
         }
       }).catch((err) => {
         this.fetchFail(err);
@@ -246,7 +250,7 @@ export default {
   &-title-line {
     border-top: 1px solid nth($fgray, 5);
     width: 80%;
-    margin: rem(40) auto;
+    margin: rem(40) auto 0;
     text-align: center;
     font-size: rem(24);
     color: nth($fblack, 3);
@@ -257,6 +261,9 @@ export default {
       padding: 0 rem(20);
       background-color: white;
     }
+  }
+  &-table {
+    padding: rem(20);
   }
 }
 </style>
