@@ -14,18 +14,27 @@
       <tbody>
         <slot></slot>
         <tr v-for="row in list">
-          <td v-for="val in headers">{{row[val.prop].toString()}}</td>
+          <td v-for="val in headers" v-if="row[val.prop]">{{row[val.prop].toString()}}</td>
         </tr>
       </tbody>
     </table>
   </div>
 </template>
 <script>
+/**
+ * 表格
+ * @param {Array}  数据
+ * @author luyanhong 2018-09-19
+ * @example
+ * <base-table list="[]">
+ *  <base-table-column label="序号" prop="id"></base-table-column>
+ * </base-table>
+*/
 export default {
   name: 'BaseTable',
   props: {
     list: {
-      required: true,
+      default: [],
       type: Array
     }
   },
@@ -56,11 +65,15 @@ export default {
     width: 100%;
     border-collapse: collapse;
     color: nth($fblack, 2);
+    font-size: rem(24);
     td,
     tr,
     th {
       border: 1px solid nth($fgray, 5);
       font-weight: normal;
+    }
+    td {
+      padding: rem(10) rem(20);
     }
   }
 }

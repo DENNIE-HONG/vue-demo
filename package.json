@@ -27,10 +27,10 @@
     "jsonwebtoken": "^8.3.0",
     "throttle-debounce": "^2.0.1",
     "universal-cookie": "^2.2.0",
-    "vue": "^2.5.16",
+    "vue": "^2.5.17",
     "vue-meta": "^1.5.2",
     "vue-router": "^3.0.1",
-    "vue-template-compiler": "^2.5.16",
+    "vue-template-compiler": "^2.5.17",
     "vue-touch": "^2.0.0-beta.4"
   },
   "devDependencies": {

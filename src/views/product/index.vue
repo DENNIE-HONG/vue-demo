@@ -160,10 +160,11 @@ export default {
       };
       this.fetchJsonp(GET_SPECIFICATION_URL, params).then((res) => {
         if (res.errcode === '0') {
-          res.data.propGroups[0].atts.map((item) => {
-            this.specification.push(item);
+          this.specification.push({
+            attName: '商品编号',
+            vals: this.productId
           });
-          // this.specification = [].concat(res.data.propGroups[0].atts);
+          this.specification = this.specification.concat(res.data.propGroups[0].atts);
         }
       }).catch((err) => {
         this.fetchFail(err);

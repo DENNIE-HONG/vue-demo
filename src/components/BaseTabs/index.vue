@@ -1,6 +1,5 @@
 <template>
   <div class="com-basetab">
-    <div v-show="false"><slot></slot></div>
     <nav class="com-basetab-box">
       <li
         v-for="tab in tabs"
@@ -8,11 +7,7 @@
         @click="changeTab(tab.name)">{{tab.label}}</li>
     </nav>
     <div class="com-basetab-content">
-      <template v-for="tab in tabs">
-        <base-tabs-slots
-          v-show="tab.name === activeName"
-          :panels="tab.panels"></base-tabs-slots>
-      </template>
+      <slot></slot>
     </div>
   </div>
 </template>
@@ -26,7 +21,7 @@
  *  <base-tabs-pane name="1" label="1">我是一</base-tabs-pane>
  * </base-tabs>
 */
-import Vue from 'vue';
+// import Vue from 'vue';
 export default {
   name: 'BaseTabs',
   model: {
@@ -41,18 +36,12 @@ export default {
   },
   data () {
     return {
-      tabs: []
+      tabs: [],
+      name: this.activeName
     }
   },
   mounted () {
     this.getTabs();
-    Vue.component('BaseTabsSlots', {
-      props: ['panels'],
-      render (h) {
-        const tag = 'div';
-        return h(tag, this.panels);
-      }
-    });
   },
   methods: {
     getTabs () {
@@ -68,6 +57,7 @@ export default {
     // 标签切换
     changeTab (activeName) {
       this.$emit('tab-change', activeName);
+      this.name = activeName;
     }
   }
 }
