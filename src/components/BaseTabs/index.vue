@@ -2,11 +2,14 @@
   <div class="com-basetab">
     <nav class="com-basetab-box">
       <li
-        v-for="tab in tabs"
+        v-for="(tab, index) in tabs"
         :class="['tab', { active: tab.name === activeName }]"
-        @click="changeTab(tab.name)">{{tab.label}}</li>
+        @click="changeTab(tab.name, index)">{{tab.label}}</li>
     </nav>
-    <div class="com-basetab-content">
+    <div
+      class="com-basetab-content"
+      ref="pane"
+      :style="{width: tabCount * 100 + '%'}">
       <slot></slot>
     </div>
   </div>
@@ -21,7 +24,6 @@
  *  <base-tabs-pane name="1" label="1">我是一</base-tabs-pane>
  * </base-tabs>
 */
-// import Vue from 'vue';
 export default {
   name: 'BaseTabs',
   model: {
@@ -40,24 +42,38 @@ export default {
       name: this.activeName
     }
   },
+  computed: {
+    tabCount () {
+      return this.tabs.length;
+    }
+  },
   mounted () {
     this.getTabs();
   },
   methods: {
     getTabs () {
-      this.$children.map((child) => {
+      this.$children.map((child, index) => {
         const data = {
           name: child.name,
           label: child.label,
           panels: child.$slots.default
         };
         this.tabs.push(data);
+        if (child.name === this.activeName) {
+          this.setTransform(index);
+        }
       });
     },
     // 标签切换
-    changeTab (activeName) {
+    changeTab (activeName, index) {
       this.$emit('tab-change', activeName);
       this.name = activeName;
+      this.setTransform(index);
+    },
+    // 根据index设置tab滚动距离,index从0开始算
+    setTransform (index) {
+      const translateX = -1 / this.tabCount * index * 100;
+      this.$refs.pane.style.transform = `translateX(${translateX}%)`;
     }
   }
 }
@@ -65,6 +81,7 @@ export default {
 <style lang="scss">
 .com-basetab {
   background-color: white;
+  @include hid;
   &-box {
     height: rem(90);
     display: flex;
@@ -78,6 +95,10 @@ export default {
         color: nth($fgreen, 1);
       }
     }
+  }
+  &-content {
+    display: flex;
+    transition: transform 0.3s ease;
   }
 }
 </style>

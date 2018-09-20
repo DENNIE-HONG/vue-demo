@@ -16,4 +16,11 @@
       top: 2px;
     }
   }
+  > .iconfont {
+    padding-right: rem(10);
+    font-size: rem(34);
+    color: nth($fblack, 3);
+    position: relative;
+    top: 1px;
+  }
 }

@@ -1,7 +1,5 @@
 <template>
-  <div
-    v-show="isShow"
-    class="com-basetab-pane">
+  <div class="com-basetab-pane">
     <slot></slot>
   </div>
 </template>
@@ -39,4 +37,10 @@ export default {
   }
 }
 </script>
+<style lang="scss">
+.com-basetab-pane {
+  width: 100%;
+}
+</style>
+
 

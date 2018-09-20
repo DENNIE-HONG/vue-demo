@@ -11,6 +11,7 @@ import NotFound from 'views/404/index.vue';
 import Product from 'views/product/index.vue';
 import Question from 'views/question';
 import QuestionDetail from 'views/question-detail';
+import Cart from 'views/cart';
 const routes = [
   { path: '/', component: Home },
   { path: '/my', component: My },
@@ -23,6 +24,7 @@ const routes = [
   { path: '/product/:productId', component: Product },
   { path: '/question/:productId', component: Question },
   { path: '/question/:productId/detail/:id', component: QuestionDetail },
+  { path: '/cart', component: Cart },
   { path: '*', component: NotFound }
 ];
 export default routes;

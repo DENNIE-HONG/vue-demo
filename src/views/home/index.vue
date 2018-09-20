@@ -12,6 +12,7 @@
     <footer class="home-footer">
       <nav>
         <a class="active" href="javascript:;  "><i class="iconfont icon-home"></i><p class="footer-txt">首页</p></a>
+        <router-link to="/cart"><i class="iconfont icon-cart"></i><p class="footer-txt">购物车</p></router-link>
         <router-link to="/my"><i class="iconfont icon-user"></i><p class="footer-txt">我的</p></router-link>
       </nav>
     </footer>
@@ -49,13 +50,6 @@ export default {
         page: 1
       }
     }
-  },
-  created () {
-    this.$api['kaola/cart']({}).then((res) => {
-      console.log(res);
-    }).catch((err) => {
-      console.log(err);
-    });
   },
   methods: {
     loadSuccess (res) {
@@ -128,6 +122,7 @@ export default {
     .footer-txt {
       margin-top: 0;
       line-height: 1;
+      font-size: rem(24);
     }
   }
 }

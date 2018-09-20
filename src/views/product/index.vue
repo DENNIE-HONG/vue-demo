@@ -51,9 +51,16 @@
       <broad-cast
         :broadcastList="broadcastList"/>
     </section>
-    <section class="product-specifications">
-      <base-tabs v-model="activeName">
-        <base-tabs-pane label="商品介绍" name="detail">哈哈，我是详情</base-tabs-pane>
+    <section
+      v-show="isCommentSimple"
+      class="product-specifications">
+      <base-tabs
+        v-model="activeName"
+        @tab-change="paneChange">
+        <base-tabs-pane label="商品介绍" name="detail">
+          <div class="product-title-line"><span>特别声明</span></div>
+          <empty-list text="是的，就是没有数据"/>
+        </base-tabs-pane>
         <base-tabs-pane label="规格参数" name="specification">
           <div class="product-title-line"><span>规格参数</span></div>
           <base-table
@@ -63,21 +70,20 @@
             <base-table-column prop="vals"></base-table-column>
           </base-table>
         </base-tabs-pane>
+        <base-tabs-pane label="售后保障" name="afterSale">
+          <div class="product-title-line"><span>权利声明</span></div>
+          <p class="product-after-sale">商城上的所有商品信息、客户评价、商品咨询、网友讨论等内容，是商城重要的经营资源，未经许可，禁止非法转载使用。</p>
+        </base-tabs-pane>
       </base-tabs>
     </section>
   </div>
 </template>
 <script>
-import jsonp from 'jsonp';
-import querystring from 'querystring';
 import HeaderBanner from 'coms/HeaderBanner';
 import CommentList from 'coms/CommentList';
 import EmptyList from 'coms/EmptyList';
 import BroadCast from 'coms/BroadCast';
-const GET_GUESS_URL = 'https://wqcoss.jd.com/mcoss/reclike/getrecinfo';
-const GET_QUESTION_URL = 'https://wq.jd.com/questionanswer/GetSkuQuestionListWeChat';
-// const GET_SHOP_URL = 'https://wq.jd.com/mshop/BatchGetShopInfoByVenderId';
-const GET_SPECIFICATION_URL = 'https://wq.jd.com/commodity/itembranch/getspecification';
+import { getQuestion, getGuess, getSpecification } from 'service/api/product.js'
 export default {
   name: 'Product',
   metaInfo: {
@@ -106,14 +112,13 @@ export default {
       broadcastList: [],
       productId: this.$route.params.productId,
       questionList: [],
-      activeName: 'specification',
+      activeName: 'detail',
       specification: []
     }
   },
   created () {
     this.fetchGuess();
     this.fetchQuestion();
-    this.fetchSpecification();
   },
   methods: {
     /**
@@ -128,13 +133,14 @@ export default {
       this.$el.querySelector(selector).scrollIntoView();
       this.tabType = tabType;
     },
+    paneChange (activeName) {
+      if (activeName === 'specification' && !this.specification.length) {
+        this.fetchSpecification();
+      }
+    },
     // 获取猜你喜欢数据
     fetchGuess () {
-      const params = {
-        sku: this.productId,
-        pc: 30
-      }
-      this.fetchJsonp(GET_GUESS_URL, params).then((res)=> {
+      getGuess(this.productId).then((res)=> {
         this.broadcastList = res.data;
       }).catch((err) => {
         this.fetchFail(err);
@@ -142,10 +148,7 @@ export default {
     },
     // 获取问答数据
     fetchQuestion () {
-      const params = {
-        productId: this.productId
-      };
-      this.fetchJsonp(GET_QUESTION_URL, params).then((res) => {
+      getQuestion(this.productId).then((res) => {
         if (res.resultCode === '0') {
           this.questionList = res.result.questionList;
         }
@@ -155,10 +158,7 @@ export default {
     },
     // 获取规格参数
     fetchSpecification () {
-      const params = {
-        skuid: this.productId
-      };
-      this.fetchJsonp(GET_SPECIFICATION_URL, params).then((res) => {
+      getSpecification(this.productId).then((res) => {
         if (res.errcode === '0') {
           this.specification.push({
             attName: '商品编号',
@@ -168,22 +168,6 @@ export default {
         }
       }).catch((err) => {
         this.fetchFail(err);
-      });
-    },
-    /**
-     * jsonp请求
-     * @param {String}   url,
-     * @param {Object}   params， 数据
-    */
-    fetchJsonp (url, params) {
-      const q = querystring.encode(params);
-      return new Promise((resolve, reject) => {
-        jsonp(`${url}?${q}`, { timeout: 10000 }, (err, res) => {
-          if (err) {
-            reject('网络不给力，请稍后再试');
-          }
-          resolve(res);
-        })
       });
     },
     fetchFail (error) {
@@ -265,6 +249,11 @@ export default {
   }
   &-table {
     padding: rem(20);
+  }
+  &-after-sale {
+    padding: 0 rem(20);
+    font-size: rem(24);
+    color: nth($fblack, 3);
   }
 }
 </style>
