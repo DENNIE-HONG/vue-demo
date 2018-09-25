@@ -1,7 +1,10 @@
 <template>
   <div
     class="cart-list-item">
-    <base-checkbox @change="changeGood($event, cart.currentPrice)"></base-checkbox>
+    <base-checkbox
+      :checked="selected"
+      @change="changeGood($event, cart.currentPrice)"
+      ref="checkbox"></base-checkbox>
     <div class="cart-list-item-box">
       <div class="cart-list-pic">
         <img :src="cart.imageUrl" />
@@ -24,6 +27,16 @@
   </div>
 </template>
 <script>
+/**
+ * 购物车单项
+ * @param {Object}   cart，数据
+ * @param {function} checked, 选中商品事件
+ * @param {Boolean}  selected, 是否选中，默认否
+ * @author luyanhong 2018-09-25
+ * @example
+ * <cart-item cart={}></cart-item>
+ *
+*/
 import InputNumber from 'coms/InputNumber';
 export default {
   name: 'CartItem',
@@ -31,6 +44,10 @@ export default {
     cart: {
       default: {},
       type: Object
+    },
+    selected: {
+      default: false,
+      type: Boolean
     }
   },
   data () {
@@ -44,7 +61,8 @@ export default {
   methods: {
     // 是否选中商品事件
     changeGood (checked, price) {
-      console.log(checked, price, this.cartCount);
+      const total = price * this.cartCount
+      this.$emit('checked', checked, total);
     }
   }
 }
