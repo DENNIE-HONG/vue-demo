@@ -8,33 +8,6 @@
         class="cart-list">
         <cart-item-group
           :list="item"></cart-item-group>
-        <!-- <div class="title">
-          <base-checkbox></base-checkbox>
-          <i class="iconfont icon-home"></i>{{item.goodsSource}}</div>
-        <ul>
-          <div
-            v-if="item.cartActivityGoodsList.length"
-            v-for="cart in item.cartActivityGoodsList">
-            <li
-              v-for="li in cart.cartGoodsList"
-              :key="li.cartId">
-              <cart-item
-                :cart="li"
-                @checked="changeGoods($event, )"></cart-item>
-            </li>
-          </div>
-          <li
-            v-for="cart in item.cartItemList"
-            :key="cart.cartGoods.cartId">
-            <cart-item
-              :cart="cart.cartGoods"
-              @checked="changeGoods"
-            ></cart-item>
-          </li>
-        </ul>
-        <div class="cart-list-total global-clearfix">
-          <span class="pull-right">本仓总计：￥0.00</span>
-        </div> -->
       </section>
     </div>
   </div>
@@ -43,7 +16,6 @@
 import HeaderBanner from 'coms/HeaderBanner';
 import InputNumber from 'coms/InputNumber';
 import CartItemGroup from 'coms/CartItem/CartItemGroup';
-// import CartItem from 'coms/CartItem';
 export default {
   name: 'Cart',
   components: {
