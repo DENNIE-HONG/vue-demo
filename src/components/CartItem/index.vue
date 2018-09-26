@@ -13,7 +13,9 @@
         <h5 class="cart-list-title">{{cart.goodsName}}</h5>
         <div class="pull-left">
           <p class="cart-list-desc">{{cart.skuDesc}}</p>
-          <b class="">￥{{cart.currentPrice}}</b>
+          <b
+            v-once
+            class="cart-list-price">￥{{cart.currentPrice}}</b>
         </div>
         <div class="pull-right">
           <input-number
@@ -29,9 +31,10 @@
 <script>
 /**
  * 购物车单项
- * @param {Object}   cart，数据
- * @param {function} checked, 选中商品事件
- * @param {Boolean}  selected, 是否选中，默认否
+ * @param {Object}    cart，数据
+ * @param {Boolean}   isSelected, 初始化是否选中
+ * @param {function}  checked, 选中商品事件
+ * @param {function}  change, 商品数量改变事件, 参数是差价
  * @author luyanhong 2018-09-25
  * @example
  * <cart-item cart={}></cart-item>
@@ -45,23 +48,34 @@ export default {
       default: {},
       type: Object
     },
-    selected: {
+    isSelected: {
       default: false,
       type: Boolean
     }
   },
   data () {
     return {
-      cartCount: 1
+      cartCount: 1,
+      selected: this.isSelected
     }
   },
   components: {
     InputNumber
   },
+  watch: {
+    cartCount (newCount, oldCount) {
+      if (this.selected) {
+        const diff = (newCount - oldCount) * this.cart.currentPrice;
+        this.$emit('change', diff);
+      }
+    }
+  },
   methods: {
     // 是否选中商品事件
     changeGood (checked, price) {
-      const total = price * this.cartCount
+      const total = price * this.cartCount;
+      this.selected = checked;
+      // 通知父组件
       this.$emit('checked', checked, total);
     }
   }
@@ -107,6 +121,7 @@ export default {
     @include hid;
   }
   &-desc {
+    height: rem(50);
     margin: 0 0 rem(20);
     color: nth($fblack, 3);
   }

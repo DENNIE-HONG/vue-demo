@@ -1,6 +1,6 @@
 <template>
   <footer class="com-footer" v-once>
-    <small>Copyright @2018 Luyan Hong</small>
+    <small>Copyright ©2018 Luyan Hong</small>
   </footer>
 </template>
 <script>

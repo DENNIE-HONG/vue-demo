@@ -2,7 +2,8 @@
   <div class="cart-list">
     <div class="title">
       <base-checkbox
-        v-model="allChecked"
+        :checked="allChecked"
+        ref="checkbox"
         @change="changeAll"></base-checkbox>
       <i class="iconfont icon-home"></i>{{list.goodsSource}}</div>
     <ul>
@@ -15,6 +16,7 @@
           <cart-item
             :cart="li"
             @checked="changeGoods"
+            @change="changeNumber"
             ref="cartItem"></cart-item>
         </li>
       </div>
@@ -25,6 +27,7 @@
           :cart="cart.cartGoods"
           @checked="changeGoods"
           ref="cartItem"
+          @change="changeNumber"
         ></cart-item>
       </li>
     </ul>
@@ -37,7 +40,7 @@
 /**
  * 购物车群组
  * @param {Object}  list，数据
- * @param {}
+ * @param {Boolean} selected, 是否仓库选中，默认否
  * @author luyanhong 2018-09-25
  * @example
  * <cart-item-group list={}></cart-item-group>
@@ -52,6 +55,10 @@ export default {
     list: {
       required: true,
       type: Object
+    },
+    selected: {
+      default: false,
+      type: Boolean
     }
   },
   computed: {
@@ -62,16 +69,19 @@ export default {
   data () {
     return {
       total: 0,
-      allChecked: false,
+      allChecked: this.selected,
       selectedTotal: 0
     }
   },
   watch: {
     selectedTotal (val) {
       if (val < this.totalNum) {
+        // 通知父组件
+        this.$emit('change', false, this.total);
         this.allChecked = false;
       } else {
         this.allChecked = true;
+        this.$emit('change', true, this.total);
       }
     }
   },
@@ -92,12 +102,18 @@ export default {
         this.selectedTotal -= 1;
       }
     },
-    // 点击每个仓库多选框事件
+    // 点击仓库多选框事件
     changeAll (checked) {
-      this.itemSelected = checked;
       this.$refs.cartItem.map((ref) => {
-        ref.$refs.checkbox.$el.click();
+        checked !== ref.selected && ref.$refs.checkbox.$el.click();
       });
+    },
+    /**
+     * 商品数改变事件
+     * @param {Number}  diffCount, 改变的差额
+    */
+    changeNumber (diffCount) {
+      this.total += diffCount;
     }
   }
 }
@@ -127,7 +143,7 @@ export default {
       }
     }
     &-total {
-      padding: rem(20);
+      padding: 0 rem(20) rem(20);
       font-size: rem(24);
     }
   }

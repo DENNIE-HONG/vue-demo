@@ -7,8 +7,19 @@
         :key="item.cartRegionId"
         class="cart-list">
         <cart-item-group
-          :list="item"></cart-item-group>
+          :list="item"
+          ref="cartGroup"
+          @change="changeWareHouse(arguments, item.cartRegionId)"></cart-item-group>
       </section>
+    </div>
+    <div class="cart-settlement">
+      <base-checkbox
+        v-model="allSelected"
+        @change="changeAll">全选</base-checkbox>
+      <div class="pull-right">
+        <span>总价：￥{{total.toFixed(2)}}</span>
+        <div class="cart-settlement-btn">结算</div>
+      </div>
     </div>
   </div>
 </template>
@@ -26,13 +37,18 @@ export default {
   data () {
     return {
       cartList: [],
-      total1: 0.00,
-      total2: 0.00
+      allSelected: false,
+      selectedSet: new Map(),
+      total: 0
+    }
+  },
+  computed: {
+    wareHouseSize () {
+      return this.cartList.length;
     }
   },
   created () {
     this.$api['kaola/cart']({}).then((res) => {
-      console.dir(res);
       if (res.status === 200) {
         this.cartList = res.data.cartShow.cartRegionList;
       } else {
@@ -49,42 +65,54 @@ export default {
     });
   },
   methods: {
-    // 商品checkbox事件
-    changeGoods (total) {
+    // 是否全选事件
+    changeAll (checked) {
+      this.$refs.cartGroup.map((ref)=> {
+        checked !== ref.allChecked && ref.$refs.checkbox.$el.click();
+      });
+    },
+    /**
+     * 每个仓库选中事件
+     * @param {checked} args[0], 是否选中
+     * @param {Number}  args[1], 本仓库总额
+    */
+    changeWareHouse (args, id) {
+      const [checked, total] = args;
       console.log(total);
+      checked && this.selectedSet.set(id, total);
+      !checked && this.selectedSet.delete(id);
+      if (this.selectedSet.size === this.wareHouseSize) {
+        this.allSelected = true;
+      } else {
+        this.allSelected = false;
+      }
+      console.log(this.selectedSet);
+      let all = 0;
+      this.selectedSet.forEach((value, key) => {
+        console.log(value, key);
+        all += value;
+      });
+      this.total = all;
     }
   }
 }
 </script>
 <style lang="scss">
 .cart {
-  // &-list {
-  //   margin-bottom: rem(20);
-  //   background-color: white;
-  //   &-item {
-  //     display: flex;
-  //     padding: rem(20);
-  //     .pull-right {
-  //       margin-top: rem(15);
-  //       text-align: right;
-  //     }
-  //     &-box {
-  //       display: flex;
-  //       @include hid;
-  //       flex: 1;
-  //       border-bottom: 1px solid nth($fgray, 1);
-  //     }
-  //     .com-checkbox {
-  //       display: flex;
-  //       align-items: center;
-  //       margin-right: rem(40);
-  //     }
-  //   }
-  //   &-total {
-  //     padding: rem(20);
-  //     font-size: rem(24);
-  //   }
-  // }
+  &-settlement {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: white;
+    border-top: 2px solid nth($fgray, 1);
+    &-btn {
+      display: inline-block;
+      width: rem(150);
+      height: rem(100);
+      text-align: center;
+      background-color: nth($fgray, 2);
+      line-height: rem(100);
+    }
+  }
 }
 </style>
-
