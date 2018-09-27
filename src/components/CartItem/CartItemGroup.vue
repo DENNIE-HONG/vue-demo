@@ -17,6 +17,7 @@
             :cart="li"
             @checked="changeGoods"
             @change="changeNumber"
+            @delete="handleDelete"
             ref="cartItem"></cart-item>
         </li>
       </div>
@@ -77,12 +78,11 @@ export default {
     selectedTotal (val) {
       if (val < this.totalNum) {
         // 通知父组件
-        this.$emit('change', false, this.total);
         this.allChecked = false;
       } else {
         this.allChecked = true;
-        this.$emit('change', true, this.total);
       }
+      this.noticeParent();
     }
   },
   methods: {
@@ -109,11 +109,19 @@ export default {
       });
     },
     /**
-     * 商品数改变事件
+     * 商品数增加或者减少改变事件
      * @param {Number}  diffCount, 改变的差额
     */
     changeNumber (diffCount) {
       this.total += diffCount;
+      this.noticeParent();
+    },
+    noticeParent () {
+      this.$emit('change', this.allChecked, this.total);
+    },
+    // 删除商品
+    handleDelete (goodsId) {
+
     }
   }
 }
@@ -149,5 +157,3 @@ export default {
   }
 }
 </style>
-
-

@@ -22,7 +22,9 @@
             v-model="cartCount"
             :min="1"
             :max="cart.userLimitBuyCount? cart.userLimitBuyCount: cart.maxSelectedStore "></input-number>
-          <div class="cart-list-delete"><i class="iconfont icon-empty"></i></div>
+          <div
+            class="cart-list-delete"
+            @click="handleDelete(cart.goodsId)"><i class="iconfont icon-empty"></i></div>
         </div>
       </div>
     </div>
@@ -77,6 +79,20 @@ export default {
       this.selected = checked;
       // 通知父组件
       this.$emit('checked', checked, total);
+    },
+    // 删除商品事件
+    handleDelete (goodsId) {
+      // this.$emit('delete', goodsId);
+      this.$confirm('很抢手哦~下次不一定能买到', {
+        confirmButtonText: '留在购物车'
+      }).then(()=>{
+        // this.cart = {};
+        console.log('确定');
+      }).catch(()=>{
+        console.log('取消');
+        // this.cart = {};
+        this.$emit('cancel', goodsId);
+      });
     }
   }
 }

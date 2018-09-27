@@ -1,6 +1,6 @@
 <template>
   <div class="cart">
-    <header-banner>购物车</header-banner>
+    <header-banner>购物车({{allCount}})</header-banner>
     <div class="cart-box">
       <section
         v-for="item of cartList"
@@ -17,29 +17,31 @@
         v-model="allSelected"
         @change="changeAll">全选</base-checkbox>
       <div class="pull-right">
-        <span>总价：￥{{total.toFixed(2)}}</span>
-        <div class="cart-settlement-btn">结算</div>
+        <span>总价：<b class="cart-settlement-total">￥{{total.toFixed(2)}}</b></span>
+        <div :class="['cart-settlement-btn', {active: total != 0}]">结算</div>
       </div>
     </div>
   </div>
 </template>
 <script>
 import HeaderBanner from 'coms/HeaderBanner';
-import InputNumber from 'coms/InputNumber';
 import CartItemGroup from 'coms/CartItem/CartItemGroup';
+import ConfirmBox from 'coms/ConfirmBox';
 export default {
   name: 'Cart',
   components: {
     HeaderBanner,
-    InputNumber,
-    CartItemGroup
+    CartItemGroup,
+    ConfirmBox
   },
   data () {
     return {
       cartList: [],
       allSelected: false,
-      selectedSet: new Map(),
-      total: 0
+      selectedSet: new Set(),
+      total: 0,
+      totalObj: {},
+      allCount: 0
     }
   },
   computed: {
@@ -47,10 +49,35 @@ export default {
       return this.cartList.length;
     }
   },
+  watch: {
+    // 每个仓库价格变化，就重新计算总价
+    totalObj: {
+      handler (val) {
+        const totalList = Object.values(val);
+        let all = 0;
+        for (const value of totalList) {
+          all += value;
+        }
+        this.total = all;
+      },
+      deep: true
+    }
+  },
   created () {
+    // this.$confirm('很抢手哦~下次不一定能买到', {
+    //   confirmButtonText: '留在购物车'
+    // }).then(()=>{
+    //   console.log('确定');
+    // }).catch(()=>{
+    //   console.log('取消');
+    // });
     this.$api['kaola/cart']({}).then((res) => {
       if (res.status === 200) {
+        this.allCount = res.data.cartShow.allCount;
         this.cartList = res.data.cartShow.cartRegionList;
+        this.cartList.map((item)=> {
+          this.$set(this.totalObj, item.cartRegionId, 0);
+        });
       } else {
         this.$message({
           type: 'error',
@@ -78,22 +105,16 @@ export default {
     */
     changeWareHouse (args, id) {
       const [checked, total] = args;
-      console.log(total);
-      checked && this.selectedSet.set(id, total);
+      checked && this.selectedSet.add(id, total);
       !checked && this.selectedSet.delete(id);
       if (this.selectedSet.size === this.wareHouseSize) {
         this.allSelected = true;
       } else {
         this.allSelected = false;
       }
-      console.log(this.selectedSet);
-      let all = 0;
-      this.selectedSet.forEach((value, key) => {
-        console.log(value, key);
-        all += value;
-      });
-      this.total = all;
+      this.$set(this.totalObj, id, total);
     }
+
   }
 }
 </script>
@@ -105,6 +126,10 @@ export default {
     width: 100%;
     background-color: white;
     border-top: 2px solid nth($fgray, 1);
+    .com-checkbox {
+      padding-left: rem(20);
+      margin-top: rem(30);
+    }
     &-btn {
       display: inline-block;
       width: rem(150);
@@ -112,6 +137,13 @@ export default {
       text-align: center;
       background-color: nth($fgray, 2);
       line-height: rem(100);
+      &.active {
+        background-color: nth($fgreen, 1);
+        color: white;
+      }
+    }
+    &-total {
+      color: nth($fgreen, 1);
     }
   }
 }
