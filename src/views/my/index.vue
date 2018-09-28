@@ -59,7 +59,10 @@ export default {
       signOut().then(() => {
         this.$router.push('/login');
       }).catch((error) => {
-        console.log(error);
+        this.$message({
+          type: 'error',
+          message: error
+        });
       });
     }
   }

@@ -37,6 +37,7 @@
  * @param {Boolean}   isSelected, 初始化是否选中
  * @param {function}  checked, 选中商品事件
  * @param {function}  change, 商品数量改变事件, 参数是差价
+ * @param {function}  delete, 删除商品事件，参数是id
  * @author luyanhong 2018-09-25
  * @example
  * <cart-item cart={}></cart-item>
@@ -83,15 +84,13 @@ export default {
     // 删除商品事件
     handleDelete (goodsId) {
       // this.$emit('delete', goodsId);
-      this.$confirm('很抢手哦~下次不一定能买到', {
-        confirmButtonText: '留在购物车'
-      }).then(()=>{
-        // this.cart = {};
-        console.log('确定');
-      }).catch(()=>{
-        console.log('取消');
-        // this.cart = {};
-        this.$emit('cancel', goodsId);
+      this.$confirm('很抢手哦~下次不一定能买到，确定要删除我吗~', {
+        confirmButtonText: '留在购物车',
+        cancelButtonText: '狠心删除'
+      }).then(()=> {
+
+      }).catch(()=> {
+        this.$emit('delete', goodsId);
       });
     }
   }

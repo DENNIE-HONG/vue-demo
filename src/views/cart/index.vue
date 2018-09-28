@@ -9,7 +9,8 @@
         <cart-item-group
           :list="item"
           ref="cartGroup"
-          @change="changeWareHouse(arguments, item.cartRegionId)"></cart-item-group>
+          @change="changeWareHouse(arguments, item.cartRegionId)"
+          @delete="handleDelete"></cart-item-group>
       </section>
     </div>
     <div class="cart-settlement">
@@ -64,13 +65,6 @@ export default {
     }
   },
   created () {
-    // this.$confirm('很抢手哦~下次不一定能买到', {
-    //   confirmButtonText: '留在购物车'
-    // }).then(()=>{
-    //   console.log('确定');
-    // }).catch(()=>{
-    //   console.log('取消');
-    // });
     this.$api['kaola/cart']({}).then((res) => {
       if (res.status === 200) {
         this.allCount = res.data.cartShow.allCount;
@@ -113,8 +107,14 @@ export default {
         this.allSelected = false;
       }
       this.$set(this.totalObj, id, total);
+    },
+    // 删除商品
+    handleDelete (cartId) {
+      this.$message({
+        type: 'success',
+        message: '假装删除成功啦'
+      });
     }
-
   }
 }
 </script>

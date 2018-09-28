@@ -29,6 +29,7 @@
           @checked="changeGoods"
           ref="cartItem"
           @change="changeNumber"
+          @delete="handleDelete"
         ></cart-item>
       </li>
     </ul>
@@ -121,7 +122,7 @@ export default {
     },
     // 删除商品
     handleDelete (goodsId) {
-
+      this.$emit('delete', goodsId);
     }
   }
 }

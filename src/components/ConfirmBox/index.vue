@@ -24,6 +24,7 @@
  * @param {function} cancel, 取消事件
  * @author luyanhong 2018-09-27
 */
+import lockWindow from 'utils/lockWindow';
 export default {
   name: 'ConfirmBox',
   props: {
@@ -48,20 +49,22 @@ export default {
       type: Function
     }
   },
+  created () {
+    lockWindow();
+  },
   methods: {
     remove () {
       this.$el.parentNode.removeChild(this.$el);
       this.$destroy();
+      lockWindow({ isLock: false });
     },
     handleOk () {
       this.remove();
-      // this.$emit('ok');
       this.callback && this.callback('confirm')
     },
     handleCancel () {
       this.remove();
       this.callback && this.callback('cancel');
-      // this.$emit('cancel');
     }
   }
 }
@@ -79,14 +82,11 @@ export default {
   &-content {
     min-height: rem(100);
     padding: rem(30) rem(50);
-    line-height: rem(50);
+    line-height: rem(44);
     @include wordbreak;
     text-align: center;
-    font-size: rem(30);
+    font-size: rem(28);
     border-bottom: 1px solid nth($fgray, 1);
-  }
-  &-btns {
-
   }
   &-btn {
     width: 50%;
