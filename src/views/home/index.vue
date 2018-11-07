@@ -7,13 +7,34 @@
         <h3 class="home-guess-txt"><i class="iconfont icon-search"></i>猜你喜欢</h3>
       </div>
       <product-list :productList="productList"/>
-      <load-more :url="url" :success="loadSuccess" :params="sendData" ref="loadmore"/>
+      <load-more
+        :url="url"
+        :success="loadSuccess"
+        :params="sendData"
+        ref="loadmore"
+        jsonp />
     </section>
     <footer class="home-footer">
       <nav>
-        <a class="active" href="javascript:;  "><i class="iconfont icon-home"></i><p class="footer-txt">首页</p></a>
-        <router-link to="/cart"><i class="iconfont icon-cart"></i><p class="footer-txt">购物车</p></router-link>
-        <router-link to="/my"><i class="iconfont icon-user"></i><p class="footer-txt">我的</p></router-link>
+        <li class="home-footer-item">
+          <h2>
+            <router-link
+              class="active"
+              to="/">
+              <i class="iconfont icon-home"></i><p class="footer-txt">首页</p>
+            </router-link>
+          </h2>
+        </li>
+        <li class="home-footer-item">
+          <h2>
+            <router-link to="/cart"><i class="iconfont icon-cart"></i><p class="footer-txt">购物车</p></router-link>
+          </h2>
+        </li>
+        <li class="home-footer-item">
+          <h2>
+            <router-link to="/my"><i class="iconfont icon-user"></i><p class="footer-txt">我的</p></router-link>
+          </h2>
+        </li>
       </nav>
     </footer>
   </div>
@@ -44,20 +65,24 @@ export default {
   },
   data () {
     return {
-      url: 'api/recommend.action',
+      url: 'https://wqcoss.jd.com/mcoss/reclike/getrecinfo',
       productList: [],
       sendData: {
-        page: 1
+        pi: 1,
+        pc: 22
       }
     }
   },
   methods: {
     loadSuccess (res) {
-      if (res.status === 200) {
-        const result = JSON.parse(res.data.recommend);
-        if (result.wareInfoList.length) {
-          this.productList = this.productList.concat(result.wareInfoList);
-          this.sendData.page += 1;
+      if (!res.error_msg) {
+        const result = res.data;
+        if (result.length) {
+          this.productList = this.productList.concat(result);
+          this.sendData.pi += 1;
+          if (result.length < this.sendData.pc) {
+            this.$refs.loadmore.toEnd();
+          }
         } else {
           this.$refs.loadmore.toEnd();
         }
@@ -112,7 +137,13 @@ export default {
       justify-content: space-around;
       background-color: white;
     }
+    &-item {
+      h2 {
+        margin: 0;
+      }
+    }
     a {
+      display: block;
       text-align: center;
       color: nth($fblack, 2);
       &.active {

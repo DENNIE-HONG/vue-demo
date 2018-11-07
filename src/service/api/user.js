@@ -12,7 +12,14 @@ const userName = 'name';
 const defaultName = 'vue宝宝';
 const vueToken = 'vue_token';
 import defaultAvatar from 'assets/img/user.png';
-// 登入
+const storeToken = (data) => {
+  const token = jwt.sign(data, 'secret', { expiresIn: '3 days' });
+  cookies.set(vueToken, token);
+}
+/**
+ * 登入接口
+ * @param {Object} {name: 'xxx', password: 'xx'}
+ */
 export function postLogin (params = required()) {
   return new Promise((resolve, reject) => {
     const { name } = params;
@@ -22,17 +29,19 @@ export function postLogin (params = required()) {
         msg: '缺少参数name'
       });
     }
-    const token = jwt.sign({
-      name
-    }, 'secret', { expiresIn: '3 days' });
-    cookies.set(vueToken, token, {
-      path: '/'
-    });
-    localStorage.setItem(userName, name);
-    resolve({
-      code: 200,
-      msg: ''
-    });
+    const originName = localStorage.getItem(userName);
+    if (!originName) {
+      reject({
+        code: 1,
+        msg: '找不到该用户哦'
+      });
+    }
+    if (name === originName) {
+      resolve({
+        code: 200,
+        msg: ''
+      });
+    }
   })
 }
 
@@ -54,7 +63,7 @@ export function getUser () {
     });
   }
   if (deCoded && deCoded[userName]) {
-    const name = localStorage.getItem(userName);
+    const name = deCoded[userName];
     Object.assign(data, {
       name,
       isLogin: true
@@ -83,5 +92,27 @@ export function signOut () {
         msg: '您还没有登入哦'
       });
     }
+  });
+}
+
+/**
+ * 注册用户
+ * @param {Object} { name: 'xxx' }, 用户昵称
+*/
+export function signUp ({ name }) {
+  return new Promise((resolve, reject) => {
+    if (!name) {
+      reject({
+        code: 1,
+        msg: '缺少参数name'
+      });
+    }
+    storeToken({ name });
+    // 永久保存昵称
+    localStorage.setItem(userName, name);
+    resolve({
+      code: 200,
+      msg: ''
+    });
   });
 }

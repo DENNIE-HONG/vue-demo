@@ -5,24 +5,19 @@
     <dl class="product-list-box">
       <dd
         v-for="(list, index) in productList"
-        :key="list.wareId + index"
+        :key="list.sku + index"
         class="product-list-item">
-        <router-link
-          v-if="list.itemType == 0"
-          :to="'product/' + list.wareId">
-          <div class="product-list-pic"><img v-lazy="list.imageurl"/></div>
-          <h4 class="product-list-title">{{list.wname}}</h4>
+        <router-link :to="'product/' + list.sku">
+          <div class="product-list-pic">
+            <img
+              v-lazy="imgPrefix + list.img"
+              :alt="list.t" />
+          </div>
+          <h4 class="product-list-title">{{list.t}}</h4>
           <div class="product-list-info">
-            <span>￥{{list.jdPrice}}</span>
+            <span>￥{{list.jp / 100}}</span>
           </div>
         </router-link>
-        <div
-          v-if="list.itemType == 1"
-          class="product-list-shop">
-          <div class="product-list-pic small"><img v-lazy="list.imageurl"/></div>
-          <h4 class="product-list-title">{{list.wname}}</h4>
-          <span>{{list.followCount}}人关注</span>
-        </div>
       </dd>
     </dl>
   </section>
@@ -41,6 +36,10 @@ export default {
     productList: {
       default: [],
       type: Array
+    },
+    imgPrefix: {
+      default: '//img12.360buyimg.com/n7/',
+      type: String
     }
   }
 }

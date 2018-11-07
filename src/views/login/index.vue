@@ -4,25 +4,38 @@
     <form class="login-content">
       <BaseInput
         placeholder="昵称"
-        v-model="name"
+        v-model.trim="name"
         class="login-input"
         maxlength="10"
         clearable
       />
       <BaseInput
         placeholder="密码"
-        v-model="password"
+        v-model.trim="password"
         class="login-input"
         maxlength="20"
         type="password"
         clearable
       />
-      <div class="btn-primary btn-large" @click="submit">登录</div>
+      <div
+        v-show="!isRegister"
+        class="btn-primary btn-large"
+        @click="submit">登录</div>
+      <div
+        v-show="isRegister"
+        class="btn-primary btn-large"
+        @click="register">注册</div>
+      <p v-show="!isRegister">
+        没有账号？
+        <span
+          class="login-register"
+          @click="isRegister = true">点击注册</span>
+      </p>
     </form>
   </div>
 </template>
 <script>
-import { postLogin } from 'service/api/user.js';
+import { postLogin, signUp } from 'service/api/user.js';
 export default {
   name: 'Login',
   metaInfo: {
@@ -45,7 +58,9 @@ export default {
       sendData: {
         name: '',
         password: ''
-      }
+      },
+      isRegister: false,
+      isLoading: false
     }
   },
 
@@ -88,7 +103,28 @@ export default {
         this.showError(res.msg);
       });
     },
-
+    // 注册
+    async register () {
+      const errorMsg = this.check();
+      if (errorMsg) {
+        this.showError(errorMsg);
+        return;
+      }
+      if (this.isLoading) {
+        this.showError('正在发送，请稍候');
+        return;
+      }
+      this.isLoading = true;
+      this.combineData();
+      try {
+        await signUp(this.sendData);
+        this.isRegister = false;
+      } catch (err) {
+        this.showError(err.msg);
+      } finally {
+        this.isLoading = false;
+      }
+    },
     showError (text) {
       this.$message({
         type: 'error',
@@ -116,6 +152,10 @@ export default {
   }
   &-input {
     margin-bottom: rem(40);
+  }
+  &-register {
+    color: nth($fgreen, 1);
+    text-decoration: underline;
   }
 }
 </style>
