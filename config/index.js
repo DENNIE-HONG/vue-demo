@@ -26,7 +26,9 @@ const WEBPACK_DEV_CONFIG = {
 // webpack production 配置
 const WEBPACK_PROD_CONFIG = {
   assetsDirectory: resolve('dist'),
-  assetsPublicPath: '/'
+  assetsPublicPath: '/',
+  port: 5555,
+  assetsViews: resolve('dist/index.html')
 };
 // axios 默认配置
 const AXIOS_DEFAULT_CONFIG = {
