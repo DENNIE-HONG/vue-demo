@@ -43,7 +43,8 @@ module.exports = (env) => {
     output: {
       filename: 'js/[name].[chunkhash:8].js',
       path: WEBPACK_PROD_CONFIG.assetsDirectory,
-      publicPath: WEBPACK_PROD_CONFIG.assetsPublicPath
+      publicPath: WEBPACK_PROD_CONFIG.assetsPublicPath,
+      chunkFilename: 'js/[name].[chunkhash:8].js'
     }
   });
   if (process.env.npm_config_report) {

@@ -8,6 +8,7 @@ import routes from '../routes/index.js';
 import isLogin from 'utils/isLogin.js';
 Vue.use(Router);
 const router = new Router({
+  scrollBehavior: () => ({ y: 0 }),
   routes
 });
 router.beforeEach((to, from, next) => {
