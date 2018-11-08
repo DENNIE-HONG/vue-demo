@@ -31,7 +31,8 @@
     "vue-meta": "^1.5.2",
     "vue-router": "^3.0.1",
     "vue-template-compiler": "^2.5.17",
-    "vue-touch": "^2.0.0-beta.4"
+    "vue-touch": "^2.0.0-beta.4",
+    "xss": "^1.0.3"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
@@ -73,7 +74,7 @@
     "webpack": "^4.16.2",
     "webpack-bundle-analyzer": "^2.13.1",
     "webpack-cli": "^3.0.8",
-    "webpack-dev-server": "^3.1.4",
+    "webpack-dev-server": "^3.1.10",
     "webpack-merge": "^4.1.3"
   }
 }

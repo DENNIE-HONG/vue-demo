@@ -20,6 +20,8 @@
 /**
  * 输入模块
  * @author luyanhong
+ * @param {String}   value
+ * @param {Function} input, 回调事件
 */
 export default {
   name: 'BaseInput',

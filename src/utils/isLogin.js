@@ -1,5 +1,5 @@
 import Cookie from 'universal-cookie';
 const cookies = new Cookie();
-const userName = 'name';
-const isLogin = () => !!cookies.get(userName);
+const token = 'vue_token';
+const isLogin = () => cookies.get(token);
 export default isLogin;

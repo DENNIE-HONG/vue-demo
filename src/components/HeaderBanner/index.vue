@@ -53,6 +53,7 @@ export default {
   border-bottom: 1px solid nth($fgray, 1);
   box-sizing: border-box;
   &-slot {
+    margin: 0;
     flex: 1;
     text-align: center;
     font-size: rem(30);

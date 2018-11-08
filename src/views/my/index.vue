@@ -4,10 +4,11 @@
     <div class="my-header">
       <div class="my-behavior">
         <div class="my-info">
-          <img
-            class="my-avatar"
-            :src="avatar"
-          />
+          <div class="my-avatar">
+            <img
+              :src="avatar"
+              :alt="name">
+          </div>
           <span v-if="isLogin">{{name}}</span>
         </div>
       </div>
@@ -75,12 +76,21 @@ export default {
     height: rem(400);
     background: url('./img/bg.png') top/100% no-repeat;
     border-bottom: 1px solid nth($fgray, 1);
-    .my-avatar {
-      display: inline-block;
-      width: rem(130);
-      height: rem(130);
-      border-radius: 50%;
-      border: rem(4) solid nth($fgray, 1);
+  }
+  &-avatar {
+    position: relative;
+    display: inline-block;
+    width: rem(130);
+    height: rem(130);
+    border-radius: 50%;
+    border: rem(4) solid nth($fgray, 1);
+    @include hid;
+    > img {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 100%;
+      transform: translateY(-50%);
     }
   }
   &-behavior {

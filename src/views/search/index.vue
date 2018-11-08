@@ -33,7 +33,9 @@
         <i class="iconfont icon-down"></i>
       </li>
     </nav>
-    <product-list :productList="searchList" />
+    <product-list
+      :productList="searchList"
+      imgPrefix="//img10.360buyimg.com/n2/s240x240_" />
     <empty-list v-if="firstLoadEmpty" text="暂时搜索不到该商品"/>
     <load-more v-else :url="url" :success="loadSuccess" :params="sendData" jsonp ref="loadmore"/>
   </div>
@@ -111,11 +113,10 @@ export default {
       }
       if (res.data.searchm.Paragraph.length) {
         for (const item of res.data.searchm.Paragraph) {
-          item.wareId = item.wareid;
-          item.imageurl = `//img11.360buyimg.com/n7/s360x360_${item.Content.imageurl}`;
-          item.wname = item.Content.warename;
-          item.jdPrice = item.dredisprice;
-          item.itemType = item.venderType;
+          item.sku = item.wareid;
+          item.img = item.Content.imageurl;
+          item.t = item.Content.warename;
+          item.jp = item.dredisprice * 100;
         }
         this.searchList = this.searchList.concat(res.data.searchm.Paragraph);
         this.sendData.page += 1;

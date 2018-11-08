@@ -4,7 +4,8 @@
       <img
         v-if="imgUrl"
         :src="imgUrl"
-        class="com-upload-pic"/>
+        class="com-upload-pic"
+        alt="avatar" />
       <input
         type="file"
         class="com-upload-input"
@@ -113,10 +114,12 @@ export default {
   height: rem(100);
   width: rem(100);
   &-pic {
-    display: inline-block;
+    position: absolute;
+    top: 50%;
+    left: 0;
     width: 100%;
-    height: auto;
     min-height: 100%;
+    transform: translateY(-50%);
   }
   &-input {
     position: absolute;

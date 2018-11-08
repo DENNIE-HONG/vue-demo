@@ -119,6 +119,10 @@ export default {
       try {
         await signUp(this.sendData);
         this.isRegister = false;
+        this.$message({
+          type: 'success',
+          message: '注册成功！'
+        });
       } catch (err) {
         this.showError(err.msg);
       } finally {

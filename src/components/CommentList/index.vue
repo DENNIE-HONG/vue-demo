@@ -12,7 +12,7 @@
         <div
           @click="backToSimple"
           class="header-go-back"><i class="iconfont icon-left"></i></div>
-        <span class="com-header-banner-slot">商品评价</span>
+        <h2 class="com-header-banner-slot">商品评价</h2>
       </div>
       <div class="com-comment-tab">
         <base-checkbox v-model="onlyCurrent">只看当前商品</base-checkbox>
@@ -46,16 +46,18 @@
               <div class="com-comment-time pull-right">{{item.referenceTime}}</div>
             </div>
             <p class="com-comment-detail">{{item.content}}</p>
-            <div
+            <ul
               v-if="item.imageCount"
               class="com-comment-pics">
-              <div
+              <li
                 v-for="(img, i) in item.images"
                 class="com-comment-pic"
                 @click="checkImgDetail(item.images, i+1)">
-                <img v-lazy="img.imgUrl + '!cc_100x100.dpg'"/>
-              </div>
-            </div>
+                <img
+                  v-lazy="img.imgUrl + '!cc_100x100.dpg'"
+                  alt="用户评论" />
+              </li>
+            </ul>
         </li>
       </ul>
       <div

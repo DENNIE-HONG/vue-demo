@@ -5,6 +5,7 @@
 import Cookie from 'universal-cookie';
 import jwt from 'jsonwebtoken';
 const cookies = new Cookie();
+import xss from 'xss';
 const required = () => {
   throw Error('missing parameter');
 }
@@ -30,16 +31,16 @@ export function postLogin (params = required()) {
       });
     }
     const originName = localStorage.getItem(userName);
-    if (!originName) {
-      reject({
-        code: 1,
-        msg: '找不到该用户哦'
-      });
-    }
     if (name === originName) {
+      storeToken({ name });
       resolve({
         code: 200,
         msg: ''
+      });
+    } else {
+      reject({
+        code: 1,
+        msg: '找不到该用户哦'
       });
     }
   })
@@ -48,7 +49,6 @@ export function postLogin (params = required()) {
 // 用户信息
 export function getUser () {
   const data = {
-    avatar: defaultAvatar,
     name: defaultName,
     isLogin: false
   };
@@ -64,8 +64,10 @@ export function getUser () {
   }
   if (deCoded && deCoded[userName]) {
     const name = deCoded[userName];
+    const avatar = localStorage.getItem('avatar');
     Object.assign(data, {
       name,
+      avatar: avatar || defaultAvatar,
       isLogin: true
     });
   }
@@ -115,4 +117,27 @@ export function signUp ({ name }) {
       msg: ''
     });
   });
+}
+
+/**
+ * 修改用户信息
+*/
+export function modifyUser ({ name, avatar }) {
+  return new Promise((resolve, reject) => {
+    const changeName = xss(name);
+    const changeAvatar = xss(avatar);
+    if (!changeName && !changeAvatar) {
+      reject({
+        code: 1,
+        msg: '参数不为空！'
+      });
+    }
+    changeName && localStorage.setItem(userName, changeName);
+    changeAvatar && localStorage.setItem('avatar', changeAvatar);
+    storeToken({ name: changeName });
+    resolve({
+      code: 200,
+      msg: ''
+    });
+  })
 }

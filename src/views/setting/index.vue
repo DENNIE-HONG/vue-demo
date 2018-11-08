@@ -5,14 +5,20 @@
       <div class="info-item">
         <span>vue头像</span>
         <div class="info-item-right">
-          <upload-picture v-model="avatar" class="info-item-pic"></upload-picture>
+          <upload-picture
+            v-model="avatar"
+            @change="isChange = true"
+            class="info-item-pic">
+          </upload-picture>
         </div>
       </div>
       <div class="info-item">
         <span>vue昵称</span>
         <div class="info-item-right">
-          {{name}}
-          <i class="iconfont icon-right"></i>
+          <base-input
+            v-model.trim="name"
+            maxLength="10"
+            @input="isChange = true" />
         </div>
       </div>
     </section>
@@ -61,6 +67,9 @@
         </div>
       </div>
     </section>
+    <div
+      class="btn-primary btn-large setting-btn"
+      @click="modify">提交修改</div>
   </div>
 </template>
 <script>
@@ -68,7 +77,7 @@
  * 设置个人资料页
  * @author luyanhong 2018-08-05
 */
-import { getUser } from 'service/api/user.js';
+import { getUser, modifyUser } from 'service/api/user.js';
 import UploadPicture from 'coms/UploadPicture/index.vue';
 import HeaderBanner from 'coms/HeaderBanner/index.vue';
 export default {
@@ -98,7 +107,9 @@ export default {
       isHideGender: true,
       checked: true,
       hobby: '1',
-      topic: ['3']
+      topic: ['3'],
+      isChange: false,
+      isLoading: false
     }
   },
   computed: {
@@ -132,9 +143,54 @@ export default {
     closeGender (options) {
       this.isHideGender = options.isHide;
     },
-    imgUrl (url) {
-      console.log(url);
+    check () {
+      let errorMsg;
+      if (!this.isChange) {
+        errorMsg = '暂时没有修改哦';
+        return errorMsg;
+      }
+      if (!this.name) {
+        errorMsg = '修改的昵称不能为空';
+        return errorMsg;
+      }
+      return errorMsg;
+    },
+    async modify () {
+      const errorMsg = this.check();
+      if (errorMsg) {
+        this.$message({
+          type: 'error',
+          message: errorMsg
+        });
+        return;
+      }
+      try {
+        if (this.isLoading) {
+          this.$message({
+            type: 'warning',
+            message: '正在发送，请稍候再试哦'
+          });
+          return;
+        }
+        this.isLoading = true;
+        await modifyUser({
+          name: this.name,
+          avatar: this.avatar
+        });
+        this.$message({
+          type: 'success',
+          message: '修改成功啦, 棒棒哒~'
+        });
+      } catch (err) {
+        this.$message({
+          type: 'error',
+          message: err.msg
+        });
+      } finally {
+        this.isLoading = false;
+      }
     }
+
   }
 }
 </script>
@@ -168,6 +224,12 @@ export default {
         margin: rem(20) rem(20) rem(20) 0;
       }
     }
+    .com-input-box {
+      text-align: right;
+    }
+  }
+  &-btn {
+    margin: rem(70) rem(40);
   }
 }
 </style>
