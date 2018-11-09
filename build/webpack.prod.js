@@ -48,6 +48,7 @@ module.exports = (env) => {
         staticFileGlobs: [
           `${WEBPACK_PROD_CONFIG.assetsDirectory}/fonts/*.*`
         ],
+        minify: true,
         runtimeCaching: [{
           urlPattern: /^http:\/\/localhost:5555\/#\//,
           handler: 'networkFirst',
