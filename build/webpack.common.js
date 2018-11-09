@@ -59,7 +59,14 @@ module.exports = (env) => {
         filename: 'index.html',
         // chunks: ['manifst', 'main'],
         inject: true,
-        minify: !env.production,
+        minify: env.production ? {
+          removeComments: true,
+          minifyJS: true,
+          collapseWhitespace: true,
+          removeScriptTypeAttributes: true,
+          removeStyleLinkTypeAttributes: true,
+          useShortDoctype: true
+        } : false,
         cache: false,
         // chunksSortMode: 'manual',
         xhtml: true,

@@ -3,12 +3,14 @@
  * webpack生产环境配置
  * @author luyanhong 2018-07-24
 */
+const path = require('path');
 const merge = require('webpack-merge');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 const common = require('./webpack.common');
-const WEBPACK_PROD_CONFIG = require('../config/index.js').WEBPACK_PROD_CONFIG;
+const { WEBPACK_PROD_CONFIG } = require('../config/index.js');
 module.exports = (env) => {
   const webpackConfig = merge(common(env), {
     mode: 'production',
@@ -38,6 +40,51 @@ module.exports = (env) => {
       new MiniCssExtractPlugin({
         filename: 'css/[name].[contenthash:8].css',
         chunkFilename: 'css/[name].[contenthash:8].css'
+      }),
+      new SWPrecacheWebpackPlugin({
+        cacheId: 'vue-demo',
+        filepath: path.resolve(__dirname, '../sw.js'),
+        stripPrefix: WEBPACK_PROD_CONFIG.assetsDirectory,
+        staticFileGlobs: [
+          `${WEBPACK_PROD_CONFIG.assetsDirectory}/fonts/*.*`
+        ],
+        runtimeCaching: [{
+          urlPattern: /^http:\/\/localhost:5555\/#\//,
+          handler: 'networkFirst',
+          options: {
+            cache: {
+              name: 'page-cache',
+              maxEntries: 20
+            }
+          }
+        }, {
+          urlPattern: /\/js\/(.*)\.(.*)\.js$/,
+          handler: 'cacheFirst',
+          options: {
+            cache: {
+              name: 'js-cache',
+              maxAgeSeconds: 60 * 60 * 24 * 7
+            }
+          }
+        }, {
+          urlPattern: /\/css\/(.*)\.(.*)\.css$/,
+          handler: 'cacheFirst',
+          options: {
+            cache: {
+              name: 'css-cache',
+              maxAgeSeconds: 60 * 60 * 24 * 7
+            }
+          }
+        }, {
+          urlPattern: /\/img\/(.*)\.(png|jpg|svg|gif)/,
+          handler: 'cacheFirst',
+          options: {
+            cache: {
+              name: 'img-cache',
+              maxEntries: 30
+            }
+          }
+        }]
       })
     ],
     output: {
