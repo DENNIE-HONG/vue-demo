@@ -3,6 +3,7 @@
     <header-banner>购物车({{allCount}})</header-banner>
     <div class="cart-box">
       <section
+        v-if="cartList.length"
         v-for="item of cartList"
         :key="item.cartRegionId"
         class="cart-list">
@@ -12,6 +13,10 @@
           @change="changeWareHouse(arguments, item.cartRegionId)"
           @delete="handleDelete"></cart-item-group>
       </section>
+      <empty-list
+        v-else="!cartList.length"
+        text="购物车空空如也"
+        />
     </div>
     <div class="cart-settlement">
       <base-checkbox
@@ -28,12 +33,14 @@
 import HeaderBanner from 'coms/HeaderBanner';
 import CartItemGroup from 'coms/CartItem/CartItemGroup';
 import ConfirmBox from 'coms/ConfirmBox';
+import EmptyList from 'coms/EmptyList';
 export default {
   name: 'Cart',
   components: {
     HeaderBanner,
     CartItemGroup,
-    ConfirmBox
+    ConfirmBox,
+    EmptyList
   },
   data () {
     return {
