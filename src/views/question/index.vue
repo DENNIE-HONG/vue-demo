@@ -53,7 +53,7 @@ export default {
         'content': 'vue问题页'
       },
       {
-        'property': 'description',
+        'name': 'description',
         'content': 'vue问题页'
       }
     ]

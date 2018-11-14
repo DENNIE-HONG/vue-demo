@@ -58,7 +58,7 @@ export default {
         'content': 'vue练习首页'
       },
       {
-        'property': 'description',
+        'name': 'description',
         'content': 'vue练习首页'
       }
     ]

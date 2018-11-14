@@ -63,7 +63,7 @@ export default {
         'content': 'vue练习搜索页'
       },
       {
-        'property': 'description',
+        'name': 'description',
         'content': 'vue练习搜索页'
       }
     ]

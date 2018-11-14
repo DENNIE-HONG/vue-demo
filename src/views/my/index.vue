@@ -38,6 +38,19 @@ import { getUser, signOut } from 'service/api/user.js';
 import HeaderBanner from 'coms/HeaderBanner/index.vue';
 export default {
   name: 'My',
+  metaInfo: {
+    title: 'profile',
+    meta: [
+      {
+        'property': 'keywords',
+        'content': 'vue个人页'
+      },
+      {
+        'name': 'description',
+        'content': 'vue个人页'
+      }
+    ]
+  },
   components: {
     HeaderBanner
   },

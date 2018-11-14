@@ -16,7 +16,7 @@ export default {
         'content': 'vue404页'
       },
       {
-        'property': 'description',
+        'name': 'description',
         'content': 'vue404页'
       }
     ]

@@ -36,6 +36,19 @@ import ConfirmBox from 'coms/ConfirmBox';
 import EmptyList from 'coms/EmptyList';
 export default {
   name: 'Cart',
+  metaInfo: {
+    title: '购物车',
+    meta: [
+      {
+        'property': 'keywords',
+        'content': 'vue购物车页'
+      },
+      {
+        'name': 'description',
+        'content': 'vue购物车页'
+      }
+    ]
+  },
   components: {
     HeaderBanner,
     CartItemGroup,
