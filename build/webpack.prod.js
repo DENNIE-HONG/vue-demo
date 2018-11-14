@@ -9,6 +9,7 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
+const PreloadWebpackPlugin = require('preload-webpack-plugin');
 const common = require('./webpack.common');
 const { WEBPACK_PROD_CONFIG } = require('../config/index.js');
 module.exports = (env) => {
@@ -86,6 +87,17 @@ module.exports = (env) => {
             }
           }
         }]
+      }),
+      new PreloadWebpackPlugin({
+        rel: 'preload',
+        as (entry) {
+          if (/\.css$/.test(entry)) return 'style';
+          if (/\.woff$/.test(entry)) return 'font';
+          if (/\.(png|jpg|svg|gif)$/.test(entry)) return 'image';
+          return 'script';
+        },
+        include: 'allAssets',
+        fileWhitelist: [/\.woff$/]
       })
     ],
     output: {

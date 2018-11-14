@@ -16,25 +16,14 @@
     </section>
     <footer class="home-footer">
       <nav>
-        <li class="home-footer-item">
-          <h2>
-            <router-link
-              class="active"
-              to="/">
-              <i class="iconfont icon-home"></i><p class="footer-txt">首页</p>
-            </router-link>
-          </h2>
-        </li>
-        <li class="home-footer-item">
-          <h2>
-            <router-link to="/cart"><i class="iconfont icon-cart"></i><p class="footer-txt">购物车</p></router-link>
-          </h2>
-        </li>
-        <li class="home-footer-item">
-          <h2>
-            <router-link to="/my"><i class="iconfont icon-user"></i><p class="footer-txt">我的</p></router-link>
-          </h2>
-        </li>
+        <router-link
+          class="active"
+          to="/">
+          <i class="iconfont icon-home"></i><h2 class="footer-txt">首页</h2>
+        </router-link>
+        <router-link to="/cart"><i class="iconfont icon-cart"></i><h2 class="footer-txt">购物车</h2></router-link>
+        <router-link to="/my"><i class="iconfont icon-user"></i><h2 class="footer-txt">我的</h2></router-link>
+        </h2>
       </nav>
     </footer>
   </div>

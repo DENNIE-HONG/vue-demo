@@ -1,7 +1,7 @@
 <template>
   <div class="product">
     <header-banner v-show="isCommentSimple">
-      <nav>
+      <ul>
         <li
           :class="['product-tab', 'iconfont', {active: tabType === 1}]"
           @click="switchTab('.com-empty', 1)"
@@ -12,7 +12,7 @@
         <li
           :class="['product-tab', 'iconfont', {active: tabType === 3}]"
           @click="switchTab('.product-guess', 3)">推荐</li>
-      </nav>
+      </ul>
     </header-banner>
     <section
       v-show="isCommentSimple"

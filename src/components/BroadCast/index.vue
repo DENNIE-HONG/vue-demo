@@ -16,7 +16,7 @@
           :to="'/product/' + item.sku">
           <div class="pic">
             <img
-              :src="'//img14.360buyimg.com/mobilecms/s270x270_'+ item.img"
+              v-lazy="'//img14.360buyimg.com/mobilecms/s270x270_'+ item.img"
               :alt="item.t">
           </div>
           <h5 class="com-broadcast-title">{{item.t}}</h5>

@@ -35,6 +35,7 @@ app.use(helmet())
   })
   .use(ctx => {
     ctx.compress = true;
+    ctx.set('Cache-control', 'must-revalidate, no-store');
     ctx.type = 'html';
     ctx.body = fs.readFileSync(WEBPACK_PROD_CONFIG.assetsViews);
   })

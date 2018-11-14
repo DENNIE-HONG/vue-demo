@@ -47,7 +47,7 @@
                 class="com-comment-pic"
                 @click="checkImgDetail(item.images, index + 1)">
                 <img
-                  :src="img.imgUrl + '!cc_100x100.dpg'"
+                  v-lazy="img.imgUrl + '!cc_100x100.dpg'"
                   alt="用户评论"/>
               </li>
             </ul>
