@@ -42,6 +42,7 @@
 */
 import { debounce } from 'throttle-debounce';
 import lockWindow from 'utils/lockWindow.js';
+import { getSugguest } from 'service/api';
 const MAX_HISTORY_WORDS = 10;
 /**
  * @param {Array}   存储的数组
@@ -112,7 +113,7 @@ export default {
         return;
       }
       this.sendData.q = this.value;
-      this.$api['api/sug'](this.sendData).then((res) => {
+      getSugguest(this.value).then((res) => {
         this.result = res.data.result;
       }).catch((err) => {
         this.$message({

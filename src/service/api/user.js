@@ -68,7 +68,7 @@ export function getUser () {
     const avatar = localStorage.getItem('avatar');
     Object.assign(data, {
       name,
-      avatar,
+      avatar: avatar || defaultAvatar,
       isLogin: true
     });
   }

@@ -4,11 +4,11 @@
   "description": "vue test",
   "main": "index.js",
   "scripts": {
-    "devServer": "webpack-dev-server --env.production=false --config build/webpack.dev.js",
+    "devServer": "rm -f sw.js && webpack-dev-server --env.production=false --config build/webpack.dev.js",
     "dev": "webpack  --env.production=false --config build/webpack.dev.js",
     "build": "webpack --env.production --config build/webpack.prod.js",
     "build:sit-preview": "npm_config_report=true webpack --env.production=false --config build/webpack.prod.js",
-    "start": "NODE_ENV=production nodemon app.js"
+    "start": "nodemon app.js"
   },
   "repository": {
     "type": "git",
@@ -30,6 +30,7 @@
     "koa-compress": "^3.0.0",
     "koa-helmet": "^4.0.0",
     "koa-logger": "^3.2.0",
+    "koa-server-http-proxy": "^0.1.0",
     "koa-static": "^5.0.0",
     "throttle-debounce": "^2.0.1",
     "universal-cookie": "^2.2.0",

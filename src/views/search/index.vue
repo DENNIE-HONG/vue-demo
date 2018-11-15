@@ -3,7 +3,7 @@
     <header-banner>
       <search-header :defaultValue="keyword"/>
     </header-banner>
-    <nav class="tab">
+    <ul class="tab">
       <li
         :class="['tab-item', {active: searchType === 1}]"
         @click="changeType(1)">
@@ -32,7 +32,7 @@
         </base-select>
         <i class="iconfont icon-down"></i>
       </li>
-    </nav>
+    </ul>
     <product-list
       :productList="searchList"
       imgPrefix="//img10.360buyimg.com/n2/s240x240_" />

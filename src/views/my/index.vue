@@ -1,6 +1,6 @@
 <template>
   <div class="my">
-    <header-banner>我的vue1</header-banner>
+    <header-banner>我的vue</header-banner>
     <div class="my-header">
       <div class="my-behavior">
         <div class="my-info">

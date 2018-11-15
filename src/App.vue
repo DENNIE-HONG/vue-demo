@@ -22,6 +22,7 @@ export default {
   flex-direction: column;
   .content {
     flex: 1;
+    width: 100%;
   }
 }
 </style>

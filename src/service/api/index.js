@@ -1,3 +1,4 @@
+import axios from '../../plugins/axios';
 export default {
   api: [{
     name: 'sug',
@@ -28,3 +29,22 @@ export default {
     params: {}
   }]
 }
+
+export const getSugguest = (keyword) => {
+  const params = {
+    q: keyword,
+    extras: 1,
+    code: 'utf-8'
+  };
+  return axios({
+    method: 'GET',
+    url: '/api/sug',
+    params
+  });
+}
+
+export const getCart = (params) => axios({
+  method: 'GET',
+  url: '/kaola/cart/cartdata.html',
+  params
+});

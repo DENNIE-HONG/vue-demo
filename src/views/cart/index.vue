@@ -34,6 +34,7 @@ import HeaderBanner from 'coms/HeaderBanner';
 import CartItemGroup from 'coms/CartItem/CartItemGroup';
 import ConfirmBox from 'coms/ConfirmBox';
 import EmptyList from 'coms/EmptyList';
+import { getCart } from 'service/api';
 export default {
   name: 'Cart',
   metaInfo: {
@@ -85,7 +86,7 @@ export default {
     }
   },
   created () {
-    this.$api['kaola/cart']({}).then((res) => {
+    getCart({}).then((res) => {
       if (res.status === 200) {
         this.allCount = res.data.cartShow.allCount;
         this.cartList = res.data.cartShow.cartRegionList;
