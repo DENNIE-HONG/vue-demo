@@ -1,12 +1,14 @@
 <template>
   <div class="question">
     <header-banner>问答专区</header-banner>
-    <router-link
-      :to="'/product/' + productId"
-      class="title question-link">关于“ <span class="question-link-txt">{{questionTitle}}</span>” 的{{total}}个问题
-      <span class="pull-right"><i class="iconfont icon-right"></i></span>
-    </router-link>
     <section class="question-box">
+      <dt>
+        <router-link
+          :to="'/product/' + productId"
+          class="title question-link">关于“ <span class="question-link-txt">{{questionTitle}}</span>” 的{{total}}个问题
+          <span class="pull-right"><i class="iconfont icon-right"></i></span>
+        </router-link>
+      </dt>
       <dl class="question-list">
         <dd
           v-for="item in questionList"
@@ -18,8 +20,8 @@
               <span class="pull-right">{{item.created}}</span>
             </div>
             <h3 class="question-title"><i class="iconfont icon-ask"></i>{{item.content}}</h3>
-            <div class="question-content"><i class="iconfont icon-write"></i>{{item.answerCount ? item.answerList[0].content:
-            '暂无回答'}}</div>
+            <article class="question-content"><i class="iconfont icon-write"></i>{{item.answerCount ? item.answerList[0].content:
+            '暂无回答'}}</article>
             <div
               v-if="item.answerCount"
               class="question-more pull-right">查看全部{{item.answerCount}}个回答<i class="iconfont icon-right"></i></div>

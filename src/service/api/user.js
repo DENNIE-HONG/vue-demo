@@ -50,6 +50,7 @@ export function postLogin (params = required()) {
 export function getUser () {
   const data = {
     name: defaultName,
+    avatar: defaultAvatar,
     isLogin: false
   };
   const token = cookies.get(vueToken);
@@ -67,7 +68,7 @@ export function getUser () {
     const avatar = localStorage.getItem('avatar');
     Object.assign(data, {
       name,
-      avatar: avatar || defaultAvatar,
+      avatar,
       isLogin: true
     });
   }

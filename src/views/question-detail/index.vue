@@ -1,11 +1,17 @@
 <template>
   <div class="question-detail">
     <header-banner>问题详情</header-banner>
-    <section class="question-detail-info">
+    <section
+      v-if="productInfo"
+      class="question-detail-info">
       <router-link
         :to="'/product/' + productId"
         class="question-detail-product">
-        <div class="detail-pic"><img :src="'//img12.360buyimg.com/evalpic/s240x240_' + productInfo.imgUrl" /></div>
+        <div class="detail-pic">
+          <img
+            :src="'//img12.360buyimg.com/evalpic/s120x120_' + productInfo.imgUrl"
+            :alt="productInfo.shortName" />
+        </div>
         <h5 class="product-title">{{productInfo.fullName}}</h5>
         <div class="pull-right"><i class="iconfont icon-right"></i></div>
       </router-link>
@@ -24,7 +30,7 @@
           :key="item.id"
           class="question-detail-item">
           <div class="detail-answer-user"><span class="red">已买的人</span>用户{{item.pin}}说：</div>
-          <h3 class="detail-answer-content"><i class="iconfont icon-write"></i>{{item.content}}</h3>
+          <article class="detail-answer-content"><i class="iconfont icon-write"></i>{{item.content}}</article>
           <div class="detail-answer-time">{{item.created}}</div>
         </li>
       </ul>
@@ -224,6 +230,7 @@ export default {
       }
       &-content {
         margin: rem(15) 0;
+        font-size: rem(30);
         .iconfont {
           padding-right: rem(5);
           color: nth($fgreen, 1);

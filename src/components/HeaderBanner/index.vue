@@ -5,7 +5,7 @@
       v-once
       @click="goBack"><i class="iconfont icon-left"></i>
     </div>
-    <span class="com-header-banner-slot"><slot></slot></span>
+    <h2 class="com-header-banner-slot"><slot></slot></h2>
     <drop-down
       v-once
       class="com-header-banner-right">
