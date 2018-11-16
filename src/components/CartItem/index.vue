@@ -7,7 +7,9 @@
       ref="checkbox"></base-checkbox>
     <div class="cart-list-item-box">
       <div class="cart-list-pic">
-        <img :src="cart.imageUrl" />
+        <img
+          v-lazy="cart.imageUrl"
+          :alt="cart.goodsName" />
       </div>
       <div class="cart-list-info">
         <h5 class="cart-list-title">{{cart.goodsName}}</h5>

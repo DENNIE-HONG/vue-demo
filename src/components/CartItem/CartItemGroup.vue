@@ -1,11 +1,11 @@
 <template>
   <div class="cart-list">
-    <div class="title">
+    <h3 class="title">
       <base-checkbox
         :checked="allChecked"
         ref="checkbox"
         @change="changeAll"></base-checkbox>
-      <i class="iconfont icon-home"></i>{{list.goodsSource}}</div>
+      <i class="iconfont icon-home"></i>{{list.goodsSource}}</h3>
     <ul>
       <div
         v-if="list.cartActivityGoodsList.length"
