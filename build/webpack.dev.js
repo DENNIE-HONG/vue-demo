@@ -35,7 +35,8 @@ module.exports = (env) => {
         colors: true,
         modules: false,
         chunks: false,
-        children: false
+        children: false,
+        chunkModules: false
       },
       proxy: {
         '/api': {
