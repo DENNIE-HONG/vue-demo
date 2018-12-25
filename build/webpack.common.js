@@ -85,15 +85,17 @@ module.exports = (env) => {
         {
           test: /\.vue$/,
           loader: 'vue-loader',
-          exclude: /node_modules/
+          include: WEBPACK_COMMON_CONFIG.sourceCode,
+          exclude: /node_modules/,
         },
         {
           test: /\.js$/,
-          loader: env.production ? 'babel-loader' : ['babel-loader', 'eslint-loader'],
-          exclude: /node_modules/
+          loader: env.production ? 'babel-loader?cacheDirectory' : ['babel-loader?cacheDirectory', 'eslint-loader'],
+          include: WEBPACK_COMMON_CONFIG.sourceCode
         },
         {
-          test: /\.(css|scss)$/,
+          test: /\.scss$/,
+          include: WEBPACK_COMMON_CONFIG.sourceCode,
           use: [
             MiniCssExtractPlugin.loader,
             {
@@ -136,6 +138,7 @@ module.exports = (env) => {
         },
         {
           test: /\.(woff|woff2|eot|ttf|otf|svg)$/,
+          include: path.resolve(__dirname, '../src/assets/fonts'),
           use: [
             {
               loader: 'url-loader',
