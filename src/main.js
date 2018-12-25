@@ -11,6 +11,7 @@ import App from './App';
 import 'assets/main.scss';
 import loadingImg from 'assets/img/loading.gif';
 import errorImg from 'assets/img/error.png';
+import '@babel/polyfill';
 Vue.use(Meta);
 Vue.use(inject);
 Vue.use(VueTouch, { name: 'v-touch' });
