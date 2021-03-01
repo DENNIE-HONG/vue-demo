@@ -32,6 +32,14 @@ app.use(helmet())
     changeOrigin: true,
     pathRewrite: { '^/api': '' }
   }))
+  .use(proxy('/jdapi', {
+    target: 'https://wq.jd.com',
+    changeOrigin: true,
+    pathRewrite: { '^/jdapi': '' },
+    headers: {
+      'Referer': 'https://wq.jd.com/mcoss/reclike/getrecinfo?pi=1&pc=22&recpos=6163&hi=%7Bpage%3A1%2Cpagesize%3A22%7D&_=1614336357773&callback=Zepto1614336357726'
+    }
+  }))
   .use(proxy('/kaola', {
     target: 'https://m.kaola.com',
     changeOrigin: true,
