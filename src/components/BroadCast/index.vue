@@ -13,6 +13,7 @@
         :style="{width: 1/total/column * 100 + '%'}"
         class="com-broadcast-item">
         <router-link
+          v-if="i < total * row * column"
           :to="'/product/' + item.sku">
           <div class="pic">
             <img
@@ -26,7 +27,7 @@
     </v-touch>
     <div class="com-broadcast-page">
       <span
-        v-for="page in 5"
+        v-for="page in total"
         :class="['page-spot', {active: page === index}]"></span>
     </div>
   </div>
@@ -69,7 +70,7 @@ export default {
   },
   computed: {
     total () {
-      return this.broadcastList.length / this.row / this.column;
+      return Math.floor(this.broadcastList.length / this.row / this.column);
     }
 
   },

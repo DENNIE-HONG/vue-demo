@@ -30,7 +30,7 @@
       </dl>
       <load-more
         ref="loadmore"
-        url="https://wq.jd.com/questionanswer/GetSkuQuestionList"
+        url="/jdapi/questionanswer/GetSkuQuestionList"
         :params="sentData"
         :success="fetchData"
         jsonp
