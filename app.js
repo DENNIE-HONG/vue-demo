@@ -19,7 +19,7 @@ require('dnscache')({
   'enable': true
 });
 const app = new Koa();
-app.use(helmet())
+app
   .use(logger())
   .use(compress({
     flush: require('zlib').Z_SYNC_FLUSH
@@ -37,7 +37,7 @@ app.use(helmet())
     changeOrigin: true,
     pathRewrite: { '^/jdapi': '' },
     headers: {
-      'Referer': 'https://wq.jd.com/mcoss/reclike/getrecinfo?pi=1&pc=22&recpos=6163&hi=%7Bpage%3A1%2Cpagesize%3A22%7D&_=1614336357773&callback=Zepto1614336357726'
+      'Referer': 'https://wq.jd.com/mcoss/reclike/getrecinfo?pi=1&pc=22&recpos=6163&hi=%7Bpage%3A1%2Cpagesize%3A22%7D&_=1614336357773&callback=Zepto1614336357726',
     }
   }))
   .use(proxy('/kaola', {
@@ -62,6 +62,7 @@ app.use(helmet())
       // 页面
       ctx.compress = true;
       ctx.set('Cache-control', 'must-revalidate, no-store');
+      // ctx.set('X-Content-Type-Options', 'nosniff');
       ctx.type = 'html';
       ctx.body = fs.readFileSync(WEBPACK_PROD_CONFIG.assetsViews);
       if (ctx.status === 404) {

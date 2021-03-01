@@ -66,7 +66,7 @@
       </div>
       <load-more
         v-show="!FirstLoadEmpty"
-        url="https://wq.jd.com/commodity/comment/getcommentlist" :success="loadSuccess"
+        url="/jdapi/commodity/comment/getcommentlist" :success="loadSuccess"
         :params="sendData"
         jsonp
         ref="loadmore"

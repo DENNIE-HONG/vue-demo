@@ -15,11 +15,6 @@ export default {
   name: 'TheHead',
   components: {
     SearchHeader
-  },
-  data () {
-    return {
-      msg: 'Hello world!'
-    }
   }
 }
 </script>

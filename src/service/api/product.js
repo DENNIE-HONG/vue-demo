@@ -1,8 +1,8 @@
 import jsonp from 'jsonp';
 import querystring from 'querystring';
-const GET_GUESS_URL = 'https://wqcoss.jd.com/mcoss/reclike/getrecinfo';
-const GET_QUESTION_URL = 'https://wq.jd.com/questionanswer/GetSkuQuestionListWeChat';
-const GET_SPECIFICATION_URL = 'https://wq.jd.com/commodity/itembranch/getspecification';
+const GET_GUESS_URL = '/jdapi/mcoss/reclike/getrecinfo';
+const GET_QUESTION_URL = '/jdapi/questionanswer/GetSkuQuestionListWeChat';
+const GET_SPECIFICATION_URL = '/jdapi/commodity/itembranch/getspecification';
 const required = () => {
   throw Error('missing parameter！');
 }
