@@ -54,7 +54,7 @@ export default {
   },
   data () {
     return {
-      url: 'https://wqcoss.jd.com/mcoss/reclike/getrecinfo',
+      url: '/jdapi/mcoss/reclike/getrecinfo',
       productList: [],
       sendData: {
         pi: 1,
