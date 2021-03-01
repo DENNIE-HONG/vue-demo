@@ -37,7 +37,7 @@ app
     changeOrigin: true,
     pathRewrite: { '^/jdapi': '' },
     headers: {
-      'Referer': 'https://wq.jd.com/mcoss/reclike/getrecinfo?pi=1&pc=22&recpos=6163&hi=%7Bpage%3A1%2Cpagesize%3A22%7D&_=1614336357773&callback=Zepto1614336357726',
+      'Referer': 'https://m.jd.com/?ad_od=3&cu=true&utm_source=baidu-pinzhuan&utm_medium=cpc&utm_campaign=t_288551095_baidupinzhuan&utm_term=ba6fb982ce824f8382e493214bab3b10_0_db4ebebb1c974852a217d15bd0342c23'
     }
   }))
   .use(proxy('/kaola', {
@@ -62,7 +62,6 @@ app
       // 页面
       ctx.compress = true;
       ctx.set('Cache-control', 'must-revalidate, no-store');
-      // ctx.set('X-Content-Type-Options', 'nosniff');
       ctx.type = 'html';
       ctx.body = fs.readFileSync(WEBPACK_PROD_CONFIG.assetsViews);
       if (ctx.status === 404) {

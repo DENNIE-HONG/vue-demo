@@ -1,4 +1,4 @@
-<template>
+<template functional>
   <div class="com-empty">
     <div class="com-empty-pic"></div>
     <span

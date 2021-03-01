@@ -12,7 +12,7 @@ export const getQuestion = (productId = required()) => {
   };
   const q = querystring.encode(params);
   return new Promise((resolve, reject) => {
-    jsonp(`${GET_QUESTION_URL}?${q}`, { timeout: 10000 }, (err, res) => {
+    jsonp(`${GET_QUESTION_URL}?${q}`, { timeout: 10000, prefix: 'callback' }, (err, res) => {
       if (err) {
         reject('网络不给力，请稍后再试');
       }

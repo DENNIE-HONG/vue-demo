@@ -10,3 +10,14 @@ babel配置注意去掉comments：false
 
 ### 3、京东的api增加了referer限制
 改用代理koa-server-http-proxy匹配，并增加headers里的referer
+
+
+## 优化
+1.函数式组件
+在无状态、无生命周期、无响应式数据
+
+```
+<template functional>
+xxx
+</template>
+```

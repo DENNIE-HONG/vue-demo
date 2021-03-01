@@ -1,4 +1,4 @@
-<template>
+<template functional>
   <section
     v-if="productList.length"
     class="product-list">
