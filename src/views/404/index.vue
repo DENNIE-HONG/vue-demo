@@ -26,8 +26,10 @@ export default {
 <style lang="scss">
 .not-found {
   margin: auto;
+  height: 100%;
   text-align: center;
   background-color: white;
+  @include hid;
   &-pic {
     height: rem(400);
     margin-top: rem(100);

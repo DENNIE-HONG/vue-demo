@@ -122,6 +122,7 @@ export default {
   watch: {
     gender (val) {
       console.log(val);
+      this.isChange = true;
     },
     hobby (val) {
       console.log(val);

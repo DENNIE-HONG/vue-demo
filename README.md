@@ -51,3 +51,11 @@ babel配置注意去掉comments：false
 xxx
 </template>
 ```
+
+2. keepAlive
+404页面是纯静态页面，可缓存
+```
+<keep-alive include="xx">
+  <component />
+</keep-alive>
+```

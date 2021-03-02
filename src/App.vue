@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <div class="content">
-      <router-view
-        :key="$route.fullpath +new Date()"
-        class="content"></router-view>
+      <keep-alive include="NotFound">
+        <router-view :key="$route.fullpath"></router-view>
+      </keep-alive>
     </div>
     <the-footer />
   </div>
