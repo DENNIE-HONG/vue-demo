@@ -8,7 +8,7 @@
       </div>
       <product-list :productList="productList"/>
       <load-more
-        :url="url"
+        url="/jdapi/mcoss/reclike/getrecinfo"
         :success="loadSuccess"
         :params="sendData"
         ref="loadmore"
@@ -54,7 +54,6 @@ export default {
   },
   data () {
     return {
-      url: '/jdapi/mcoss/reclike/getrecinfo',
       productList: [],
       sendData: {
         pi: 1,

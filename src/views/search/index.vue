@@ -37,7 +37,7 @@
       :productList="searchList"
       imgPrefix="//img10.360buyimg.com/n2/s240x240_" />
     <empty-list v-if="firstLoadEmpty" text="暂时搜索不到该商品"/>
-    <load-more v-else :url="url" :success="loadSuccess" :params="sendData" jsonp ref="loadmore"/>
+    <load-more v-else url="https://so.m.jd.com/ware/search._m2wq_list" :success="loadSuccess" :params="sendData" jsonp ref="loadmore"/>
   </div>
 </template>
 <script>
@@ -89,7 +89,6 @@ export default {
   },
   data () {
     return {
-      url: 'https://so.m.jd.com/ware/search._m2wq_list',
       searchList: [],
       sendData: {
         keyword: this.$route.query.keyword,
